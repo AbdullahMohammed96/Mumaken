@@ -1,0 +1,349 @@
+﻿@using Mumaken.Domain.Enums
+@model Mumaken.Domain.Model.DashBoardHomeModel
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<style>
+    .clock {
+        width: 146px;
+        height: 146px;
+        border: 7px solid #282828;
+        box-shadow: -4px -4px 10px rgb(67 67 67 / 50%), inset 4px 4px 10px rgb(0 0 0 / 50%), inset -4px -4px 10px rgb(67 67 67 / 50%), 4px 4px 10px rgb(0 0 0 / 30%);
+        border-radius: 50%;
+        position: relative;
+        padding: 3px;
+    }
+
+    .outer-clock-face {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+        background: #282828;
+        overflow: hidden;
+    }
+
+        .outer-clock-face::after {
+            -webkit-transform: rotate(90deg);
+            -moz-transform: rotate(90deg);
+            transform: rotate(90deg)
+        }
+
+        .outer-clock-face::before,
+        .outer-clock-face::after,
+        .outer-clock-face .marking {
+            content: '';
+            position: absolute;
+            width: 5px;
+            height: 100%;
+            background: #7ec540;
+            z-index: 0;
+            left: 49%;
+        }
+
+        .outer-clock-face .marking {
+            background: #bdbdcb;
+            width: 3px;
+        }
+
+            .outer-clock-face .marking.marking-one {
+                -webkit-transform: rotate(30deg);
+                -moz-transform: rotate(30deg);
+                transform: rotate(30deg)
+            }
+
+            .outer-clock-face .marking.marking-two {
+                -webkit-transform: rotate(60deg);
+                -moz-transform: rotate(60deg);
+                transform: rotate(60deg)
+            }
+
+            .outer-clock-face .marking.marking-three {
+                -webkit-transform: rotate(120deg);
+                -moz-transform: rotate(120deg);
+                transform: rotate(120deg)
+            }
+
+            .outer-clock-face .marking.marking-four {
+                -webkit-transform: rotate(150deg);
+                -moz-transform: rotate(150deg);
+                transform: rotate(150deg)
+            }
+
+    .inner-clock-face {
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        width: 80%;
+        height: 80%;
+        background: #282828;
+        -webkit-border-radius: 100%;
+        -moz-border-radius: 100%;
+        border-radius: 100%;
+        z-index: 1;
+    }
+
+        .inner-clock-face::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 16px;
+            height: 16px;
+            border-radius: 18px;
+            margin-inline-end: -9px;
+            margin-top: -6px;
+            background: #4d4b63;
+            z-index: 11;
+        }
+
+    .hand {
+        width: 50%;
+        right: 50%;
+        height: 6px;
+        background: #61afff;
+        position: absolute;
+        top: 50%;
+        border-radius: 6px;
+        transform-origin: 100%;
+        transform: rotate(90deg);
+        transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+    }
+
+        .hand.hour-hand {
+            width: 30%;
+            z-index: 3;
+        }
+
+        .hand.min-hand {
+            height: 3px;
+            z-index: 10;
+            width: 40%;
+        }
+
+        .hand.second-hand {
+            background: #ee791a;
+            width: 45%;
+            height: 2px;
+        }
+</style>
+
+
+<div class="home_dash">
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="box-dash box-admin">
+                <div>
+                    <h4>@localizer["Hello"], <a asp-area="Identity" asp-page="/Account/EditUser">@localizer["Hello"] @User.Identity.Name!</a></h4>
+                    <h6>@localizer["Welcome to  Dashboard"] @localizer["Mumaken"]</h6>
+                </div>
+                <span class="icon">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                </span>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="box-dash box-dash-time">
+                <div>
+                    <div class="clock">
+                        <div class="outer-clock-face">
+                            <div class="marking marking-one"></div>
+                            <div class="marking marking-two"></div>
+                            <div class="marking marking-three"></div>
+                            <div class="marking marking-four"></div>
+                            <div class="inner-clock-face">
+                                <div class="hand hour-hand"></div>
+                                <div class="hand min-hand"></div>
+                                <div class="hand second-hand"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h6 id="date">
+                        <span id="day">0</span> / <span id="month">0</span> / <span id="year">0</span>
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+            <a href="" class="box-dash box-dash2">
+                <div>
+                    <h4>@Model.UserCount</h4>
+                    <h6>@localizer["Total Users"]</h6>
+                </div>
+                <span class="icon">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                </span>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <a href="~/Clients/Index" class="box-dash box-dash2">
+                <div>
+                    <h4>@Model.DriverCount</h4>
+                    <h6>@localizer["Total Drivers"]</h6>
+                </div>
+                <span class="icon">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                </span>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <a asp-action="Index" asp-controller="Clients" asp-route-driverType="@DriverTypeEnum.Independent" class="box-dash box-dash2">
+                <div>
+                    <h4>@Model.IndependentDriversCount</h4>
+                    <h6>@localizer["Independent Drivers"]</h6>
+                </div>
+                <span class="icon">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                </span>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <a asp-action="Index" asp-controller="Clients" asp-route-driverType="@DriverTypeEnum.Company" class="box-dash box-dash2">
+                <div>
+                    <h4>@Model.CompanyDriversCount</h4>
+                    <h6>@localizer["Company Drivers"]</h6>
+                </div>
+                <span class="icon">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                </span>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+            <a href="~/DeliveryCompany/Index" class="box-dash box-dash2">
+                <div>
+                    <h4>@Model.DeliveryCompanyCount</h4>
+                    <h6>@localizer["Total Delivery Companies"]</h6>
+                </div>
+                <span class="icon">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                </span>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <a href="~/RentalCompanies/Index" class="box-dash box-dash2">
+                <div>
+                    <h4>@Model.RentalCompanyCount</h4>
+                    <h6>@localizer["Total Car Rental Companies"]</h6>
+                </div>
+                <span class="icon">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                </span>
+            </a>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <a href="~/Orders/Index" class="box-dash box-dash2">
+                <div>
+                    <h4>@Model.totalOrder</h4>
+                    <h6>@localizer["Total Orders"]</h6>
+                </div>
+                <span class="icon">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                </span>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <a href="~/Orders/Index?status=1" class="box-dash box-dash2">
+                <div>
+                    <h4>@Model.totalNewOrder</h4>
+                    <h6>@localizer["Total New Orders"]</h6>
+                </div>
+                <span class="icon">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                </span>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+            <a href="~/Orders/Index?status=2" class="box-dash box-dash2">
+                <div>
+                    <h4>@Model.totalCurrentOrder</h4>
+                    <h6>@localizer["Total Current Orders"]</h6>
+                </div>
+                <span class="icon">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                </span>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md=6">
+            <a href="~/Orders/Index?status=4" class="box-dash box-dash2">
+                <div>
+                    <h4>@Model.totalCanceledOrder</h4>
+                    <h6>@localizer["Total Canceled Orders"]</h6>
+                </div>
+                <span class="icon">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                </span>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md=6">
+            <a href="~/Cities/Index" class="box-dash box-dash2">
+                <div>
+                    <h4>@Model.CityCount</h4>
+                    <h6>@localizer["Total Cities"]</h6>
+                </div>
+                <span class="icon">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                </span>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+
+            "use strict";
+            const secondHand = document.querySelector('.second-hand');
+            const minsHand = document.querySelector('.min-hand');
+            const hourHand = document.querySelector('.hour-hand');
+
+            function setDate() {
+                const now = new Date();
+                const seconds = now.getSeconds();
+                const secondsDegrees = ((seconds / 60) * 360) + 90;
+                secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+                const mins = now.getMinutes();
+                const minsDegrees = ((mins / 60) * 360) + ((seconds / 60) * 6) + 90;
+                minsHand.style.transform = `rotate(${minsDegrees}deg)`;
+                const hour = now.getHours();
+                const hourDegrees = ((hour / 12) * 360) + ((mins / 60) * 30) + 90;
+                hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+            }
+
+            setInterval(setDate, 1000);
+
+            setDate();
+
+            function clock() {
+                var da = document.getElementById("day"),
+                    ma = document.getElementById("month"),
+                    ye = document.getElementById("year"),
+                    theDate = new Date();
+
+                da.innerHTML = theDate.getDate();
+                ma.innerHTML = theDate.getMonth() + 1;
+                ye.innerHTML = theDate.getFullYear();
+
+            }
+
+            setInterval(clock, 1000);
+
+        });
+    </script>
+}

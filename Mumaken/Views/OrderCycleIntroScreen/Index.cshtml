@@ -1,0 +1,161 @@
+﻿@model IEnumerable<Mumaken.Domain.Entities.SettingTables.OrderCycleIntro>
+@inject IViewLocalizer localizer
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card-box">
+    <h2 class="header-title m-t-0 m-b-30">@localizer["Main Pages"]</h2>
+    <div>
+
+        <p>
+            <a asp-action="Create" asp-controller="OrderCycleIntroScreen" class="btn btn-primary btn-rounded w-md waves-effect waves-light m-b-5">@localizer["Add Page"]</a>
+        </p>
+        <!-- -------------------------------------------------------------------------------------------------- -->
+        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>@localizer["Title in Arabic"]</th>
+                    <th>@localizer["Title in English"]</th>
+                    <th>@localizer["Description in Arabic"]</th>
+                    <th>@localizer["Description in English"]</th>
+                    <th>@localizer["Order"]</th>
+                    <th>@localizer["Status"]</th>
+                    <th>@localizer["Change Status"]</th>
+                    <th>@localizer["Edit"]</th>
+                    <th>@localizer["Delete"] </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                           
+                            @item.TitleAr
+                        </td>
+                        <td>
+                            @item.TitleEn
+                        </td>
+                        <td>
+                            @{
+                                var DescriptionAr = item.DescriptionAr.Length > 30
+                                ? item.DescriptionAr.Substring(0, 20) + "..." : item.DescriptionAr;
+                            }
+                            @DescriptionAr
+                        </td>
+                        <td>
+                            @{
+                                var DescriptionEn = item.DescriptionEn.Length > 30
+                                ? item.DescriptionEn.Substring(0, 20) + "..." : item.DescriptionEn;
+                            }
+                            @DescriptionEn
+                        </td>
+                        <td>
+                            @item.Index
+                        </td>
+                        <td>
+                            @{
+                                if (item.IsActive == true)
+                                {
+                                    <label id="@item.Id" style="color:green;font-size: 17px;">@localizer["Active"]</label>
+                                }
+                                else
+                                {
+                                    <label id="@item.Id" style="color:red;font-size: 17px;">@localizer["Inactive"]</label>
+                                }
+                            }
+                        </td>
+                        <td>
+                            <input type="button" value="@localizer["Change Status"]" onclick="Validation('@item.Id')" class="btn btn-purple btn-rounded" />
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-controller="OrderCycleIntroScreen" asp-route-id="@item.Id" class="btn btn-info btn-rounded">@localizer["Edit"]</a>
+                           
+                        </td>
+                        <td>
+                            <a onclick="Delete(@item.Id)" class="btn btn-danger btn-rounded">@localizer["Delete"]</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- -------------------------------------------------------------------------------------------------- -->
+    </div><!-- end row -->
+</div>
+@section scripts {
+    <script>
+
+        function Validation(id) {
+            $.ajax({
+                url: "/OrderCycleIntroScreen/ChangeState",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: id
+                },
+                success: function (result) {
+
+                    if (result.data == true) {
+                        $('#' + id).css('color', 'green');
+                        $('#' + id).html('@localizer["Active"]');
+                    } else if (result.data == false) {
+                        $('#' + id).css('color', 'red');
+                        $('#' + id).html('@localizer["Inactive"]');
+
+                    }
+                },
+                failure: function (info) {
+
+                }
+            });
+        }
+
+        function Delete(id) {
+            debugger;
+            Swal.fire({
+                position: 'warning',
+                type: 'warning',
+                title: '@localizer["Are you sure you want to delete this page?"]',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '@localizer["Yes"]',
+                cancelButtonText: '@localizer["No"]'
+
+            }).then((result) => {
+                debugger;
+                if (result.value) {
+                    $.ajax({
+                        url: "/OrderCycleIntroScreen/Delete",
+                        type: "DELETE",
+                        dataType: "json",
+                        data: {
+                            id: id
+                        },
+                        success: function (res) {
+                            Swal.fire(
+                                '',
+                                '@localizer["The page has been successfully deleted"]',
+                                'success'
+                            )
+                            setTimeout(function () {
+                                window.location.href = res.redirectToUrl;
+                            }, 2000);
+
+                        },
+                        failure: function (info) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: '@localizer["An error has occurred in the operation!"]',
+                            })
+                        }
+                    });
+                }
+            })
+        }
+    </script>
+}

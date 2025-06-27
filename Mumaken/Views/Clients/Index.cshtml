@@ -1,0 +1,146 @@
+﻿@using Mumaken.Domain.Enums
+@{
+    ViewData["Title"] = localizer["Drivers"];
+    var driverType = ViewBag.driverType;
+
+}
+
+<div class="card-box">
+
+    <h2 class="header-title m-t-0 m-b-30">@ViewData["Title"]</h2>
+    <div style="width: 250px;" class="form-group">
+        <label for="driverTypeFilter">@localizer["Driver Type"]</label>
+        <select  id="driverTypeFilter" class="form-control">
+            <option value="@DriverTypeEnum.All">@localizer["All"]</option>
+            <option value="@DriverTypeEnum.Independent">@localizer["Independent"]</option>
+            <option value="@DriverTypeEnum.Company">@localizer["Company"]</option>
+            <!-- Add other driver types as needed -->
+        </select>
+    </div>
+
+    <div>
+
+        <table id="datatable-responsive_clients" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>@localizer["Name"]</th>
+                    <th>@localizer["Mobile Number"]</th>
+                    <th>@localizer["Email"]</th>
+                    <th>@localizer["Picture"]</th>
+                    <th>@localizer["City"]</th>
+                    <th>@localizer["Driver Type"]</th>
+                    <th>@localizer["Status"]</th>
+                    <th>@localizer["Change Status"]</th>
+                    <th></th>
+                </tr>
+
+            </thead>
+            <!-- #region tbody -->
+            <!-- #endregion -->
+        </table>
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript">
+        var localization = {
+            active: '@localizer["Active"]',
+            inactive: '@localizer["Not Active"]',
+            status: '@localizer["Status"]',
+            DeleteText: '@localizer["Delete"]'
+        };
+    </script>
+    <script src="~/js/site.js"></script>
+    <script>
+
+
+        // $(document).ready(function () {
+        //     DataTableClientFun("Clients", "LoadData", ["id", , "creationDate", "userName", "phoneNumber", "email", "imgProfile", "city", "typeUserText", "typeUser", "isActive"]);
+
+        // })
+        $(document).ready(function () {
+            var initialDriverType = '@driverType';
+            $('#driverTypeFilter').val(initialDriverType); // Set the dropdown to the initial value
+
+            // Initialize DataTable
+            loadDataTable();
+
+            // Reload DataTable when the driver type filter changes
+            $('#driverTypeFilter').change(function () {
+                loadDataTable();
+            });
+        });
+        function loadDataTable() {
+            debugger;
+            // Check if DataTable already exists and destroy it if it does
+            if ($.fn.DataTable.isDataTable('#datatable-responsive_clients')) {
+                $('#datatable-responsive_clients').DataTable().clear().destroy();
+            }
+            var selectedDriverType = $('#driverTypeFilter').val();
+
+            // Initialize or reload DataTable with filter parameter
+            DataTableClientFun("Clients", "LoadData", ["id", , "creationDate", "userName", "phoneNumber", "email", "imgProfile", "city", "typeUserText", "typeUser", "isActive"], selectedDriverType);
+        }
+
+        function Validation(id) {
+            $.ajax({
+                url: "/Clients/ChangeState",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: id
+                },
+                success: function (result) {
+
+                    if (result.data == true) {
+                        $('#' + id).css('color', 'green');
+                        $('#' + id).html('@localizer["Active"]');
+                    } else if (result.data == false) {
+                        $('#' + id).css('color', 'red');
+                        $('#' + id).html('@localizer["Not Active"]');
+                    }
+                },
+                failure: function (info) {
+
+                }
+            });
+        }
+        function DeleteUser(id) {
+            Swal.fire({
+                title: '  @localizer["Are you sure you want to delete this item?"]',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                cancelButtonText: '@localizer["close"]',
+                confirmButtonText: '@localizer["Delete"]',
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "/Clients/DeleteAccount",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            id: id
+                        }, success: function (result) {
+                            toastr.success(result.msg);
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 3000);
+
+
+
+
+
+                        },
+                        failure: function (info) {
+
+                        }
+                    })
+                }
+            })
+        }
+
+    </script>
+
+}

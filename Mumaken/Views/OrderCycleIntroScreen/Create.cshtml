@@ -1,0 +1,86 @@
+﻿@model Mumaken.Domain.Entities.SettingTables.OrderCycleIntro
+@inject IViewLocalizer localizer
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card-box">
+    <h2 class="header-title m-t-0 m-b-30">@localizer["Main Pages"]</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="TitleAr" class="control-label">@localizer["Title in Arabic"]</label>
+                    <textarea asp-for="TitleAr" class="form-control summernote"></textarea>
+                    <span asp-validation-for="TitleAr" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TitleEn" class="control-label">@localizer["Title in English"]</label>
+                    <textarea asp-for="TitleEn" class="form-control summernote"></textarea>
+                    <span asp-validation-for="TitleEn" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DescriptionAr" class="control-label">@localizer["Description in Arabic"]</label>
+                    <textarea asp-for="DescriptionAr" class="form-control summernote"></textarea>
+                    <span asp-validation-for="DescriptionAr" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DescriptionEn" class="control-label">@localizer["Description in English"]</label>
+                    <textarea asp-for="DescriptionEn" class="form-control summernote"></textarea>
+                    <span asp-validation-for="DescriptionEn" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Index" class="control-label">@localizer["Order"]</label>
+                    <input asp-for="Index" class="form-control" />
+                    <span asp-validation-for="Index" class="text-danger"></span>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="button" id="btncli" class="btn-new-style btn-rounded" onclick="validation()">@localizer["Add"]</button>
+                        <button type="submit" hidden class="btn-new-style btn-rounded" id="btnSubmit">@localizer["Add"]</button>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div>
+                        <a asp-action="Index" class="btn-black">@localizer["Return to Home"]</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @* @{
+        await html.renderpartialasync("_validationscriptspartial");
+    }*@
+    <script>
+        function validation() {
+            var yt = $("#index").val();
+            if ($("#TitleAr").val() == 0) {
+                toastr.error("@localizer["Please enter the Title in Arabic correctly"]");
+                return false;
+            }
+            else if ($("#TitleEn").val() == 0) {
+                toastr.error("@localizer["Please enter the Title in English correctly"]");
+                return false;
+            }
+            else if ($("#DescriptionAr").val() == 0) {
+                toastr.error("@localizer["Please enter the Description in Arabic correctly"]");
+                return false;
+            }
+            else if ($("#DescriptionEn").val() == 0) {
+                toastr.error("@localizer["Please enter the Description in English correctly"]");
+                return false;
+            }
+            else if ($("#index").val() == 0) {
+                toastr.error("@localizer["please enter the order correctly"]");
+                return false;
+            }
+            else {
+                $("#btncli").prop("disabled", true);
+                $("#btnSubmit").click();
+            }
+        }
+    </script>
+}

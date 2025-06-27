@@ -1,0 +1,177 @@
+﻿@using Mumaken.Domain.Common.PathUrl;
+@model IEnumerable<Mumaken.Domain.Entities.SettingTables.SplashScreen>
+@inject IViewLocalizer localizer
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card-box">
+    @*<h4 class="header-title m-t-0 m-b-30" style="text-align:center"></h4>*@
+
+    <h2 class="header-title m-t-0 m-b-30">@localizer["Intro Pages"]</h2>
+
+    <div>
+        <p>
+            @Html.ActionLink(localizer["Add Page"].Value, "Create", "IntroScreens", null, new { @class = "btn btn-primary btn-rounded w-md waves-effect waves-light m-b-5" })
+        </p>
+        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>@localizer["Title in Arabic"]</th>
+                    <th>@localizer["Title in English"]</th>
+                    <th>@localizer["Description"]</th>
+                    <th>@localizer["ImageAr"]</th>
+                    <th>@localizer["ImageEn"]</th>
+                    <th>@localizer["Status"]</th>
+                    <th>@localizer["Change Status"]</th>
+                    <th>@localizer["Edit"]</th>
+                    <th>@localizer["Delete"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TitleAr)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TitleEn)
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-info btn-rounded show-description" data-toggle="modal" data-target="#descriptionModal+@item.Id">
+                                @localizer["Show"]
+                            </button>
+                            <div class="modal fade bd-example-modal-lg" id="descriptionModal+@item.Id" tabindex="-1" role="dialog" aria-labelledby="descriptionModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="descriptionModallLongTitle">@localizer["Description"]</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body" style="text-wrap: wrap">
+                                            @item.DescriptionAr
+                                            <hr>
+                                            @item.DescriptionEn
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">@localizer["Close"]</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <a href="@DashBordUrl.baseUrlHost@item.ImgAr" target="_blank">
+                                <img src="@DashBordUrl.baseUrlHost@item.ImgAr" style="width:100px; height:100px; " />
+                            </a>
+                        </td>
+                        <td>
+                            <a href="@DashBordUrl.baseUrlHost@item.ImgEn" target="_blank">
+                                <img src="@DashBordUrl.baseUrlHost@item.ImgEn" style="width:100px; height:100px; " />
+                            </a>
+                        </td>
+                        <td>
+                            @{
+                                if (item.IsActive == true)
+                                {
+                                    <label id="@item.Id" style="color:green;font-size: 17px;">@localizer["Active"]</label>
+                                }
+                                else
+                                {
+                                    <label id="@item.Id" style="color:red;font-size: 17px;">@localizer["Inactive"]</label>
+                                }
+                            }
+                        </td>
+                        <td>
+                            <input type="button" value="@localizer["Change Status"]" onclick="Validation('@item.Id')" class="btn btn-purple btn-rounded" />
+                        </td>
+                        <td>
+                            @Html.ActionLink(localizer["Edit"].Value, "Update", new { id = item.Id }, new { @class = "btn btn-info btn-rounded" })
+                        </td>
+                        <td>
+                            <a onclick="Delete(@item.Id)" class="btn btn-danger btn-rounded">@localizer["Delete"]</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <!-- -------------------------------------------------------------------------------------------------- -->
+    </div><!-- end row -->
+</div>
+
+@section scripts {
+    <script>
+        function Validation(id) {
+            $.ajax({
+                url: "/IntroScreens/ChangeStatus",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: id
+                },
+                success: function (result) {
+                    debugger;
+                    if (result.data == true) {
+                        $('#' + id).css('color', 'green');
+                        $('#' + id).html('@localizer["Active"]');
+                    } else if (result.data == false) {
+                        $('#' + id).css('color', 'red');
+                        $('#' + id).html('@localizer["Inactive"]');
+                    }
+                },
+                failure: function (info) {
+
+                }
+            });
+        }
+
+        function Delete(id) {
+            debugger;
+            Swal.fire({
+                position: 'warning',
+                type: 'warning',
+                title: '@localizer["Are you sure you want to delete the intro page?"]',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '@localizer["Yes"]',
+                cancelButtonText: '@localizer["No"]'
+            }).then((result) => {
+                debugger;
+                if (result.value) {
+                    $.ajax({
+                        url: "/IntroScreens/Delete",
+                        type: "DELETE",
+                        dataType: "json",
+                        data: {
+                            id: id
+                        },
+                        success: function (res) {
+                            Swal.fire(
+                                '',
+                                '@localizer["The page has been successfully deleted."]',
+                                'success'
+                            )
+                            setTimeout(function () {
+                                window.location.href = res.redirectToUrl;
+                            }, 2000);
+                        },
+                        failure: function (info) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: '@localizer["An error occurred during the operation!"]',
+                            })
+                        }
+                    });
+                }
+            })
+        }
+    </script>
+}

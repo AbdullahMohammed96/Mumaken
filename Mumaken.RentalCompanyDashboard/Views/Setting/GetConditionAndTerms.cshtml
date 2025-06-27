@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "_Layout";
+}
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <h2 class="fs15 ff-d mb-4 text-center"> @localizer["Condition And Terms"]</h2>
+
+        <p class="fs13 lh-md c-gray text-center">
+            @Html.Raw(ViewBag.conditionAndTerms)
+            @* @if (ViewBag.lang == "ar")
+            {
+                <div style="font-family: 'Arial', sans-serif; white-space: pre-wrap; direction: rtl;">
+                    @Html.Raw(ViewBag.conditionAndTerms)
+                </div>
+            }
+            else
+            {
+                <pre>
+                    @Html.Raw(ViewBag.conditionAndTerms)
+                    </pre>
+            } *@
+        </p>
+    </div>
+</div>

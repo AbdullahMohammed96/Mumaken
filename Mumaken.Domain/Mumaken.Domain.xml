@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mumaken.Domain</name>
+    </assembly>
+    <members>
+        <member name="P:Mumaken.Domain.DTO.AppClientDTO.ContactUsClientDto.ContactUsClientAddDto.email">
+            <summary>
+            email or phone
+            </summary>
+        </member>
+        <member name="P:Mumaken.Domain.DTO.AppProviderDTO.ContactUsProviderDto.ContactUsProviderAddDto.email">
+            <summary>
+            email or phone
+            </summary>   
+        </member>
+        <member name="P:Mumaken.Domain.DTO.AuthApiDTO.UserAddDTO.projectName">
+            <summary>
+            for title of notification
+            </summary>
+        </member>
+        <member name="P:Mumaken.Domain.DTO.AuthApiDTO.UserAddDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+        </member>
+        <member name="P:Mumaken.Domain.DTO.AuthDTO.UserInfoAddDTO.projectName">
+            <summary>
+            for title of notification
+            </summary>
+        </member>
+        <member name="P:Mumaken.Domain.DTO.AuthDTO.UserInfoAddDTO.lang">
+             <summary>
+            ar or en
+             </summary>
+        </member>
+        <member name="T:Mumaken.Domain.DTO.OrderDTO.OrderAddDto">
+            <summary>
+            I Split Add Order Base on Ui Screen
+            </summary>
+        </member>
+        <member name="T:Mumaken.Domain.DTO.OrderDTO.OrderAddUserInfoDto">
+            <summary>
+            Order User Info 
+            </summary>
+        </member>
+        <member name="T:Mumaken.Domain.Enums.PaymentMethod">
+            <summary>
+            This Enum For Finacial Account
+            </summary>
+        </member>
+    </members>
+</doc>

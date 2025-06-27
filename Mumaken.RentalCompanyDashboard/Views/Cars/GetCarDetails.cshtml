@@ -1,0 +1,103 @@
+﻿@model Mumaken.Domain.ViewModel.Cars.GetCarDetails
+<div class="section_style mb-4">
+    <h3 class="main-card-title">@localizer["Car Data"]</h3>
+
+    <div class="content">
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Image"]</span>
+            <img src="@Model.Image" alt="" class="small_img circle">
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Number"]</span>
+            <span class="main_item_sec">@Model.CarNumber</span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Category"]</span>
+            <span class="main_item_sec"> @Model.CarCategory</span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Type"]</span>
+            <span class="main_item_sec">@Model.CarType</span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Model"]</span>
+            <span class="main_item_sec">@Model.CarModel </span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Rental Price per Day"]</span>
+            <span class="main_item_sec">@Model.DailyPrice @localizer["SAR"]</span>
+        </div>
+
+    </div>
+</div>
+
+@* <div class="section_style mb-4">
+    <h3 class="main-card-title">@localizer["Car Insurance Information"]</h3>
+
+    <div class="content p-4">
+
+        <p class="fs13 lh-md c-black">
+            @Model.InsuranceInformation
+        </p>
+
+        <a href="@Model.FileInsurancInformation" target="_blank" class="pdf_item mt-3">
+            <i class="fa-regular fa-file"></i>
+        </a>
+
+    </div>
+</div>
+
+<div class="section_style mb-4">
+    <h3 class="main-card-title">@localizer["Car Form"]</h3>
+
+    <div class="content p-4">
+
+        <a href="@Model.CarForm" target="_blank" class="pdf_item">
+            <i class="fa-regular fa-file"></i>
+        </a>
+
+    </div>
+</div> *@
+
+<div class="section_style mb-4">
+    <h3 class="main-card-title">@localizer["Notes"]</h3>
+
+    <div class="content p-4">
+
+        <p class="fs13 lh-md c-black">
+            @Model.Note
+        </p>
+
+    </div>
+</div>
+
+<div class="d-flex gap-3 mt-4">
+    <a asp-action="EditCar" asp-controller="Cars" asp-route-carId="@Model.Id" class="main-btn md up">@localizer["Edit"]</a>
+    <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" class="main-btn md up red">@localizer["Delete"]</button>
+</div>
+
+<!-- ==================================== Start Delete Modal ==================================== -->
+<div class="modal fade" id="deleteModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+     tabindex="-1">
+    <div class="modal-dialog sm modal-dialog-centered">
+        <div class="modal-content p-4 pt-5">
+
+            <button class="close-model-btn" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
+
+            <p class="fs15 c-black text-center">@localizer["Do you really want to delete the car?"]</p>
+
+            <div class="d-flex gap-3 mt-4 w-100">
+                <a asp-action="DeleteCar" asp-controller="Cars" asp-route-carId="@Model.Id"  class="main-btn red up flex-grow-1">@localizer["Yes"]</a>
+                <button type="button" data-bs-dismiss="modal" class="main-btn up flex-grow-1">@localizer["No"]</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- ==================================== End Delete Modal ==================================== -->

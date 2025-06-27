@@ -1,0 +1,98 @@
+﻿@model IEnumerable<Mumaken.Domain.ViewModel.FinancialAccount.OrderOnlineFinancialAccountIndexViewModel>
+@inject IViewLocalizer localizer
+@{
+    ViewData["Title"] = @localizer["Financial Accounts - Not Settled"];
+}
+
+<div class="card-box">
+    <h2 class="header-title m-t-0 m-b-30">@localizer["Financial Accounts (Online Orders) - Not Settled"]</h2>
+
+    <div>
+        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>@localizer["Service Provider Name"]</th>
+                   @*  <th>@localizer["Service Provider Email"]</th> *@
+                    <th>@localizer["Service Provider Phone"]</th>
+                    <th>@localizer["Bank Name"]</th>
+                    <th>@localizer["IBAN Number"]</th>
+                    <th>@localizer["App Commission"]</th>   
+                    <th>@localizer["Total Orders"]:</th>
+                    <th>@localizer["Service provider ratio"]:</th>
+                    <th>@localizer["Confirm"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.ProviderName
+                        </td>
+                        @* <td>
+                            @item.ProviderEmail
+                        </td> *@
+                        <td>
+                            @item.ProviderPhone
+                        </td>
+                        <td>
+                            @item.ProviderBankName
+                        </td>
+                        <td>
+                            @item.ProviderBankIBN
+                        </td>
+                        <td>
+                            @item.AppTax
+                        </td>
+                        <td>
+                            @item.TotalOrderPrice
+                        </td>
+                        <td>
+                            @item.ProviderPrice
+                        </td>
+                        <td>
+                            <button class="btn btn-info btn-rounded" onclick="confirmBalance('@item.Id')">@localizer["Confirm"]</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <!-- -------------------------------------------------------------------------------------------------- -->
+    </div><!-- end row -->
+</div>
+
+@section scripts {
+    <script>
+
+        function confirmBalance(id) {
+            $.ajax({
+                url: '/FinancialAccounts/ConfirmBalance/' + id,
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: id
+                },
+                success: function (response) {
+                    Swal.fire(
+                        '@localizer["Account Settlement"]',
+                        '@localizer["The account has been settled successfully"]',
+                        '@localizer["Done"]',
+                    )
+
+                    setTimeout(function () {
+                        window.location.reload()
+                    }, 2000);
+
+                },
+                error: function (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: '@localizer["An error occurred during the process!"]',
+                    })
+                }
+            });
+        }
+
+    </script>
+}

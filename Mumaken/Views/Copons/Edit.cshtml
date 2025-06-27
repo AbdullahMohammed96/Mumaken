@@ -1,0 +1,136 @@
+﻿@model Mumaken.Domain.ViewModel.Copon.CoponCreateViewModel
+
+@{
+    ViewBag.Title = @localizer["title"];
+    Layout = "_Layout";
+}
+
+<div class="card-box">
+
+    <h2 class="header-title m-t-0 m-b-30">@localizer["Edit"]</h2>
+
+    <form asp-action="Edit" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="IsActive" />
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="CoponCode" class="control-label">@localizer["Coupon Code"]</label>
+                    <input asp-for="CoponCode" class="form-control" readonly />
+                    <span asp-validation-for="CoponCode" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="Count" class="control-label">@localizer["Beneficiary Count"]</label>
+                    <input asp-for="Count" class="form-control" />
+                    <span asp-validation-for="Count" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="Discount" class="control-label">@localizer["Discount Percentage"]</label>
+                    <input type="number" asp-for="Discount" class="form-control" />
+                    <span asp-validation-for="Discount" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="limt_discount" class="control-label">@localizer["Maximum Discount (in SAR)"]</label>
+                    <input type="number" asp-for="limt_discount" class="form-control" />
+                    <span asp-validation-for="limt_discount" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="expirdate" class="control-label">@localizer["Coupon Expiry Date"]</label>
+                    <input asp-for="expirdate" type="date" class="form-control" id="date_picker" />
+                    <span asp-validation-for="expirdate" class="text-danger"></span>
+                </div>
+            </div>
+            @* <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="RentalCompanyId" class="control-label">@localizer["Rental Company"]</label>
+                    <select asp-for="RentalCompanyId" class="form-control" asp-items="@ViewBag.rentalCompanies">
+                    </select>
+                    <span asp-validation-for="RentalCompanyId" class="text-danger"></span>
+                </div>
+            </div> *@
+
+
+            <div class="form-group mb-3">
+                <label class="form-label">@localizer["Rental Company"]</label>
+                <select asp-for="RentalCompaniesIdsList" class="select-2 form-control" id="companiesSelect" asp-items="@ViewBag.rentalCompanies" multiple="multiple"></select>
+                <input type="hidden" asp-for="RentalCompaniesIds" id="SelectedCompanies" />
+                <div id="selectedCompaniesContainer"></div>
+            </div>
+
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <input type="submit" value="@localizer["Save"]" class="btn-new-style btn-rounded" />
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div>
+                    <a asp-action="Index" class="btn-black">@localizer["Back to Homepage"]</a>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            // Initialize Select2
+            $('#companiesSelect').select2({
+                placeholder: '@localizer["Select rental companies"]',
+                allowClear: true
+            });
+
+            // Handle select/deselect "All"
+            $('#companiesSelect').on('change', function () {
+                var allOption = 'all';
+                var selectedValues = $(this).val() || [];
+
+                if (selectedValues.includes(allOption)) {
+                    // Select all if "All" is selected
+                    $('#companiesSelect option').prop('selected', true).trigger('change');
+                } else {
+                    // Deselect "All" if not all are selected
+                    $('#companiesSelect option[value="' + allOption + '"]').prop('selected', false);
+                }
+
+                // Update the hidden input
+                var finalSelected = $('#companiesSelect').val().filter(value => value !== allOption);
+                $('#SelectedCompanies').val(finalSelected.join(','));
+            });
+
+            // Handle form submission
+            $('#createUserForm').on('submit', function () {
+                var selectedCompanies = $('#companiesSelect').val() || [];
+                $('#SelectedCompanies').val(selectedCompanies.filter(value => value !== 'all').join(','));
+            });
+        });
+    </script>
+
+    <script language="javascript">
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+
+        today = yyyy + '-' + mm + '-' + dd;
+        $('#date_picker').attr('min', today);
+    </script>
+}

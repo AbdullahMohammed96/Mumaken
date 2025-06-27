@@ -1,0 +1,193 @@
+﻿@model Mumaken.Domain.ViewModel.Auth.EditCaptainViewModel
+@{
+    Layout = "_Layout";
+}
+<div class="row">
+    <div class="col-xl-5 col-lg-7">
+
+        <form method="post" asp-action="UpdateCaption" asp-controller="DeliveryCompanyCaptains" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="lang" value="@ViewBag.Lang" />
+            @*             <input type="hidden" asp-for="PhoneCode" /> *@
+            <h3 class="fs16 c-black mb-5">@localizer["Edit Captain"]</h3>
+            <div class="input-g upload-con">
+                <lablel class="main-label">@localizer["Captain Image"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <label asp-for="NewImageProfile" class="input-me photo-input">
+                        @localizer["Attach Captain Image"]
+                        <input type="file" class="hidden-input img-upload-input" asp-for="NewImageProfile">
+                        <i class="fa-solid fa-arrow-up-from-bracket main-icon"></i>
+                    </label>
+                </div>
+                <div class="photo-con">
+                    <div class="hidden-img">
+
+                        <a class="fancybox" data-fancybox="gallery" href="../assets/imgs/captain.png">
+                            <img class="img" src="@Model.ImageProfile" />
+                        </a>
+
+                        <button type='button' class='remove-img'>
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-g">
+                <lablel class="main-label">@localizer["Captain Name"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <input type="text" class="input-me" placeholder="@localizer["Enter Captain Name"]" asp-for="UserName">
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+            </div>
+
+            @*  <div class="input-g">
+            <lablel class="main-label">@localizer["Captain Phone"] <span class="hint">*</span> </lablel>
+            <div class="main-input">
+            <input type="number" class="input-me telephone" placeholder="@localizer["Enter Captain Phone"]" asp-for="PhoneNumber">
+            </div>
+            </div> *@
+
+            <div class="input-g">
+                <lablel class="main-label">
+                    @localizer["Captain Email"] <span class="hint">*</span>
+                </lablel>
+                <div class="main-input">
+                    <input type="email" class="input-me" placeholder="@localizer["Enter Captain Email"]" asp-for="Email">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="input-g">
+                <lablel class="main-label">@localizer["City"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <select class="select"
+                            asp-for="CityId"
+                            asp-items="@(new SelectList((IEnumerable<SelectListItem>)ViewData["Cites"], "Value", "Text"))">
+                    </select>
+                </div>
+                <span asp-validation-for="CityId" class="text-danger"></span>
+            </div>
+@* 
+            <div class="input-g">
+                <lablel class="main-label">@localizer["Age"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <input type="number" class="input-me" placeholder="@localizer["Enter Age"]" asp-for="Age">
+                    <span asp-validation-for="Age" class="text-danger"></span>
+                </div>
+            </div> *@
+            <div class="input-g">
+                <label class="main-label">@localizer["BirthDate"] <span class="hint">*</span> </label>
+                <div class="main-input">
+                    <input type="date" class="input-me" placeholder="@localizer["Enter Birth Date"]" asp-for="BirthDate">
+                    <span asp-validation-for="BirthDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="input-g">
+                <lablel class="main-label">@localizer["Gender"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <select class="select"
+                            asp-for="GenderType"
+                            asp-items="@(new SelectList((IEnumerable<SelectListItem>)ViewData["Genders"], "Value", "Text"))">
+                    </select>
+                    <span asp-validation-for="GenderType" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="input-g">
+                <lablel class="main-label">@localizer["Nationality"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <select class="select"
+                            asp-for="Nationality"
+                            asp-items="@(new SelectList((IEnumerable<SelectListItem>)ViewData["Nationalities"], "Value", "Text"))">
+                    </select>
+                    <span asp-validation-for="Nationality" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="input-g">
+                <lablel class="main-label">@localizer["Identity Number"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <input type="number" class="input-me" placeholder="@localizer["Enter Identity Number"]" asp-for="IdentityNumber">
+                    <span asp-validation-for="IdentityNumber" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="input-g upload-con">
+                <lablel class="main-label">@localizer["Driving License Image"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <label asp-for="NewDliveryLisence" class="input-me photo-input">
+                        @localizer["Attach Driving License Image"]
+                        <input type="file" class="hidden-input img-upload-input" asp-for="NewDliveryLisence">
+                        <i class="fa-solid fa-arrow-up-from-bracket main-icon"></i>
+                    </label>
+                  
+                </div>
+                <div class="photo-con">
+                    <div class="hidden-img">
+
+                        <a class="fancybox" data-fancybox="gallery" href="../assets/imgs/captain.png">
+                            <img class="img" src="@Model.DeliveryImage" />
+                        </a>
+
+                        <button type='button' class='remove-img'>
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-g upload-con">
+                <lablel class="main-label">@localizer["Identity Image"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <label asp-for="NewIdentityImage" class="input-me photo-input">
+                        @localizer["Attach Identity Image"]
+                        <input type="file" class="hidden-input img-upload-input" asp-for="NewIdentityImage">
+                        <i class="fa-solid fa-arrow-up-from-bracket main-icon"></i>
+                    </label>
+                </div>
+                <div class="photo-con">
+                    <div class="hidden-img">
+
+                        <a class="fancybox" data-fancybox="gallery" href="../assets/imgs/captain.png">
+                            <img class="img" src="@Model.IdentityImage" />
+                        </a>
+
+                        <button type='button' class='remove-img'>
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+            @* <div class="input-g">
+            <lablel class="main-label">@localizer["Password"] <span class="hint">*</span> </lablel>
+            <div class="main-input">
+            <input type="password" class="input-me" placeholder="@localizer["Enter Password"]">
+            </div>
+            </div> *@
+
+            <button type="submit" class="main-btn up md">@localizer["Save"]</button>
+
+        </form>
+
+    </div>
+</div>
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            var phoneCodeText = $(".iti__selected-dial-code").text();
+            $("#PhoneCode").val(phoneCodeText)
+        })
+        $(document).on('click', '#iti-0__country-listbox', function () {
+            debugger
+            var phoneCodeText = $(".iti__selected-dial-code").text();
+            $("#PhoneCode").val(phoneCodeText)
+        });
+    </script>
+}

@@ -1,0 +1,314 @@
+﻿@model Mumaken.Domain.ViewModel.AdminOrders.OrderDetailsByAdminViewModel
+@using Mumaken.Domain.Enums;
+<div class="card-box">
+
+	<h2 class="header-title m-t-0 m-b-30">@localizer["Details"]</h2>
+</div>
+<div>
+	<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+		<thead>
+			<tr>
+
+				<th>@localizer["Order Number"]</th>
+				<th>@localizer["Date"]</th>
+				<th>@localizer["Rental start date"]</th>
+				<th>@localizer["Rental Period"]</th>
+				@if (Model.OrderStatus == (int)OrderStutes.Finished)
+				{
+					<th>@localizer["Coupon Code"]</th>
+				}
+				<th>@localizer["Discount Value"]</th>
+				<th>@localizer["Price Before Discount"]</th>
+				<th>@localizer["Total Price"]</th>
+				<th>@localizer["Break period on Order"]</th>
+				<th>@localizer["Break Price on Order"]</th>
+				<th>@localizer["Rental Confirmation period on Order"]</th>
+				<th>@localizer["Rental Confirmation  Price on Order"]</th>
+				<th>@localizer["Order Status"]</th>
+				<th>@localizer["Driver Infromation"]</th>
+				@*   <th>@localizer["Driver Name"]</th>
+                <th>@localizer["Driver Phone Number"]</th>
+                <th>@localizer["Driver License"]</th>
+                <th>@localizer["Identity Image"]</th>
+                <th>@localizer["Identity Number"]</th> *@
+				@* <th>@localizer["Car Number"]</th>
+                <th>@localizer["Car Type"]</th>
+                <th>@localizer["Car Category"]</th>
+                <th>@localizer["Car Model"]</th>
+                <th>@localizer["Rental Company"]</th> *@
+				<th>@localizer["Car Infromation"]</th>
+				<th>@localizer["Delivery Companies"]</th>
+				<th>@localizer["New Rental Period"]</th>
+				<th>@localizer["Break period on  Renew Order"]</th>
+				<th>@localizer["Break Price on  Renew Order"]</th>
+				<th>@localizer["Rental Confirmation period on Renew Order"]</th>
+				<th>@localizer["Rental Confirmation  Price on  Renew Order"]</th>
+				<th>@localizer["New Price"]</th>
+				@if (Model.OrderCase == (int)OrderCase.WaitToAcceptRentalCompany)
+				{
+					<th>@localizer["Accept"]</th>
+					<th>@localizer["Reject"]</th>
+				}
+				@if (Model.OrderStatus != (int)OrderStutes.Finished)
+				{
+					<th> @localizer["Cancel Order"]</th>
+				}
+
+			</tr>
+		</thead>
+		<tbody>
+
+			<tr>
+				<td>@Model.OrderId</td>
+				<td dir="ltr">@Model.Date</td>
+				<td dir="ltr">@Model.DateRentalPeriod</td>
+				<td>@Model.RentalPeriod</td>
+				@if (Model.OrderStatus == (int)OrderStutes.Finished)
+				{
+					<td>@Model.CoponCode</td>
+				}
+				<td>@Model.DiscountValue</td>
+				<td>@Model.SubPrice</td>
+				<td>@Model.NetPrice</td>
+				<td>@Model.BreakPeriodForOrder</td>
+				<td>@Model.BreakPriceForOrder</td>
+				<td>@Model.RentalDailyPeriodForOrder</td>
+				<td>@Model.RentailDailyPriceForOrder</td>
+
+				<td>@Model.OrderCaseText</td>
+				@*     <td>@Model.DriverName</td>
+                <td>@Model.DriverPhone</td>
+                <td>
+                <img src="@Model.DriverLicenseImage" height="80" width="80px" />
+                </td>
+                <td>
+                <img src="@Model.IdentityImage" height="80" width="80px" />
+                </td>
+                <td>@Model.IdentityNumber</td> *@
+				@*  <td>@Model.CarNumber</td>
+                <td>@Model.CarType</td>
+                <td>@Model.CarCategory</td>
+                <td>@Model.CarModel</td>
+                <td>@Model.RentalCompany</td> *@
+
+
+				<td>
+					<button type="button" onclick="showOrderDriverInformationModal()"
+							class="btn btn-primary btn-rounded">
+						@localizer["Driver Infromation"]
+					</button>
+				</td>
+				<td>
+					<button type="button" onclick="showOrderCarInformationModal()"
+							class="btn btn-primary btn-rounded">
+						@localizer["Car Infromation"]
+					</button>
+				</td>
+				<td>
+					<button type="button" onclick="showDeliveryCompanyModal()"
+							class="btn btn-primary btn-rounded">
+						@localizer["Delivery Companies"]
+					</button>
+				</td>
+				<td>@Model.RenewRetalPeriod</td>
+				<td>@Model.BreakPriceForRenew</td>
+				<td>@Model.BreakPriceForRenew</td>
+				<td>@Model.RentalDailyPeriodForRenew</td>
+				<td>@Model.RentailDailyPriceForRenew</td>
+				<td>@Model.RenewOrderPrice</td>
+				@if (Model.OrderCase == (int)OrderCase.WaitToAcceptRentalCompany)
+				{
+					<td>
+						<a onclick="AcceptOrder(@Model.OrderId)" class="btn btn-info btn-rounded">@localizer["Accept"]</a>
+					</td>
+					<td>
+						<a onclick="refusedOrder@Model.OrderId)" class="btn btn-info btn-rounded">@localizer["Reject"]</a>
+					</td>
+				}
+				@if (Model.OrderStatus != (int)OrderStutes.Finished)
+				{
+					<td>
+						<a class="btn btn-info btn-rounded" onclick="ShowCancelOrderModal(@Model.OrderId)"> @localizer["Cancel Order"]</a>
+					</td>
+				}
+
+			</tr>
+
+		</tbody>
+	</table>
+
+	<!-- -------------------------------------------------------------------------------------------------- -->
+</div>
+<!-- end row -->
+<div class="modal fade bd-example-modal-lg" id="DeliveyCompanyListModal" tabindex="-1" role="dialog" aria-labelledby="DeliveyCompanyListModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="DeliveyCompanyListModalLabel">@localizer["Delivery Companies"]</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body text-dark">
+				<ul id="DeliveyCompanyList">
+					@foreach (var item in Model.DeliveyCompanies)
+					{
+						<li>@item</li>
+					}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Car modal -->
+
+<div class="modal fade bd-example-modal-lg" id="OrderCarModal" tabindex="-1" role="dialog" aria-labelledby="DeliveyCompanyListModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="DeliveyCompanyListModalLabel">@localizer["Car Infromation"]</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<table class="table" cellspacing="0">
+					<thead>
+						<tr>
+							<th>@localizer["Car Number"]</th>
+							<th>@localizer["Car Type"]</th>
+							<th>@localizer["Car Category"]</th>
+							<th>@localizer["Car Model"]</th>
+							<th>@localizer["Rental Company"]</th>
+							<th>@localizer["Car Form"]</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>@Model.CarNumber</td>
+							<td>@Model.CarType</td>
+							<td>@Model.CarCategory</td>
+							<td>@Model.CarModel</td>
+							<td>@Model.RentalCompany</td>
+							<td>
+								@if (!string.IsNullOrWhiteSpace(@Model.CarForm))
+								{
+									<a href="@Url.Content(@Model.CarForm)" download target="_blank" class="btn btn-primary">@localizer["Show"]</a>
+								}
+								else
+								{
+									<button class="btn btn-secondary" disabled>@localizer["Not Entered"]  </button>
+								}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Car modal -->
+<!-- Driver modal -->
+
+<div class="modal fade bd-example-modal-lg" id="OrderDriverModal" tabindex="-1" role="dialog" aria-labelledby="DeliveyCompanyListModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="DeliveyCompanyListModalLabel">@localizer["Driver Infromation"]</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<table class="table" cellspacing="0">
+					<thead>
+						<tr>
+							<th>@localizer["Driver Name"]</th>
+							<th>@localizer["Driver Phone Number"]</th>
+							<th>@localizer["Driver License"]</th>
+							<th>@localizer["Identity Image"]</th>
+							<th>@localizer["Identity Number"]</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>@Model.DriverName</td>
+							<td>@Model.DriverPhone</td>
+							<td>
+								<img src="@Model.DriverLicenseImage" height="80" width="80px" />
+							</td>
+							<td>
+								<img src="@Model.IdentityImage" height="80" width="80px" />
+							</td>
+							<td>@Model.IdentityNumber</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Driver modal -->
+<div class="modal fade bd-example-modal-lg" id="RefusedOrderModal" tabindex="-1" role="dialog" aria-labelledby="DeliveyCompanyListModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="DeliveyCompanyListModalLabel">@localizer["Please enter the reason for cancellation"]</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body text-dark">
+				<input type="hidden" id="cancelOrderId" />
+				<label for="reasonToCancel">@localizer["Reason to Cancel"]:</label>
+				<textarea id="reasonToCancel" style="height: 200px;width: 100%;"></textarea>
+				<button type="button" class="btn btn-primary" style="width: 100%;" onclick="ConfirmCancelOrder(@Model.OrderId)">@localizer["Cancel Order"]</button>
+			</div>
+		</div>
+	</div>
+</div>
+@section Scripts {
+	<script>
+		function showDeliveryCompanyModal() {
+			$('#DeliveyCompanyListModal').modal('show');
+		}
+		function showOrderCarInformationModal() {
+			$('#OrderCarModal').modal('show');
+		}
+		function showOrderDriverInformationModal() {
+			$('#OrderDriverModal').modal('show');
+		}
+		function ShowCancelOrderModal(){
+			$("#RefusedOrderModal").modal("show")
+		}
+		function ConfirmCancelOrder(id) {
+			var reasonText = $("#reasonToCancel").val()
+			$.ajax({
+				url: "/Orders/RefusedOrder",
+				type: "POST",
+				dataType: "json",
+				data: {
+					id: id,
+					reasonText: reasonText
+				}, success: function (result) {
+					if (result.key == 1) {
+						debugger
+						toastr.success(result.msg);
+						setTimeout(function () {
+							window.location.reload();
+						}, 3000);
+
+					} else {
+						toastr.error(result.msg);
+					}
+
+
+				},
+				failure: function (info) {
+
+				}
+			})
+		}
+	</script>
+}

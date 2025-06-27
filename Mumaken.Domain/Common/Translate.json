@@ -1,0 +1,122 @@
+﻿{
+  "userName": {
+    "ar": "الاسم مطلوب ",
+    "en": "User Name is required"
+
+  },
+  "email": {
+    "ar": "الايميل مطلوب",
+    "en": "Email is required"
+  },
+  "emailAddress": {
+    "ar": "ادخل الايميل بشكل صحيح",
+    "en": "enter email in correct format"
+  },
+
+  "phone": {
+    "ar": "رقم الهاتف مطلوب ",
+    "en": "User Name is required"
+
+  },
+  "phoneCode": {
+    "ar": "كود الدوله مطلوب",
+    "en": "The Phone Code is required"
+
+  },
+  "deviceId": {
+    "ar": " deviceId مطلوب ",
+    "en": "DeviceId is required"
+
+  },
+  "userId": {
+    "ar": " userId مطلوب ",
+    "en": "userId is required"
+
+  },
+  "qualification": {
+    "ar": " المؤهلات مطلوبه ",
+    "en": "qualification is required"
+
+  },
+  "graduationYear": {
+    "ar": " سنة التخرج مطلوبه ",
+    "en": "graduationYear is required"
+
+  },
+  "ImgCommercialRegister": {
+    "ar": " السيره الذاتيه مطلوبه ",
+    "en": "ImgCommercialRegister is required"
+
+  },
+  "specialization": {
+    "ar": " التخصص مطلوب ",
+    "en": "specialization is required"
+
+  },
+  "msg": {
+    "ar": " الرساله مطلوبه ",
+    "en": "Message is required"
+
+  },
+  "age": {
+    "ar": " العمر مطلوب ",
+    "en": "Age is required"
+
+  },
+  "nationality": {
+    "ar": " الجنسيه مطلوبه ",
+    "en": "nationality is required"
+
+  },
+  "jop": {
+    "ar": " الوظيفه مطلوبه ",
+    "en": "jop is required"
+
+  },
+  "exprinceYears": {
+    "ar": " سنين الخبره مطلوبه ",
+    "en": "exprinceYears is required"
+
+  },
+  "locationWork": {
+    "ar": "مكان العمل مطلوبه ",
+    "en": "locationWork is required"
+
+  },
+  "socialStatus": {
+    "ar": " الحاله الاجتماعيه مطلوبه ",
+    "en": "socialStatus is required"
+
+  },
+  "comment": {
+    "ar": "التعليق مطلوب ",
+    "en": "comment is required"
+
+  },
+  "rate": {
+    "ar": "التقيم مطلوب ",
+    "en": "rate is required"
+
+  },
+  "password": {
+    "ar": "كلمة المرور مطلوبه",
+    "en": "Password is required"
+  },
+  "code": {
+    "ar": "الكود مطلوب",
+    "en": "Code is required"
+  },
+  "oldPassword": {
+    "ar": "كلمة المرور القديمه مطلوبه",
+    "en": "Old Password is required"
+  },
+  "newPassword": {
+    "ar": " كلمة المرور الجديده مطلوبه ",
+    "en": "New Password is required"
+  },
+  "length": {
+    "ar": "يجب ان لا تقل كلمة المرور عن 6 رموز",
+    "en": "New Password must above 6 numbers"
+  }
+}
+

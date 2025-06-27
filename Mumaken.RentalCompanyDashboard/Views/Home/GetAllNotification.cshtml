@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Mumaken.Domain.DTO.AuthDTO.NotifyListDto>
+<div class="position-relative mb-5 ">
+    <h2 class="fs15 ff-d text-center"> @localizer["Notification"]</h2>
+    <button class="main-btn delete_all sm red" onclick="deleteAllNotify()">
+        <i class="fa-regular fa-trash-can"></i>
+        @localizer["Delete All"]
+    </button>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        @foreach (var notify in Model)
+        {
+            <!-- Item -->
+            <div class="not_item">
+                <a href="@(notify.orderId != null || notify.orderId != 0 ? "/Orders/OrderDetails?orderId=" + notify.orderId : "#")" class="text">@notify.text</a>
+                <button class="bg-transparent c-red p-0" onclick="deleteNotifyById(@notify.id)">
+                    <i class="fa-regular fa-trash-can"></i>
+                </button>
+            </div>
+        }
+
+
+    </div>
+</div>
+@section scripts {
+    <script>
+        function deleteAllNotify() {
+            Swal.fire({
+                title: '@localizer["Are you sure you want to delete all notifications?"]',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                cancelButtonText: '@localizer["Close"]',
+                confirmButtonText: '@localizer["Delete"]',
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "/Home/DeleteAllNotification",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+
+                        }, success: function (result) {
+                            if (result.key == 1) {
+                                setTimeout(function () {
+                                    location.reload()
+                                }, 3000);
+                                toastr.success(result.msg);
+                            }
+                        },
+                        failure: function (info) {
+
+                        }
+                    })
+                }
+            })
+        }
+        function deleteNotifyById(id) {
+            Swal.fire({
+                title: '@localizer["Are you sure you want to delete all notifications?"]',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                cancelButtonText: '@localizer["Close"]',
+                confirmButtonText: '@localizer["Delete"]',
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "/Home/DeleteNotificationById",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            notifyId: id
+                        }, success: function (result) {
+                            if (result.key == 1) {
+                                setTimeout(function () {
+                                    location.reload()
+                                }, 3000);
+                                toastr.success(result.msg);
+                            }
+                        },
+                        failure: function (info) {
+
+                        }
+                    })
+                }
+            })
+        }
+    </script>
+}

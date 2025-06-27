@@ -1,0 +1,164 @@
+﻿@model Mumaken.Domain.ViewModel.Cars.UpadateCarViewModel
+<div class="row">
+    <div class="col-xl-5 col-lg-7">
+
+        <form amethod="post" enctype="multipart/form-data" asp-action="EditCar">
+            <h3 class="fs16 c-black mb-5">@localizer["Edit Car"]</h3>
+            <input type="hidden" asp-for="Id" value="@Model.Id" />
+            <div class="mb-4 input-g">
+                <lablel class="main-label">@localizer["Car Image"] <span class="hint">*</span> </lablel>
+                <label asp-for="NewImage" class="profile-img">
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    <input type="file" asp-for="NewImage" accept="image/*"
+                           class="hidden-input img-upload-input profile">
+                    <img src="@Model.OldCarImage" alt="" class="img">
+                </label>
+            </div>
+
+            <div class="input-g">
+                <lablel class="main-label">@localizer["Car Number"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <input  class="input-me" asp-for="CarNumber" placeholder="@localizer["Enter Car Number"]">
+                    <span asp-validation-for="CarNumber" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="input-g">
+                <lablel class="main-label">@localizer["Car Category"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <select class="select"
+                            asp-items="@(new SelectList((IEnumerable<SelectListItem>)ViewBag.CarCategories,"Value","Text"))"
+                            asp-for="CarCategory">
+                        <option value="0" selected disabled>@localizer["Select Car Category"]</option>
+                    </select>
+                    <span asp-validation-for="CarCategory" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="input-g">
+                <lablel class="main-label">@localizer["Car Type"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <select class="select"
+                            asp-items="@(new SelectList((IEnumerable<SelectListItem>)ViewBag.CarTypes,"Value","Text"))"
+                            asp-for="CarType">
+                        <option value="0" selected disabled>@localizer["Select Car Type"]</option>
+                    </select>
+                    <span asp-validation-for="CarType" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="input-g">
+                <lablel class="main-label">@localizer["Car Model"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <select class="select"
+                            asp-items="@(new SelectList((IEnumerable<SelectListItem>)ViewBag.models,"Value","Text"))"
+                            asp-for="CarModel">
+                    </select>
+                    <span asp-validation-for="CarModel" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="input-g">
+                <lablel class="main-label">@localizer["Daily Rental Price"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <input type="number" class="input-me" asp-for="DailyPrice" oninput="validity.valid||(value='');" placeholder="@localizer["Enter Daily Rental Price"]">
+                    <span class="main-icon red">@localizer["SAR"]</span>
+                    <span asp-validation-for="DailyPrice" class="text-danger"></span>
+                </div>
+            </div>
+
+         @*    <div class="input-g">
+                <lablel  class="main-label" >
+                    @localizer["Car Insurance Information"] <span class="hint">*</span>
+                </lablel>
+                <div class="main-input">
+                    <textarea class="input-me text-area" asp-for="InsuranceInformation" placeholder="@localizer["Enter Car Insurance Information"]"></textarea>
+                    <span asp-validation-for="InsuranceInformation" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="input-g upload-con">
+                <lablel class="main-label">@localizer["Car Insurance Information File"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <label asp-for="NewFileInsurancInformation" class="input-me photo-input">
+                        @localizer["Attach Car Insurance Information File"]
+                        <input type="file" accept="application/*" class="hidden-input img-upload-input" asp-for="NewFileInsurancInformation">
+                        <i class="fa-solid fa-arrow-up-from-bracket main-icon"></i>
+                    </label>
+                </div>
+                <div class="photo-con">
+
+                    <div class="upload-label mt-3">
+                        <input type='hidden' value='file name' />
+                        <a href="@Model.OldFileInsurancInformation" target="_blank" class="pdf_item">
+                            <i class="fa-regular fa-file"></i>
+                        </a>
+                        <button type='button' class='remove-img'>
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="input-g upload-con">
+                <lablel class="main-label">@localizer["Car Registration Form"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <label id="NewCarForm" class="input-me photo-input">
+                        @localizer["Attach Car Registration Form"]
+                        <input type="file" accept="application/*" class="hidden-input img-upload-input" id="NewCarForm" asp-for="NewCarForm">
+                        <i class="fa-solid fa-arrow-up-from-bracket main-icon"></i>
+                    </label>
+                </div>
+                <div class="photo-con">
+
+                    <div class="upload-label mt-3">
+                        <input type='hidden' value='file name' />
+                        <a href="@Model.OldCarForm" target="_blank" class="pdf_item">
+                            <i class="fa-regular fa-file"></i>
+                        </a>
+                        <button type='button' class='remove-img'>
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div> *@
+
+            <div class="input-g">
+                <lablel class="main-label">
+                    @localizer["Notes"] <span class="hint">*</span>
+                </lablel>
+                <div class="main-input">
+                    <textarea asp-for="Note" class="input-me text-area" placeholder="@localizer["Enter Notes"]"></textarea>
+                    <span asp-validation-for="Note" class="text-danger"></span>
+                </div>
+            </div>
+
+            <button type="submit" class="main-btn md up">@localizer["Save"]</button>
+
+        </form>
+
+    </div>
+</div>
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $("#CarType").change(function () {
+            debugger
+            var carTypeId = $(this).val();
+            var carModelsList = $('#CarModel');
+            $.ajax({
+                url: `/Cars/GetCarModelWithType?carTypeId=${carTypeId}`,
+                method: 'GET',
+                success: function (carModels) {
+                    carModelsList.empty();
+                    $.each(carModels, function (i, carModel) {
+                        carModelsList.append($('<option></option>').attr('value', carModel.id).text(carModel.name));
+                    });
+                }, error: function () { }
+            })
+        })
+    </script>
+}

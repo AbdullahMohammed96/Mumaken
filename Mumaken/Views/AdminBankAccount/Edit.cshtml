@@ -1,0 +1,76 @@
+﻿@model Mumaken.Domain.Entities.SettingTables.AdminBankAccount
+@inject IViewLocalizer localizer
+
+@{
+    ViewData["Title"] = localizer["Edit"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card-box">
+    <h2 class="header-title m-t-0 m-b-30">@localizer["Bank"]</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Edit">
+                <input type="hidden" asp-for="IsActive" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="BankName" class="control-label">@localizer["Bank Name"]</label>
+                    <input asp-for="BankName" class="form-control" />
+                    <span asp-validation-for="BankName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BankAccountName" class="control-label">@localizer["Account Holder Name"]</label>
+                    <input asp-for="BankAccountName" class="form-control" />
+                    <span asp-validation-for="BankAccountName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AccountNumber" class="control-label">@localizer["Account Number"]</label>
+                    <input asp-for="AccountNumber" class="form-control" />
+                    <span asp-validation-for="AccountNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Iban" class="control-label">@localizer["IBAN"]</label>
+                    <input asp-for="Iban" class="form-control" />
+                    <span asp-validation-for="Iban" class="text-danger"></span>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="button" id="btncli" class="btn-new-style btn-rounded" onclick="validation()">@localizer["Edit"]</button>
+                        <button type="submit" hidden class="btn-new-style btn-rounded" id="btnSubmit">@localizer["Edit"]</button>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div>
+                        <a asp-action="Index" class="btn-black">@localizer["Back to Home"]</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        function validation() {
+
+            if ($("#BankName").val() == 0) {
+                toastr.error("@localizer["Please enter a valid bank name"]");
+                return false;
+            }
+            else if ($("#BankAccountName").val() == 0) {
+                toastr.error("@localizer["Please enter a valid account holder name"]");
+                return false;
+            }
+            else if ($("#AccountNumber").val() == 0) {
+                toastr.error("@localizer["Please enter a valid account number"]");
+                return false;
+            }
+            else if ($("#Iban").val() == 0) {
+                toastr.error("@localizer["Please enter a valid IBAN"]");
+                return false;
+            }
+            else {
+                $("#btncli").prop("disabled", true);
+                $("#btnSubmit").click();
+            }
+        }
+    </script>
+}

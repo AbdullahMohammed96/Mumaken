@@ -1,0 +1,344 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mumaken</name>
+    </assembly>
+    <members>
+        <member name="M:Mumaken.Controllers.Api.AuthController.RegisterClient(Mumaken.Domain.DTO.AuthApiDTO.UserAddDTO)">
+            <summary>
+            Add new user 
+            </summary>
+            <remarks>
+            Sample request:
+              {
+            "id": "c3eed5f3-ca71-4833-ace9-62ee3b608d95",
+            "userName": "ahmed",
+            "email": "ahmed@gmail.com",
+            "phone": "01234567895",
+            "lang": "ar",
+            "closeNotify": false,
+            "status": false,
+            "imgProfile": "https://image.freepik.com/free-vector/user-icon_126283-435.jpg",
+            "token": "",
+            "typeUser": 1,
+            "code": 1234,
+            "activeCode": false
+             }
+            </remarks>
+            <param lang="UserAddDTO.lang">ar or en</param>
+            <param userName="UserAddDTO.userName"></param>
+            <param email="UserAddDTO.email"></param>
+            <param phone="UserAddDTO.phone"></param>
+            <param password="UserAddDTO.password"></param>
+            <param deviceId="UserAddDTO.deviceId"> for Notify </param>
+            <param deviceType="UserAddDTO.deviceType">ios or android </param>
+            <param projectName="UserAddDTO.projectName">For title of notification </param>
+            <returns>return object of user </returns>
+            <response code="200">Sucess</response>
+            <response code="400">BadRequest Or Exption</response>
+            <response code="500">internal server error</response>
+        </member>
+        <member name="M:Mumaken.Controllers.Api.AuthController.ConfirmCodeRegister(Mumaken.Domain.DTO.AuthDTO.ConfirmCodeAddDto)">
+            <summary>
+            Confirm Code for Register 
+            </summary>
+            <remarks>
+            Sample request:
+              {
+            "id": "c3eed5f3-ca71-4833-ace9-62ee3b608d95",
+            "userName": "ahmed",
+            "email": "ahmed@gmail.com",
+            "phone": "01234567895",
+            "lang": "ar",
+            "closeNotify": false,
+            "status": false,
+            "imgProfile": "https://image.freepik.com/free-vector/user-icon_126283-435.jpg",
+            "token": "",
+            "typeUser": 1,
+            "code": 1234,
+            "activeCode": false
+             }
+            </remarks>
+            <param lang="confirmCodeAddDto.lang">ar or en</param>
+            <param userId="confirmCodeAddDto.Id"></param>
+            <param code="confirmCodeAddDto.code"></param>
+            <returns>return object of user </returns>
+            <response code="200">Sucess</response>
+            <response code="400">BadRequest Or Exption</response>
+            <response code="500">internal server error</response>
+        </member>
+        <member name="M:Mumaken.Controllers.Api.AuthController.ResendCode(Mumaken.Domain.DTO.AuthDTO.ResendCodeAddDto)">
+            <summary>
+            resend Code for Register 
+            </summary>
+            <remarks>
+            Sample request:
+              {
+            "id": "c3eed5f3-ca71-4833-ace9-62ee3b608d95",
+            "phone": "01234567895",
+            "code": 1234,
+             }
+            </remarks>
+            <param lang="resendCodeAddDto.lang">ar or en</param>
+            <param userId="resendCodeAddDto.Id"></param>
+            <param code="resendCodeAddDto.code"></param>
+            <returns>return object of user </returns>
+            <response code="200">Sucess</response>
+            <response code="400">BadRequest Or Exption</response>
+            <response code="500">internal server error</response>
+        </member>
+        <member name="M:Mumaken.Controllers.Api.AuthController.Login(Mumaken.Domain.DTO.AuthApiDTO.LoginDto)">
+            <summary>
+            LogIn
+            </summary>
+            <remarks>
+            Sample request:
+              {
+            "id": "c3eed5f3-ca71-4833-ace9-62ee3b608d95",
+            "userName": "ahmed",
+            "email": "ahmed@gmail.com",
+            "phone": "01234567895",
+            "lang": "ar",
+            "closeNotify": false,
+            "status": false,
+            "imgProfile": "https://image.freepik.com/free-vector/user-icon_126283-435.jpg",
+            "token": "",
+            "typeUser": 1,
+            "code": 1234,
+            "activeCode": false
+             }
+            </remarks>
+            <param lang="LoginDto.lang">ar or en</param>
+            <param phone="LoginDto.phone"></param>
+            <param password="LoginDto.password"></param>
+            <param deviceId="LoginDto.deviceId"> for Notify </param>
+            <param deviceType="LoginDto.deviceType">ios or android </param>
+            <param projectName="LoginDto.projectName">For title of notification </param>
+            <returns>return object of user </returns>
+            <response code="200">Sucess</response>
+            <response code="400">BadRequest Or Exption</response>
+            <response code="500">internal server error</response>
+        </member>
+        <member name="M:Mumaken.Controllers.Api.AuthController.ForgetPassword(Mumaken.Domain.DTO.AuthApiDTO.ForgetPasswordAddDto)">
+            <summary>
+            Forget password
+            </summary>
+            <remarks>
+            Sample request:
+              {
+            "id": "c3eed5f3-ca71-4833-ace9-62ee3b608d95",
+            "code": 1234,
+             }
+            </remarks>
+            <param lang="forgetPasswordDto.lang">ar or en</param>
+            <param phone="forgetPasswordDto.phone"></param>
+            <returns>return object of user </returns>
+            <response code="200">Sucess</response>
+            <response code="400">BadRequest Or Exption</response>
+            <response code="500">internal server error</response>
+        </member>
+        <member name="M:Mumaken.Controllers.Api.AuthController.ChangePasswordByCode(Mumaken.Domain.DTO.AuthApiDTO.ChangePasswordByCodeDto)">
+            <summary>
+            Change user Password by code
+            </summary>
+            <remarks>
+            Sample request:
+              "msg":"Password changed"
+            </remarks>
+            <param lang="changePasswordDto.lang">ar or en</param>
+            <param phone="changePasswordDto.code"></param>
+            <param phone="changePasswordDto.userId"></param>
+            <param password="changePasswordDto.newPassword"></param>
+            <returns>return msg </returns>
+            <response code="200">Sucess</response>
+            <response code="400">BadRequest Or Exption</response>
+            <response code="500">internal server error</response>
+        </member>
+        <member name="M:Mumaken.Controllers.Api.AuthController.ChangePassword(Mumaken.Domain.DTO.AuthApiDTO.ChangePasswordDto)">
+            <summary>
+            Change user Password
+            </summary>
+            <remarks>
+            Sample request:
+              "msg":"Password changed"
+            </remarks>
+            <param lang="changePasswordDto.lang">ar or en</param>
+            <param phone="changePasswordDto.oldPassword"></param>
+            <param password="changePasswordDto.newPassword"></param>
+            <returns>return object of user </returns>
+            <response code="200">Sucess</response>
+            <response code="400">BadRequest Or Exption</response>
+            <response code="500">internal server error</response>
+        </member>
+        <member name="M:Mumaken.Controllers.Api.AuthController.ChangeLanguage(System.String)">
+            <summary>
+            Change app Language 
+            </summary>
+            <param lang="ar">ar or en</param>
+            <returns>return status code </returns>
+            <response code="200">Sucess</response>
+            <response code="400">BadRequest Or Exption</response>
+            <response code="500">internal server error</response>
+        </member>
+        <member name="M:Mumaken.Controllers.Api.AuthController.Logout(Mumaken.Domain.DTO.AuthApiDTO.LogoutDto)">
+            <summary>
+            user logout
+            </summary>
+            <remarks>
+            Sample request:
+              "msg":"LogOut Successfully "
+            </remarks>
+            <param lang="userModel.lang">ar or en</param>
+            <param deviceId="userModel.deviceId"></param>
+            <returns>return msg </returns>
+            <response code="200">Sucess</response>
+            <response code="400">BadRequest Or Exption</response>
+            <response code="500">internal server error</response>
+        </member>
+        <member name="M:Mumaken.Controllers.Api.AuthController.RemoveAccount(System.String)">
+            <summary>
+            Remove user account  مسح الحساب
+            </summary>
+            <remarks>
+             Sample request:
+             
+                 {
+                   "lang": "ar",   
+                 }
+             
+            </remarks>
+            <param lang="ar">ar or en</param>
+            <returns>return status code </returns>
+            <response code="200">Sucess</response>
+            <response code="400">BadRequest Or Exption</response>
+            <response code="500">internal server error</response>
+        </member>
+        <member name="M:Mumaken.Controllers.Api.UserController.GetDataOfUser(System.String)">
+            <summary>
+            get user data
+            </summary>
+            <remarks>
+            Sample request:
+              {
+            "id": "c3eed5f3-ca71-4833-ace9-62ee3b608d95",
+            "userName": "ahmed",
+            "email": "ahmed@gmail.com",
+            "phone": "01234567895",
+            "lang": "ar",
+            "closeNotify": false,
+            "status": false,
+            "imgProfile": "https://image.freepik.com/free-vector/user-icon_126283-435.jpg",
+            "token": "",
+            "typeUser": 1,
+            "code": 1234,
+            "activeCode": false
+             }
+            </remarks>
+            <param lang="ar">ar or en</param>
+            <returns>return object of user </returns>
+            <response code="200">Sucess</response>
+            <response code="400">BadRequest Or Exption</response>
+            <response code="500">internal server error</response>
+        </member>
+        <member name="M:Mumaken.Controllers.Api.UserController.UpdateDataUser(Mumaken.Domain.DTO.AuthApiDTO.UpdateDataUserDto)">
+             <summary>
+            update user data 
+             </summary>
+             <remarks>
+             Sample request:
+               {
+             "id": "c3eed5f3-ca71-4833-ace9-62ee3b608d95",
+             "userName": "ahmed",
+             "email": "ahmed@gmail.com",
+             "phone": "01234567895",
+             "lang": "ar",
+             "closeNotify": false,
+             "status": false,
+             "imgProfile": "https://image.freepik.com/free-vector/user-icon_126283-435.jpg",
+             "token": "",
+             "typeUser": 1,
+             "code": 1234,
+             "activeCode": false
+              }
+             </remarks>
+             <param lang="userModel.lang">ar or en</param>
+             <param userName="userModel.userName"></param>
+             <param email="userModel.email"></param>
+             <param phone="userModel.phone"></param>
+             <param imgProfile="userModel.imgProfile"></param>
+             <returns>return object of user </returns>
+             <response code="200">Sucess</response>
+             <response code="400">BadRequest Or Exption</response>
+             <response code="500">internal server error</response>
+        </member>
+        <member name="M:Mumaken.Controllers.Api.UserController.GetDataOfProvider(System.String)">
+            <summary>
+            get provider data
+            </summary>
+            <remarks>
+            Sample request:
+              {
+            "id": "c3eed5f3-ca71-4833-ace9-62ee3b608d95",
+            "userName": "ahmed",
+            "email": "ahmed@gmail.com",
+            "phone": "01234567895",
+            "lang": "ar",
+            "closeNotify": false,
+            "status": false,
+            "imgProfile": "https://image.freepik.com/free-vector/user-icon_126283-435.jpg",
+            "token": "",
+            "typeUser": 1,
+            "code": 1234,
+            "activeCode": false
+             }
+            </remarks>
+            <param lang="ar">ar or en</param>
+            <returns>return object of user </returns>
+            <response code="200">Sucess</response>
+            <response code="400">BadRequest Or Exption</response>
+            <response code="500">internal server error</response>
+        </member>
+        <member name="M:Mumaken.Controllers.Api.UserController.RemoveAllNotify(System.String)">
+            <summary>
+            Change app Language 
+            </summary>
+            <returns>return status code </returns>
+            <response code="200">Sucess</response>
+            <response code="400">BadRequest Or Exption</response>
+            <response code="500">internal server error</response>
+        </member>
+        <member name="M:Mumaken.Controllers.Api.UserController.ChangeNotify(Mumaken.Domain.DTO.AuthApiDTO.NotifyDto)">
+            <summary>
+            Close Notification for users
+            </summary>
+            <param lang="changeNotifyEditDto.lang">ar or en</param>
+            <param notify="changeNotifyEditDto.notify"></param>
+            <returns>return status code </returns>
+            <response code="200">Sucess</response>
+            <response code="400">BadRequest Or Exption</response>
+            <response code="500">internal server error</response>
+        </member>
+        <member name="M:Mumaken.Controllers.Api.UserController.ListOfNotifyUser(System.String)">
+            <summary>
+            List Notification for Client
+            </summary>
+            <remarks>
+            Sample request:
+               {
+            "id": "1",
+            "text": any,
+            "date": 18/10/2021,
+            "type":1,
+             }
+            </remarks>
+            <param lang="ar">ar or en</param>
+            <returns>return object of notify </returns>
+            <response code="200">Sucess</response>
+            <response code="400">BadRequest Or Exption</response>
+            <response code="500">internal server error</response>
+        </member>
+        <member name="M:Mumaken.Controllers.Shared.Back_UpController.DownloadFile(System.String,System.String)">
+            [HttpGet]
+        </member>
+    </members>
+</doc>

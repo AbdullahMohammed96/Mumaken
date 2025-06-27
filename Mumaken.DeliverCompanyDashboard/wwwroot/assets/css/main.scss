@@ -1,0 +1,135 @@
+@import "sass/variables", "sass/mixins", "sass/global", "sass/components",
+  "sass/navbar", "sass/sidebar", "sass/dataTable" , "sass/footer";
+
+/******************** Start Main Section ********************/
+
+.main-sec {
+  width: calc(100% - 300px);
+  padding-top: 110px;
+  transition: all 0.8s cubic-bezier(0.68, -0.3, 0.265, 1.3);
+  padding-bottom: 50px;
+
+  #{$ltr} & {
+    transform: translateX(300px);
+  }
+
+  #{$rtl} & {
+    transform: translateX(-300px);
+  }
+
+
+  &.active-main {
+    width: calc(100%);
+    transform: translateX(0px) !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    #{$ltr} & {
+      transform: translateX(-330px);
+    }
+    
+    #{$rtl} & {
+      transform: translateX(330px);
+    }
+    overflow: hidden;
+  }
+
+  .sidebar.active-side {
+    transform: translateX(0px) !important;
+    width: 300px;
+  }
+
+  .navbar-me {
+    transform: translateX(0px) !important;
+    width: calc(100% - 0px);
+  }
+
+  .main-sec {
+    width: calc(100%);
+    transform: translateX(0px) !important;
+  }
+}
+
+@media screen and (max-width: 330px) {
+  .sidebar.active-side {
+    width: 300px;
+  }
+}
+
+/******************** End Main Section ********************/
+
+
+/******************** Start contact form ********************/
+.contact_form{
+  .contact_item{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: rgba($color: $sec, $alpha: 15%);
+    border-radius: 5px;
+    padding: 12px 25px;
+    color: $sec;
+    transition: $main-transition;
+
+    &:hover{
+      transform: translateY(-5px);
+    }
+  }
+}
+/******************** End contact form ********************/
+
+
+/******************** Start not_item ********************/
+.not_item{
+  @include between;
+  gap: 15px;
+  background-color: rgba($color: $sec, $alpha: 10%);
+  padding: 14px 18px;
+
+  &:not(:last-child){
+    margin-bottom: 18px;
+  }
+  
+  .text{
+    color: $black;
+    font-size: 13px;
+  }
+}
+
+.delete_all{
+  position: absolute;
+  top: -10px;
+  @include dir-right(0);
+  z-index: 3;
+}
+/******************** End not_item ********************/
+
+
+/******************** Start auth_layout ********************/
+
+.auth_layout{
+  padding-top: 115px;
+  padding-bottom: 40px;
+}
+
+/******************** End auth_layout ********************/
+
+
+/******************** Start wallet_box ********************/
+.wallet_box{
+  padding: 40px 25px;
+  @include center;
+  flex-direction: column;
+  gap: 25px;
+
+  .wallet_img{
+    max-width: 250px;
+
+    @media screen and (max-width: 500px) {
+      max-width: 200px;
+    }
+  }
+}
+/******************** End wallet_box ********************/

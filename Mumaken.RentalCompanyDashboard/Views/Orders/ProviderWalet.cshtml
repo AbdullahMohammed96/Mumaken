@@ -1,0 +1,202 @@
+﻿@model Mumaken.Domain.ViewModel.Orders.ProviderWalletViewModel
+
+<div class="section_style mb-4 wallet_box">
+    <img src="~/imgs/wallet_img.png" alt="" class="wallet_img">
+    <div class="row"> 
+        <div class="col-5 d-flex flex-column align-items-center">
+            <div class="fs13 c-light2 mb-3">@localizer["Your current balance"]</div>
+            <div class="fs17 c-main mb-3">@Model.ProviderOnlineFinancial.ProviderPrice @localizer["SAR"]</div>
+            <button class="main-btn up sm w-btn" data-bs-toggle="modal" data-bs-target="#settlementModal">@localizer["Settle my dues"]</button>
+        </div>
+         <div class="col-2 line">
+
+         </div>
+        <div class="col-5 d-flex flex-column align-items-center">
+            <div class="fs13 c-light2 mb-3">@localizer["Management balance"]</div>
+            <div class="fs17 c-main mb-3">@Model.ProviderCashFinancial.AppPrice @localizer["SAR"]</div>
+            <button class="main-btn up sm w-btn" data-bs-toggle="modal" data-bs-target="#settlementAdminModal">@localizer["Settlement of management dues"]</button>
+        </div>
+
+    </div>
+</div>
+<div class="row gy-4">
+
+    @foreach (var adminBank in Model.AdminBanks)
+    {
+        <div class="col-lg-6">
+            <div class="section_style">
+
+                <div class="content">
+
+                    <div class="main_item">
+                        <span class="main_item_first">@localizer["Bank Name"]</span>
+                        <span class="main_item_sec">@adminBank.BankName</span>
+                    </div>
+
+                    <div class="main_item">
+                        <span class="main_item_first">@localizer["Account Holder Name"]</span>
+                        <span class="main_item_sec">@adminBank.BankAccountName</span>
+                    </div>
+
+                    <div class="main_item">
+                        <span class="main_item_first">@localizer["Account Number"]</span>
+                        <span class="main_item_sec">@adminBank.AccountNumber</span>
+                    </div>
+
+                    <div class="main_item">
+                        <span class="main_item_first">@localizer["IBAN Number"]</span>
+                        <span class="main_item_sec">@adminBank.Iban</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+<!-- ==================================== Start settlement Modal ==================================== -->
+<div class="modal fade" id="settlementModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+     tabindex="-1">
+    <div class="modal-dialog sm modal-dialog-centered">
+        <form class="modal-content p-4" asp-action="RequestToConfirmMySettle" asp-controller="Orders" method="post" id="formonfirmMySettle">
+
+            <button type="button" class="close-model-btn" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
+
+            <p class="fs15 c-black text-center">@localizer["Bank Account Information"]</p>
+
+            <div class="input-g mt-4 w-100">
+                <label for="" class="main-label">
+                    @localizer["Bank Name"]
+                    <span class="hint">*</span>
+                </label>
+                <div class="main-input">
+                    <input type="text" class="input-me" id="bankName" name="BankName" placeholder="@localizer["Enter Bank Name"]">
+                </div>
+            </div>
+
+            <div class="input-g w-100">
+                <label for="" class="main-label">
+                    @localizer["Account Holder Name"]
+                    <span class="hint">*</span>
+                </label>
+                <div class="main-input">
+                    <input type="text" class="input-me" id="accountHolderName" name="AccountOwnerName" placeholder="@localizer["Enter Account Holder Name"]">
+                </div>
+            </div>
+
+            <div class="input-g w-100">
+                <label for="" class="main-label">
+                    @localizer["Account Number"]
+                    <span class="hint">*</span>
+                </label>
+                <div class="main-input">
+                    <input type="number" class="input-me" id="accountNumber" name="AccountNumber" placeholder="@localizer["Enter Account Number"]">
+                </div>
+            </div>
+
+            <div class="input-g w-100">
+                <label for="" class="main-label">
+                    @localizer["IBAN Number"]
+                    <span class="hint">*</span>
+                </label>
+                <div class="main-input">
+                    <input type="text" class="input-me" id="ibanNumber" name="Iban" placeholder="@localizer["Enter IBAN Number"]">
+                </div>
+            </div>
+
+            <div class="d-flex gap-3 w-100">
+                <button type="submit" class="main-btn up flex-grow-1" hidden>@localizer["Confirm"]</button>
+                <button type="button" onclick="RequestToConfirmMySettle()" class="main-btn up flex-grow-1">@localizer["Confirm"]</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+<!-- ==================================== End settlement Modal ==================================== -->
+<!-- ==================================== Start settlement Modal ==================================== -->
+<div class="modal fade" id="settlementAdminModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+     tabindex="-1">
+    <div class="modal-dialog sm modal-dialog-centered">
+        <form class="modal-content p-4" asp-action="RequestToConfirAdminSettle" asp-controller="Orders" method="post" id="formonfirmAdminSettle">
+
+            <button type="button" class="close-model-btn" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
+
+            <p class="fs15 c-black text-center">@localizer["Choose a bank"]</p>
+            <br />
+            <div class="input-g w-100">
+                <select id="AdminBankId" name="AdminBankId" asp-items="ViewBag.banks" class="form-control">
+                    <option value="0" selected> @localizer["Choose a bank"] </option>
+                </select>
+            </div>
+
+            <div class="d-flex gap-3 w-100">
+                <button type="submit" class="main-btn up flex-grow-1" hidden>@localizer["Confirm"]</button>
+                <button type="button" onclick="RequestToConfirmAdminSettle()" class="main-btn up flex-grow-1">@localizer["Confirm"]</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+<!-- ==================================== End settlement Modal ==================================== -->
+@section Scripts {
+    <script>
+        function RequestToConfirmMySettle() {
+            debugger
+            var ibanPattern = /^SA\d{2}[0-9]{20}$/;
+            var accountNumberPattern = /^\d{18}$/;
+            var bankName = $("#bankName").val();
+            var accountHolderName = $("#accountHolderName").val();
+            var accountNumber = $("#accountNumber").val();
+            var ibanNumber = $("#ibanNumber").val();
+            if (bankName == undefined || !bankName.trim()) {
+                // Display error message using toastr
+                toastr.error('@localizer["Please Enter Bank Name"]');
+                return 0;
+            }
+            else if (accountHolderName == undefined || !accountHolderName.trim()) {
+                toastr.error('@localizer["Please Enter Owner bank Name"]');
+                return 0;
+            }
+            else if (!ibanPattern.test(ibanNumber)) {
+                toastr.error('@localizer["Please Enter Valid Iban Number"]');
+                return 0;
+            }
+            else if (!accountNumberPattern.test(accountNumber)) {
+                toastr.error('@localizer["Please Enter Valid Account Number"]');
+                return 0;
+            }
+            else if (accountNumber == undefined || !accountNumber.trim()) {
+                toastr.error('@localizer["Please Enter Account Number"]');
+                return 0;
+            }
+            else if (ibanNumber == undefined || !ibanNumber.trim()) {
+                toastr.error('@localizer["Please Enter Iban Number"]');
+                return 0;
+            }
+            if (@Model.ProviderOnlineFinancial.AppPrice== 0) {
+                toastr.error('@localizer["No Balance To Confirm Balance"]');
+                return 0;
+            }
+            else {
+                $("#formonfirmMySettle").submit();
+            }
+        }
+        function RequestToConfirmAdminSettle() {
+            debugger
+            var AdminBankId = $("#AdminBankId").val();
+            if (AdminBankId == undefined || !AdminBankId.trim() || AdminBankId==0) {
+                // Display error message using toastr
+                toastr.error('@localizer["Please Choose Bank"]');
+                return 0;
+            }
+            if (@Model.ProviderCashFinancial.AppPrice==0) {
+                toastr.error('@localizer["No Balance To Confirm Balance"]');
+                return 0;
+           }
+            else {
+                $("#formonfirmAdminSettle").submit();
+            }
+        }
+    </script>
+}

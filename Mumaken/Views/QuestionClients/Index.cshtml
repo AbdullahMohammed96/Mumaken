@@ -1,0 +1,120 @@
+﻿@model IEnumerable<Mumaken.Domain.Entities.SettingTables.CommonQuestion>
+@inject IViewLocalizer localizer
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card-box">
+    <h2 class="header-title m-t-0 m-b-30">@localizer["Questions"]</h2>
+    <div>
+
+        <p>
+            @Html.ActionLink(localizer["Add Question"].Value, "Create", "QuestionClients", null, new { @class = "btn btn-primary btn-rounded w-md waves-effect waves-light m-b-5" })
+        </p>
+        <!-- -------------------------------------------------------------------------------------------------- -->
+        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>@localizer["Question in Arabic"]</th>
+                    <th>@localizer["Answer in Arabic"]</th>
+                    <th>@localizer["Question in English"]</th>
+                    <th>@localizer["Answer in English"]</th>
+                    <th>@localizer["Status"]</th>
+                    <th>@localizer["Change Status"]</th>
+                    <th>@localizer["Edit"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @* @Html.DisplayFor(modelItem => item.QuestionAr)*@
+                            @{
+                                var QuestionAr = item.Question.Length > 30
+                                ? item.Question.Substring(0, 20) + "..." : item.Question;
+                            }
+                            @QuestionAr
+                        </td>
+                        <td>
+                            @* @Html.DisplayFor(modelItem => item.AnswerAr)*@
+                            @{
+                                var AnswerAr = item.Answer.Length > 30
+                                ? item.Answer.Substring(0, 20) + "..." : item.Answer;
+                            }
+                            @AnswerAr
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.QuestionEn)*@
+                            @{
+                                var QuestionEn = item.QuestionEn.Length > 30
+                                ? item.QuestionEn.Substring(0, 20) + "..." : item.QuestionEn;
+                            }
+                            @QuestionEn
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.AnswerEn)*@
+                            @{
+                                var AnswerEn = item.AnswerEn.Length > 30
+                                ? item.AnswerEn.Substring(0, 20) + "..." : item.AnswerEn;
+                            }
+                            @AnswerEn
+                        </td>
+                        <td>
+                            @{
+                                if (item.IsActive == true)
+                                {
+                                    <label id="@item.Id" style="color:green;font-size: 17px;">@localizer["Active"]</label>
+                                }
+                                else
+                                {
+                                    <label id="@item.Id" style="color:red;font-size: 17px;">@localizer["Inactive"]</label>
+                                }
+                            }
+                        </td>
+                        <td>
+                            <input type="button" value="@localizer["Change Status"]" onclick="Validation('@item.Id')" class="btn btn-purple btn-rounded" />
+                        </td>
+                        <td>
+                            @Html.ActionLink(localizer["Edit"].Value, "Edit", new { id = item.Id }, new { @class = "btn btn-info btn-rounded" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- -------------------------------------------------------------------------------------------------- -->
+    </div><!-- end row -->
+</div>
+
+@section scripts {
+    <script>
+
+        function Validation(id) {
+            $.ajax({
+                url: "/QuestionClients/ChangeState",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: id
+                },
+                success: function (result) {
+
+                    if (result.data == true) {
+                        $('#' + id).css('color', 'green');
+                        $('#' + id).html('@localizer["Active"]');
+                    } else if (result.data == false) {
+                        $('#' + id).css('color', 'red');
+                        $('#' + id).html('@localizer["Inactive"]');
+
+                    }
+                },
+                failure: function (info) {
+
+                }
+            });
+        }
+    </script>
+}

@@ -1,0 +1,174 @@
+﻿@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    
+
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="~/removeaccount/main.css" rel="stylesheet" />
+
+    <link href="~/assets/css/jquery.fancybox.min.css" rel="stylesheet" />
+
+    <link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" />
+    <link href="~/lib/toastr.js/toastr.css" rel="stylesheet" />
+</head>
+<body>
+    <main>
+        <section class="main-section">
+            <div class="Login">
+                <h1>Login</h1>
+                <label for="p-num" class="form-label login-input">رقم الهاتف</label>
+                <input type="number" class="form-control mb-3 login-input" id="p-num">
+                <button class="main-btn" id="login-btn" data-bs-toggle="modal" data-bs-target="#verify">
+                    <span class="btn-content">تسجيل الدخول</span>
+                </button>
+            </div>
+        </section>
+        <div class="modal fade" id="verify" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="filterLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-between border-0">
+                        <h5 class="modal-title font-bold font-b" id="filterLabel">كود التحقق</h5>
+                        <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body border-0">
+                        <label for="semester" class="my-2 font-b login-input">كود التحقق</label>
+                        <input type="number" class="form-control mb-3 login-input" id="verification-code">
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="main-btn w-100 py-3" id="verify-btn" data-bs-toggle="modal" data-bs-target="#delete">
+                            <span class="btn-content">
+                                تأكيد
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="delete" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="filterLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-between border-0">
+                        <h5 class="modal-title font-bold font-b" id="filterLabel">حذف الحساب</h5>
+                        <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body border-0 text-center">
+                        <img src="~/images/removeaccount/alert.png" alt="">
+                    </div>
+                    <div class="modal-footer border-0 row">
+                        <button class="col main-btn" id="delete-btn">
+                            <span class="btn-content">حذف</span>
+                        </button>
+                        <button class="col main-btn">
+                            <span class="btn-content">رجوع</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+
+</html>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="~/lib/toastr.js/toastr.js.map"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+<script src="~/lib/toastr.js/toastr.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script>
+
+        $('#login-btn').click(function () {
+
+            var phoneNumber = $('#p-num').val();
+            if (phoneNumber.length == 0) {
+                toastr.options.timeOut = 2500; // 1.5s
+                toastr.error('من فضلك ادخل الهاتف ');
+            } else
+            {
+                $.ajax({
+                    url: '@Url.Action("SendActivationCode", "RemoveAccount")',  // Replace with your endpoint
+                    method: 'POST',
+                    data: { phone: phoneNumber },
+                    success: function (response) {
+                        // Assuming the response contains a success status
+                        if (response.success) {
+                            $('#verify').modal('show');
+                        } else {
+                            toastr.options.timeOut = 2500; // 1.5s
+                            toastr.error('لم يتم العثور علي مستخدم  ');
+                        }
+                    },
+                    error: function () {
+                        alert('Error occurred while sending verification code.');
+                    }
+                });
+            }
+
+        });
+
+
+
+    $('#verify-btn').click(function () {
+        var verificationCode = $('#verification-code').val();
+        var phoneNumber = $('#p-num').val();
+
+        if (verificationCode.length == 0) {
+            toastr.options.timeOut = 2500; // 1.5s
+            toastr.error('من فضلك ادخل الكود ');
+        } else
+        {
+            $.ajax({
+                url: '@Url.Action("CompareCodes", "RemoveAccount")',
+                method: 'POST',
+                data: { inputCode: verificationCode, phone: phoneNumber },
+                success: function (response) {
+                    if (response.success) {
+                        $('#verify').modal('hide');
+                        $('#delete').modal('show');
+                    } else {
+                        toastr.options.timeOut = 2500; // 1.5s
+                        toastr.error('الكود خطأ ');
+                    }
+                },
+                error: function () {
+                    alert('Error occurred while comparing verification code.');
+                }
+            });
+        }
+
+    });
+
+
+    $('#delete-btn').click(function () {
+        var phoneNumber = $('#p-num').val();
+        $.ajax({
+            url: '@Url.Action("RemoveAccount", "RemoveAccount")',
+            method: 'POST',
+            data: { phone: phoneNumber },
+            success: function (response) {
+                if (response.success) {
+                    toastr.success('تم حذف المستخدم بنجاح');
+                    // You can add any additional actions upon successful account removal
+                } else {
+                    alert('Failed to remove account.');
+                }
+            },
+            error: function () {
+                alert('Error occurred while removing account.');
+            }
+        });
+    });
+
+
+</script>

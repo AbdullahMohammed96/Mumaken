@@ -1,0 +1,88 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "تسجيل دخول";
+    Layout = "_Layout2";
+}
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<h2>@ViewData["Title"]</h2>
+
+<style>
+    .far.fa-eye {
+        font-size: medium;
+        top: 40px;
+        height: 16px;
+        position: absolute;
+        left: 12px;
+        width: 16px;
+    }
+
+    .form-group {
+        position: relative
+    }
+</style>
+
+<section>
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Input.Email">البريد الالكتروني</label>
+            <input asp-for="Input.Email" class="form-control" />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.Password">كلمة المرور</label>
+            <input asp-for="Input.Password" class="form-control" />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+            <i id="showPassword" style="font-size:large" class="far fa-eye"></i>
+        </div>
+
+        <input type="hidden" asp-for="Input.RememberMe" value="true" />
+
+        @*<div class="form-group">
+            <div class="">
+                <label asp-for="Input.RememberMe">
+                    <input  asp-for="Input.RememberMe" />
+                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                </label>
+            </div>
+        </div>*@
+        <div class="form-group">
+            <button type="submit" class="btn-new-style">دخول</button>
+        </div>
+       
+        @*<div class="form-group">
+            <p>
+                <a asp-page="./ForgotPassword">هل نسيت كلمة المرور ؟</a>
+            </p>
+            <p>
+                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+            </p>
+        </div>*@
+    </form>
+</section>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $(".fa-eye").on("click", function () {
+            let element = $(this);
+            element.toggleClass("active");
+
+            if (element.hasClass("active")) {
+                element.parent(".form-group").find("input").attr({ "type": "text" });
+            } 
+            else {
+                element.parent(".form-group").find("input").attr({ "type": "password" });
+            }
+        });
+    </script>
+}

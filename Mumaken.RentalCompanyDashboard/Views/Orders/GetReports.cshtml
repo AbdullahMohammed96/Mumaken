@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Mumaken.Domain.ViewModel.Orders.GetRentalCompanyReportViewModel>
+@{
+
+}
+<!-- Start Data Table -->
+<div class="data">
+    <table id="myTable" class="display table" dir="rtl">
+        <thead>
+            <tr>
+                <th>@localizer["Number"]</th>
+                <th>@localizer["Car Number"]</th>
+                <th>@localizer["Rental Duration"]</th>
+                <th>@localizer["Rental Start Date"]</th>
+                <th>@localizer["Rental Price per Day"]</th>
+                <th>@localizer["Total Price"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.CarNumber</td>
+                    <td>@item.RentalPeriod يوم</td>
+                    <td>@item.DateStartPeriod</td>
+                    <td>@item.DailyPriceForRental @localizer["SAR"]</td>
+                    <td>@item.NetPrice @localizer["SAR"]</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

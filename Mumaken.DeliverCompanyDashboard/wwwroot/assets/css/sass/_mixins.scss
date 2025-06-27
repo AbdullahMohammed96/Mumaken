@@ -1,0 +1,221 @@
+/* Main properties that control the layout direction are:
+-----------------------------------------------
+- Direction (LTR/RTL)
+- Float (left/right)
+- Margin 
+- Padding
+- Absolute position (left/right)
+- Background position (left/right)
+- Border
+- Border radious
+- Note: "Think about flexbox properties"
+*/
+
+/* Clearfix */
+
+@mixin clearfix {
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+
+/* Direction */
+
+@mixin dir-direction($value) {
+  @if $value==ltr {
+    html[lang="en"] & {
+      direction: ltr;
+    }
+
+    html[lang="ar"] & {
+      direction: rtl;
+    }
+  }
+
+  @else if $value==rtl {
+    html[lang="en"] & {
+      direction: rtl;
+    }
+
+    html[lang="ar"] & {
+      direction: ltr;
+    }
+  }
+}
+
+/* Float */
+
+@mixin dir-float($value) {
+  @if $value==left {
+    html[lang="en"] & {
+      float: left;
+    }
+
+    html[lang="ar"] & {
+      float: right;
+    }
+  }
+
+  @else if $value==right {
+    html[lang="en"] & {
+      float: right;
+    }
+
+    html[lang="ar"] & {
+      float: left;
+    }
+  }
+
+  @else {
+    float: none;
+  }
+}
+
+/* Margin */
+
+@mixin dir-margin($top, $right, $bottom, $left) {
+  html[lang="en"] & {
+    margin: $top $right $bottom $left;
+  }
+
+  html[lang="ar"] & {
+    margin: $top $left $bottom $right;
+  }
+}
+
+@mixin dir-margin-inline-end($value) {
+  html[lang="en"] & {
+    margin-inline-end: $value;
+  }
+
+  html[lang="ar"] & {
+    margin-inline-start: $value;
+  }
+}
+
+@mixin dir-margin-inline-start($value) {
+  html[lang="en"] & {
+    margin-inline-start: $value;
+  }
+
+  html[lang="ar"] & {
+    margin-inline-end: $value;
+  }
+}
+
+/* Padding */
+@mixin dir-padding($top, $right, $bottom, $left) {
+  html[lang="en"] & {
+    padding: $top $right $bottom $left;
+  }
+
+  html[lang="ar"] & {
+    padding: $top $left $bottom $right;
+  }
+}
+
+@mixin dir-padding-left($value) {
+  html[lang="en"] & {
+    padding-left: $value;
+  }
+
+  html[lang="ar"] & {
+    padding-right: $value;
+  }
+}
+
+@mixin dir-padding-right($value) {
+
+  html[lang="en"] & {
+    padding-right: $value;
+  }
+
+  html[lang="ar"] & {
+    padding-left: $value;
+  }
+}
+
+/* Left And Right For Absolute Position */
+
+@mixin dir-left($value) {
+  html[lang="en"] & {
+    left: $value;
+  }
+
+  html[lang="ar"] & {
+    right: $value;
+  }
+}
+
+@mixin dir-right($value) {
+  html[lang="en"] & {
+    right: $value;
+  }
+
+  html[lang="ar"] & {
+    left: $value;
+  }
+}
+
+/* Border */
+
+@mixin dir-border-left($value) {
+  html[lang="en"] & {
+    border-left: $value;
+  }
+
+  html[lang="ar"] & {
+    border-right: $value;
+  }
+}
+
+@mixin dir-border-right($value) {
+  html[lang="en"] & {
+    border-right: $value;
+  }
+
+  html[lang="ar"] & {
+    border-left: $value;
+  }
+}
+
+/* d-f-center */
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* d-f-between */
+@mixin between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Circle */
+@mixin circle($dimensions){
+  border-radius: 50%;
+  width: $dimensions;
+  height: $dimensions;
+}
+
+/* Overlay */
+@mixin overlay($bg){
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $bg;
+  z-index: -1;
+}
+
+/* Grid */
+@mixin grid($width, $gap){
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($width , 1fr));
+  gap: $gap*1.5 $gap;
+}

@@ -1,0 +1,80 @@
+﻿@model Mumaken.Domain.Entities.SettingTables.CommonQuestion
+@inject IViewLocalizer localizer
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card-box">
+    <h2 class="header-title m-t-0 m-b-30">@localizer["Questions"]</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Question" class="control-label">@localizer["Question in Arabic"]</label>
+                    <input asp-for="Question" class="form-control" />
+                    <span asp-validation-for="Question" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Answer" class="control-label">@localizer["Answer in Arabic"]</label>
+                    <input asp-for="Answer" class="form-control" />
+                    <span asp-validation-for="Answer" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="QuestionEn" class="control-label">@localizer["Question in English"]</label>
+                    <input asp-for="QuestionEn" class="form-control" />
+                    <span asp-validation-for="QuestionEn" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AnswerEn" class="control-label">@localizer["Answer in English"]</label>
+                    <input asp-for="AnswerEn" class="form-control" />
+                    <span asp-validation-for="AnswerEn" class="text-danger"></span>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="button" id="btncli" class="btn-new-style btn-rounded" onclick="validation()">@localizer["Add"]</button>
+                        <button type="submit" hidden class="btn-new-style btn-rounded" id="btnSubmit">@localizer["Add"]</button>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div>
+                        <a asp-action="Index" class="btn-black">@localizer["Return to Home"]</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @* @{
+        await html.renderpartialasync("_validationscriptspartial");
+    }*@
+    <script>
+        function validation() {
+
+            if ($("#Question").val() == 0) {
+                toastr.error("@localizer["Please enter the question in Arabic correctly"]");
+                return false;
+            }
+            else if ($("#Answer").val() == 0) {
+                toastr.error("@localizer["Please enter the answer in Arabic correctly"]");
+                return false;
+            }
+            else if ($("#QuestionEn").val() == 0) {
+                toastr.error("@localizer["Please enter the question in English correctly"]");
+                return false;
+            }
+            else if ($("#AnswerEn").val() == 0) {
+                toastr.error("@localizer["Please enter the answer in English correctly"]");
+                return false;
+            }
+            else {
+                $("#btncli").prop("disabled", true);
+                $("#btnSubmit").click();
+            }
+        }
+    </script>
+}

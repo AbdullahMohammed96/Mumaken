@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Mumaken.Domain.ViewModel.Cars.ListCarViewModel>;
+@{
+    ViewData["Title"] = @localizer["Cars"];
+}
+<div class="card-box">
+
+    <h2 class="header-title m-t-0 m-b-30">@localizer["Cars"]</h2>
+
+    <div>
+        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>@localizer["Car Number"]</th>
+                    <th>@localizer["Picture"]</th>
+                    <th>@localizer["Car Model"]</th>
+                    <th>@localizer["Car Category"]</th>
+                    <th>@localizer["Car Type"]</th>
+                    <th>@localizer["Daily Rental Price"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.CarNumber
+                        </td>
+                        <td>
+                            <img src="@item.Image" />
+                        </td>
+                        <td>
+                            @item.CarModel
+                        </td>
+                        <td>
+                            @item.CarCategory
+                        </td>
+                        <td>
+                            @item.CarType
+                        </td>
+                        <td>
+                            @item.DailyPrice
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- -------------------------------------------------------------------------------------------------- -->
+    </div><!-- end row -->
+</div>

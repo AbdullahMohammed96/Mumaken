@@ -1,0 +1,81 @@
+﻿@model IEnumerable< Mumaken.Domain.ViewModel.Cars.ListCarViewModel>
+@{
+    int counter = 1;
+}
+<a asp-controller="Cars" asp-action="AddCar" class="main-btn up mb-3 sec ms-auto">
+    <i class="fa-solid fa-plus"></i>
+    @localizer["Add Car"]
+</a>
+
+<!-- Start Data Table -->
+<div class="data">
+    <table id="myTable" class="display table" dir="rtl">
+        <thead>
+            <tr>
+                <th>@localizer["Number"]</th>
+                <th>@localizer["Car Number"]</th>
+                <th>@localizer["Car Image"]</th>
+                <th>@localizer["Category"]</th>
+                <th>@localizer["Type"]</th>
+                <th>@localizer["Model"]</th>
+                <th>@localizer["Daily Rental Price"]</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var car in Model)
+            {
+                <tr>
+                 @*    <td>@car.Id</td> *@
+                   <td>@counter</td>
+                    <td>@car.CarNumber</td>
+                    <td>
+                        <img src="@car.Image" class="small_img circle" alt="">
+                    </td>
+                    <td>@car.CarCategory</td>
+                    <td>@car.CarType</td>
+                    <td>@car.CarModel</td>
+                    <td>@car.DailyPrice @localizer["SAR"]</td>
+                    <td class="position-relative">
+
+                        <i class="fa-solid fa-ellipsis drop-icon add-details"></i>
+
+                        <div class="details d-none">
+                            <a asp-action="GetCarDetails" asp-controller="Cars" asp-route-carId="@car.Id" class="d-flex justify-content-between">
+                                <i class="fa-regular fa-eye"></i>
+                                <p>@localizer["Details"]</p>
+                        </a>
+                        </div>
+                    </td>
+                    @{
+                        counter++;
+                    }
+                </tr>
+               
+            }
+        </tbody>
+    </table>
+</div>
+
+  @section Scripts 
+  {
+    <script>
+        // $(document).ready(function () {
+        //     $('.add-details').click(function () {
+        //         // Toggle the 'd-none' class on all '.details' elements except the next one to the clicked button
+        //         $('.details').not($(this).next('.details')).addClass("d-none");
+        //         $(this).next('.details').toggleClass("d-none");
+        //     });
+        // });
+
+        function runFun() {
+            $('.add-details').click(function () {
+                // Toggle the 'd-none' class on all '.details' elements except the next one to the clicked button
+                $('.details').not($(this).next('.details')).addClass("d-none");
+                $(this).next('.details').toggleClass("d-none");
+            });
+        };
+
+        runFun()
+    </script>
+}  

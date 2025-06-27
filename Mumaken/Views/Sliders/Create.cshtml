@@ -1,0 +1,45 @@
+﻿@model Mumaken.Domain.ViewModel.Slider.AddSliderViewModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card-box">
+    <h2 class="header-title m-t-0 m-b-30">@localizer["Add Slider"]</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form enctype="multipart/form-data" asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="ImgAr" class="control-label">@localizer["ImageAr"]</label>
+                    <input asp-for="ImgAr" class="form-control" accept="image/*" />
+                    <span asp-validation-for="ImgAr" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="ImgEn" class="control-label">@localizer["ImageEn"]</label>
+                    <input asp-for="ImgEn" class="form-control" accept="image/*" />
+                    <span asp-validation-for="ImgEn" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="@localizer["Add"]" class="btn-new-style btn-rounded" />
+                </div>
+
+                <div>
+                    <a asp-action="Index" class="btn-black">@localizer["Back to Home"]</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

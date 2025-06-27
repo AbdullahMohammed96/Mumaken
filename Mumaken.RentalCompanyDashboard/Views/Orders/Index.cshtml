@@ -1,0 +1,120 @@
+﻿@model IEnumerable<Mumaken.Domain.ViewModel.Orders.GetRentalOrdersByStatusViewModel>
+@using Mumaken.Domain.Enums;
+@{
+    int count = 1;
+}
+@if (ViewBag.isSuccess == false)
+{
+    <h5 class="text-danger">@ViewBag.message </h5>
+    <br />
+}
+<!-- Start Main Tabs -->
+@* <div class="tabs-container-m mb-4">
+    <div class="tab-m @(ViewBag.ordercase==(int)OrderCase.WaitToAcceptRentalCompany?"active-tab":"")" onclick="redirectToStatus(@((int)OrderCase.WaitToAcceptRentalCompany))">@localizer["New Orders"]</div>
+    <div class="tab-m @(ViewBag.ordercase==(int)OrderCase.Accepted?"active-tab":"")" onclick="redirectToStatus(@((int)OrderCase.Accepted))">@localizer["Current Orders"]</div>
+    <div class="tab-m @(ViewBag.ordercase==(int)OrderCase.RenewRentalPeriod?"active-tab":"")" onclick="redirectToStatus(@((int)OrderCase.RenewRentalPeriod))">@localizer["Renewal Requests"]</div>
+    <div class="tab-m @(ViewBag.ordercase==(int)OrderCase.CancelContractAndPaidRentalPeriod?"active-tab":"")" onclick="redirectToStatus(@((int)OrderCase.CancelContractAndPaidRentalPeriod))">@localizer["Contract Cancellation Requests"]</div>
+    <div class="tab-m @(ViewBag.ordercase==(int)OrderCase.Finished?"active-tab":"")" onclick="redirectToStatus(@((int)OrderCase.Finished))">@localizer["Completed Orders"]</div>
+</div> *@
+
+
+<div class="tabs-container-m mb-4">
+    <div class="tab-m @(ViewBag.ordercase==(int)RentalCompanyOrder.newOdrer?"active-tab":"")" onclick="redirectToStatus(@((int)RentalCompanyOrder.newOdrer))">@localizer["New Orders"]</div>
+    <div class="tab-m @(ViewBag.ordercase==(int)RentalCompanyOrder.Current?"active-tab":"")" onclick="redirectToStatus(@((int)RentalCompanyOrder.Current))">@localizer["Current Orders"]</div>
+    <div class="tab-m @(ViewBag.ordercase==(int)RentalCompanyOrder.RenewOrder?"active-tab":"")" onclick="redirectToStatus(@((int)RentalCompanyOrder.RenewOrder))">@localizer["Renewal Requests"]</div>
+    <div class="tab-m @(ViewBag.ordercase==(int)RentalCompanyOrder.CancelContractOrder?"active-tab":"")" onclick="redirectToStatus(@((int)RentalCompanyOrder.CancelContractOrder))">@localizer["Contract Cancellation Requests"]</div>
+    <div class="tab-m @(ViewBag.ordercase==(int)RentalCompanyOrder.Finished?"active-tab":"")" onclick="redirectToStatus(@((int)RentalCompanyOrder.Finished))">@localizer["Completed Orders"]</div>
+</div>
+
+
+<!-- Start Data Table -->
+<div class="data">
+    <table id="myTable" class="display table" dir="rtl">
+        <thead>
+            <tr>
+                <th>@localizer["Number"]</th>
+                <th>@localizer["Order Number"]</th>
+                <th>@localizer["Captain Name"]</th>
+                <th>@localizer["Captain Phone Number"]</th>
+                <th>@localizer["Total Price"]</th>
+                <th>@localizer["Order Date"]</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>@count</td>
+                        <td>@order.OrderId</td>
+                        <td>@order.DeliverName</td>
+                        <td dir="ltr">@order.DeliverPhone</td>
+                        <td>@order.Price @localizer["SAR"]</td>
+                        <td>@order.CreationDate</td>
+                        <td class="position-relative">
+                           
+                            <i class="fa-solid fa-ellipsis drop-icon add-details"></i>
+                            
+                            <div class="details d-none">
+                                <a asp-action="OrderDetails" asp-controller="Orders" asp-route-orderId="@order.OrderId" class="d-flex justify-content-between">
+                                    <i class="fa-regular fa-eye"></i>
+                                    <p>@localizer["Details"]</p>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    count++;
+
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
+@section Scripts {
+    @*    <script>
+        $(".tabs-container-m .tab-m").on("click", function () {
+            $(".tabs-container-m .tab-m").removeClass("active-tab");
+            $(this).addClass("active-tab");
+        });
+    </script> *@
+    <script>
+        function redirectToStatus(status) {
+            debugger
+            // Remove 'active-tab' class from all tabs
+            var tabs = document.querySelectorAll('.tab-m');
+            tabs.forEach(function (tab) {
+                tab.classList.remove('active-tab');
+            });
+
+            // Add 'active-tab' class to the clicked tab
+            event.currentTarget.classList.add('active-tab');
+
+            // Redirect to the appropriate URL based on the status
+            var url = '/Orders/Index/?ordercase=' + status;
+            window.location.assign(url);
+        }
+    </script>
+    <script>
+        // $(document).ready(function () {
+        //     $('.add-details').click(function () {
+        //         // Toggle the 'd-none' class on all '.details' elements except the next one to the clicked button
+        //         $('.details').not($(this).next('.details')).addClass("d-none");
+        //         $(this).next('.details').toggleClass("d-none");
+        //     });
+        // });
+
+        function runFun() {
+            $('.add-details').click(function () {
+                // Toggle the 'd-none' class on all '.details' elements except the next one to the clicked button
+                $('.details').not($(this).next('.details')).addClass("d-none");
+                $(this).next('.details').toggleClass("d-none");
+            });
+        };
+
+        runFun()
+    </script>
+
+}

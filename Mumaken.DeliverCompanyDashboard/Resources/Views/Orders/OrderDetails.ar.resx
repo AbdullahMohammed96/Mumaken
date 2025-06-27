@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Accept" xml:space="preserve">
+    <value>قبول</value>
+  </data>
+  <data name="Add Login Data" xml:space="preserve">
+    <value>إضافة بيانات الدخول للتطبيق</value>
+  </data>
+  <data name="Age" xml:space="preserve">
+    <value>العمر</value>
+  </data>
+  <data name="Captain's Name" xml:space="preserve">
+    <value>اسم الكابتن</value>
+  </data>
+  <data name="Captain's Phone Number" xml:space="preserve">
+    <value>رقم جوال الكابتن</value>
+  </data>
+  <data name="Car Category" xml:space="preserve">
+    <value>الفئة</value>
+  </data>
+  <data name="Car Form" xml:space="preserve">
+    <value>استمارة السيارة</value>
+  </data>
+  <data name="Car Model" xml:space="preserve">
+    <value>الموديل</value>
+  </data>
+  <data name="Car Type" xml:space="preserve">
+    <value>النوع</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>المدينة</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>تأكيد</value>
+  </data>
+  <data name="Confirm Login Data" xml:space="preserve">
+    <value>تاكيد بيانات الدخول للتطبيق</value>
+  </data>
+  <data name="Current" xml:space="preserve">
+    <value>حالي</value>
+  </data>
+  <data name="Delivery company application login data" xml:space="preserve">
+    <value>بيانات الدخول لتطبيق شركة التوصيل</value>
+  </data>
+  <data name="Delivery company application login data1" xml:space="preserve">
+    <value>بيانات الدخول لتطبيق شركة التوصيل</value>
+  </data>
+  <data name="Driver's License Image" xml:space="preserve">
+    <value>صورة رخصة القيادة</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>البريد الإلكتروني</value>
+  </data>
+  <data name="Enter Password" xml:space="preserve">
+    <value>ادخل كلمة المرور</value>
+  </data>
+  <data name="Enter the reason for rejecting the request" xml:space="preserve">
+    <value>ادخل سبب رفض الطلب</value>
+  </data>
+  <data name="Enter Username/Mobile Number/Email" xml:space="preserve">
+    <value>ادخل اسم المستخدم/رقم الجوال/البريد الإلكتروني</value>
+  </data>
+  <data name="Enter Username/Mobile Number/Email1" xml:space="preserve">
+    <value>ادخل اسم المستخدم/رقم الجوال/البريد الإلكتروني</value>
+  </data>
+  <data name="Finished" xml:space="preserve">
+    <value>منتهي</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>الجنس</value>
+  </data>
+  <data name="Identity Image" xml:space="preserve">
+    <value>صورة الهوية</value>
+  </data>
+  <data name="Identity Number" xml:space="preserve">
+    <value>رقم الهوية</value>
+  </data>
+  <data name="Insurance Information" xml:space="preserve">
+    <value>معلومات تأمين السيارة</value>
+  </data>
+  <data name="Login Data" xml:space="preserve">
+    <value>بيانات الدخول للتطبيق</value>
+  </data>
+  <data name="Mobile Number" xml:space="preserve">
+    <value>رقم الجوال</value>
+  </data>
+  <data name="Nationality" xml:space="preserve">
+    <value>الجنسية</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>جديد</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>بيانات الطلب</value>
+  </data>
+  <data name="Order Date" xml:space="preserve">
+    <value>تاريخ الطلب</value>
+  </data>
+  <data name="Order ID" xml:space="preserve">
+    <value>رقم الطلب</value>
+  </data>
+  <data name="Order Number" xml:space="preserve">
+    <value>رقم الطلب</value>
+  </data>
+  <data name="Order Type" xml:space="preserve">
+    <value>نوع الطلب</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>كلمة المرور</value>
+  </data>
+  <data name="Password must length is greater than 6" xml:space="preserve">
+    <value>يجب أن يكون كلمة المرور أكبر من 6</value>
+  </data>
+  <data name="Password1" xml:space="preserve">
+    <value>كلمة المرور</value>
+  </data>
+  <data name="Please enter the login information for the delivery company application" xml:space="preserve">
+    <value>من فضلك ادخل بيانات الدخول لتطبيق شركه التوصيل</value>
+  </data>
+  <data name="Please enter the password for the delivery company application" xml:space="preserve">
+    <value>من فضلك ادخل كلمة المرور لتطبيق شركه التوصيل</value>
+  </data>
+  <data name="Please enter the reason for rejecting the Order" xml:space="preserve">
+    <value>الرجاء إدخال سبب رفض الطلب</value>
+  </data>
+  <data name="Please enter the reason for rejecting the Please enter the reason for rejecting the application" xml:space="preserve">
+    <value>من فضلك ادخل سبب رفض الطلب</value>
+  </data>
+  <data name="Reason for rejecting the order" xml:space="preserve">
+    <value>سبب الغاء الطلب</value>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>رفض</value>
+  </data>
+  <data name="Selected Car Data" xml:space="preserve">
+    <value>بيانات السيارة المختارة</value>
+  </data>
+  <data name="Username/Mobile Number/Email" xml:space="preserve">
+    <value>اسم المستخدم/رقم الجوال/البريد الإلكتروني</value>
+  </data>
+  <data name="Username/Mobile Number/Email1" xml:space="preserve">
+    <value>اسم المستخدم/رقم الجوال/البريد الإلكتروني</value>
+  </data>
+</root>

@@ -1,0 +1,72 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Fail";
+    Layout = null;
+}
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
+<meta name="author" content="Coderthemes">
+
+<link href="~/assets/css/icons.css" rel="stylesheet" />
+<link rel="shortcut icon" href="~/Site/imges/logo1.png" />
+<title>اوامر الشبكة</title>
+<link href="~/assets/css/new-style.css" rel="stylesheet" />
+
+<style>
+    html {
+        position: relative;
+        padding-bottom: 0px;
+        min-height: auto;
+    }
+
+        html:after {
+            background: #fffffff7
+        }
+
+    body {
+        margin: 0;
+        padding: 0
+    }
+
+    .new-alert aside {
+        background: #c54040;
+        text-align: center;
+        padding: 32px 10px;
+        font-size: 224px;
+    }
+
+    .new-alert h2 {
+        text-align: center;
+        color: #120e0e;
+        font-size: 30px;
+        margin-top: 45px;
+        padding: 10px
+    }
+</style>
+
+
+<div class="new-alert">
+    <aside>
+        <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+    </aside>
+    <h2>فشلت عملية الدفع</h2>
+</div>
+
+
+
+@*<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script>
+        Swal.fire({
+            position: 'center',
+            type: 'error',
+            title: 'فشلت عملية الدفع ',
+            showConfirmButton: false,
+            timer: 2000
+        })
+
+    </script>*@
+
+

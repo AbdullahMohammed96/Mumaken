@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+@using System.Globalization;
+@{
+    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "/" : $"{Context.Request.Path.Value}";
+    var lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+}
+<html lang="@lang">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mumken</title>
+    <link rel="shortcut icon" href="~/assets/imgs/logo.png" type="image/x-icon">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="~/assets/plugins/bootstrap/bootstrap.rtl.min.css">
+    <!-- Data Table -->
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.12.1/b-2.2.3/r-2.3.0/datatables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+    <!-- intlTelInput -->
+    <link rel="stylesheet" href="~/assets/plugins/flag/css/intlTelInput.css">
+    <!-- Select 2 -->
+    <link rel="stylesheet" href="~/assets/plugins/select2/select2.min.css">
+    <!-- Style -->
+    <link rel="stylesheet" href="~/assets/css/main.css">
+
+</head>
+
+<body>
+    <!-- start to loader -->
+
+    <div class="loader-container">
+        <div id="loader">
+            <div id="logo">
+                <img src="~/assets/imgs/logo.png" alt="">
+            </div>
+            <div id="progressbar"></div>
+        </div>
+    </div>
+
+
+    <!--================ Start navbar ================-->
+    <nav class="navbar-me login">
+        <div class="container">
+            <div class="content position-relative">
+
+                <img src="~/assets/imgs/logo.png" class="logo mx-auto" alt="">
+
+                <div class="pos_drop dropdown">
+                    <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src=@(lang =="ar"?"/assets/imgs/icons/saudii.png":"/assets/imgs/icons/english.jpg") class="flag" alt="saudi flag">
+                        <span class="lang fs13">@(lang == "ar" ? "عربى" : "English")</span>
+                        <i class="fa-solid fa-angle-down fs10"></i>
+                    </button>
+
+                    <ul class="dropdown-menu drop-lang left">
+
+                        <a onclick="changeLanguage('ar-EG')" class="profile-item">العربية</a>
+                        <a onclick="changeLanguage('en-US')" class="profile-item">English</a>
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+    <!--================ End navbar ================-->
+    <!--================ Start Form ================-->
+    @RenderBody()
+    <!--================ End Form ================-->
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/assets/plugins/bootstrap/bootstrap.bundle.min.js"></script>
+    <!-- Data Table -->
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.12.1/b-2.2.3/r-2.3.0/datatables.min.js"></script>
+    <!-- intlTelInput -->
+    <script src="~/assets/plugins/flag/js/intlTelInput.min.js"></script>
+    <!-- Select 2 -->
+    <script src="~/assets/plugins/select2/select2.js"></script>
+
+
+
+    <!-- Main Script -->
+    <script src="~/assets/js/main.js"></script>
+    @RenderSection("scripts", required: false)
+    @await Component.InvokeAsync("NToastNotify")
+    <script>
+        function changeLanguage(culture) {
+
+            $.ajax({
+                url: '/Language/SetLanguage',
+                type: 'POST',
+                data: { culture: culture, returnUrl: '@returnUrl' },
+                success: function (result) {
+                    location.reload()
+                },
+                error: function (error) {
+                    console.error('Error changing language:', error);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

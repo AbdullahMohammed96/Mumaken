@@ -1,0 +1,64 @@
+﻿@model Mumaken.Domain.ViewModel.IntroScreens.IntroScreenCreateViewModel
+@inject IViewLocalizer localizer
+
+@{
+    ViewData["Title"] = localizer["Add"];
+}
+
+<div class="card-box">
+    <h2 class="header-title m-t-0 m-b-30">@localizer["Add Page"]</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form enctype="multipart/form-data" asp-action="Create" method="post">
+                <div class="form-group">
+                    <label asp-for="BackgroundImageAr" class="control-label">@localizer["Image Ar"]</label>
+                    <input asp-for="BackgroundImageAr" accept=".png, .jpg, .jpeg" class="form-control" />
+                    <span asp-validation-for="BackgroundImageAr" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BackgroundImageEn" class="control-label">@localizer["Image En"]</label>
+                    <input asp-for="BackgroundImageEn" accept=".png, .jpg, .jpeg" class="form-control" />
+                    <span asp-validation-for="BackgroundImageEn" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TitleAr" class="control-label">@localizer["Title in Arabic"]</label>
+                    <textarea asp-for="TitleAr" class="form-control summernote" ></textarea>
+                    <span asp-validation-for="TitleAr" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TitleEn" class="control-label">@localizer["Title in English"]</label>
+                    <textarea asp-for="TitleEn" class="form-control summernote" dir="ltr" > </textarea>
+                    <span asp-validation-for="TitleEn" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DetailsAr" class="control-label">@localizer["Details in Arabic"]</label>
+                    <textarea asp-for="DetailsAr" class="form-control summernote"></textarea>
+              @*       <div id="summernote"></div> *@
+                    <span asp-validation-for="DetailsAr" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DetailsEn" class="control-label">@localizer["Details in English"]</label>
+                    @* <textarea asp-for="DetailsEn" class="form-control" dir="ltr"></textarea> *@
+                    <textarea asp-for="DetailsEn" class="form-control summernote" dir="ltr"></textarea>
+                    <span asp-validation-for="DetailsEn" class="text-danger"></span>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input type="submit" value="@localizer["Add"]" class="btn-new-style btn-rounded" />
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div>
+                        <a asp-action="Index" class="btn-black">@localizer["Return to main"]</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

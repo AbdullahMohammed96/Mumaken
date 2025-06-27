@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Mumaken.Domain.ViewModel.Auth.GetCampanyCaptainsViewModel>
+@{
+    Layout = "_Layout";
+    int counter = 1;
+}
+<a asp-action="AddCaptain" asp-controller="DeliveryCompanyCaptains" class="main-btn up mb-3 sec ms-auto">
+    <i class="fa-solid fa-plus"></i>
+    @localizer["Add Captain"]
+</a>
+
+<!-- Start Data Table -->
+<div class="data">
+    <table id="myTable" class="display table" dir="rtl">
+        <thead>
+            <tr>
+                <th>@localizer["Number"]</th>
+                <th>@localizer["Captain Image"]</th>
+                <th>@localizer["Captain Name"]</th>
+                <th>@localizer["Captain Phone Number"]</th>
+                <th>@localizer["Date of Addition"]</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var captain in Model)
+            {
+                <tr>
+                    <td>@counter</td>
+                    <td>
+                        <img src="@captain.ImageProfile" class="small_img" alt="">
+                    </td>
+                    <td>@captain.UserName</td>
+                    <td>@captain.Phone</td>
+                    <td>@captain.CreationDate</td>
+                    <td class="position-relative">
+                        <i class="fa-solid fa-ellipsis drop-icon add-details"></i>
+                        <div class="details d-none">
+                            <a asp-action="GetCaptainDetails" asp-controller="DeliveryCompanyCaptains" asp-route-id="@captain.Id" class="d-flex justify-content-between">
+                                <i class="fa-regular fa-eye"></i>
+                                <p>@localizer["Details"]</p>
+                            </a>
+
+                        </div>
+                    </td>
+                </tr>
+                counter++;
+            }
+        </tbody>
+    </table>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.add-details').click(function () {
+                // Toggle the 'd-none' class on all '.details' elements except the next one to the clicked button
+                $('.details').not($(this).next('.details')).addClass("d-none");
+                $(this).next('.details').toggleClass("d-none");
+            });
+        });
+    </script>
+}

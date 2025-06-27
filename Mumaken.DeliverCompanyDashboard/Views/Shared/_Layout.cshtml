@@ -1,0 +1,369 @@
+﻿<!DOCTYPE html>
+@using Microsoft.AspNetCore.Identity
+@using Mumaken.Domain.Common.PathUrl
+@using Mumaken.Domain.Entities.UserTables
+@using Mumaken.Persistence;
+@using System.Globalization;
+@using Microsoft.EntityFrameworkCore;
+@inject SignInManager<ApplicationDbUser> SignInManager
+@inject UserManager<ApplicationDbUser> UserManager
+@inject ApplicationDbContext _db;
+@{
+    string userId = UserManager.GetUserId(User);
+    var user = await _db.Users.IgnoreQueryFilters().FirstOrDefaultAsync(c => c.Id == userId);
+
+    var countNotify = _db.NotifyDelegts.Where(x => x.UserId == userId && x.Show == false).Count();
+    var imgProfile =user!=null? DashBordUrl.baseUrlHost + @user.ImgProfile:"";
+    bool isActive = user != null ? user.IsActive : false;
+    bool isDeleted = user != null ? user.IsDeleted : false;
+    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "/" : $"{Context.Request.Path.Value}";
+    var lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+}
+<html lang="@lang">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mumken</title>
+    <link rel="shortcut icon" href="~/assets/imgs/logo.png" type="image/x-icon">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="~/assets/plugins/bootstrap/bootstrap.rtl.min.css">
+    <!-- Data Table -->
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.12.1/b-2.2.3/r-2.3.0/datatables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+    <!-- intlTelInput -->
+    <link rel="stylesheet" href="~/assets/plugins/flag/css/intlTelInput.css">
+    <!-- Select 2 -->
+    <link rel="stylesheet" href="~/assets/plugins/select2/select2.min.css">
+    <link href="~/assets/plugins/flatpicker/flatpickr.css" rel="stylesheet" />
+    <!-- Style -->
+    <link rel="stylesheet" href="~/assets/css/main.css">
+    <link href="~/assets/js/toastr.js/toastr.min.css" rel="stylesheet" />
+
+    <script>
+        window.addEventListener("load", function () {
+            debugger
+            // Push the current state
+            history.pushState(null, document.title, location.href);
+
+            // Listen for popstate events
+            window.addEventListener("popstate", function (event) {
+                // Check if the user is authenticated and if the current URL is the login page
+                if (location.pathname.toLowerCase().indexOf("account/login") !== -1 && @Html.Raw(User.Identity.IsAuthenticated.ToString().ToLower())) {
+                    history.go(1); // Go forward in history if back button is pressed
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <!-- start to loader -->
+
+    <div class="loader-container">
+        <div id="loader">
+            <div id="logo">
+                <img src="~/assets/imgs/logo.png" alt="">
+            </div>
+            <div id="progressbar"></div>
+        </div>
+    </div>
+
+
+    <!--================ Start Sidebar ================-->
+    <div class="sidebar" id="sidebar">
+        <div class="close" id="closeSidebar"><i class="fa-solid fa-xmark"></i></div>
+        <div class="content">
+            <img src="~/assets/imgs/side_logo.png" class="logo" alt="">
+            <div class="info">
+                <h3 class="top">@localizer["Empower through technology"]</h3>
+                <p class="bottom">@localizer["Delivery Company Dashboard"]</p>
+            </div>
+        </div>
+
+        <!-- start links -->
+        <ul class="links">
+            <li>
+                <a asp-controller="Orders" asp-action="Index" asp-route-status="1">
+                    <span class="icon-co">
+                        <img src="~/assets/imgs/sidebar/noun_list.png" alt="">
+                    </span>
+                    @localizer["Registration Requests"]
+                    <i class="fa-solid fa-angle-left icon-right"></i>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="DeliveryCompanyCaptains" asp-action="GetCompanyCaptains">
+                    <span class="icon-co">
+                        <img src="~/assets/imgs/sidebar/cars.png" alt="">
+                    </span>
+                    @localizer["Captains"]
+                    <i class="fa-solid fa-angle-left icon-right"></i>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Orders" asp-action="GetReports">
+                    <span class="icon-co">
+                        <img src="~/assets/imgs/sidebar/reports.png" alt="">
+                    </span>
+                    @localizer["Reports"]
+                    <i class="fa-solid fa-angle-left icon-right"></i>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="DeliveryCompanyInfo" asp-action="Index">
+                    <span class="icon-co">
+                        <img src="~/assets/imgs/sidebar/setting.png" alt="">
+                    </span>
+                    @localizer["Settings"]
+                    <i class="fa-solid fa-angle-left icon-right"></i>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Setting" asp-action="AboutUs">
+                    <span class="icon-co">
+                        <img src="~/assets/imgs/sidebar/about.png" alt="">
+                    </span>
+                    @localizer["About the App"]
+                    <i class="fa-solid fa-angle-left icon-right"></i>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Setting" asp-action="GetCommonQuestion">
+                    <span class="icon-co">
+                        <img src="~/assets/imgs/sidebar/faqs.png" alt="">
+                    </span>
+                    @localizer["FAQs"]
+                    <i class="fa-solid fa-angle-left icon-right"></i>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Setting" asp-action="GetConditionAndTerms">
+                    <span class="icon-co">
+                        <img src="~/assets/imgs/sidebar/terms.png" alt="">
+                    </span>
+                    @localizer["Terms and Conditions"]
+                    <i class="fa-solid fa-angle-left icon-right"></i>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Setting" asp-action="GetContactus">
+                    <span class="icon-co">
+                        <img src="~/assets/imgs/sidebar/contact.png" alt="">
+                    </span>
+                    @localizer["Contact Us"]
+                    <i class="fa-solid fa-angle-left icon-right"></i>
+                </a>
+            </li>
+            <li>
+                <a asp-area="Identity" asp-page="/Account/Logout" class="log-out-red">
+                    <span class="icon-co">
+                        <img src="~/assets/imgs/sidebar/noun_logout.png" alt="">
+                    </span>
+                    @localizer["Logout"]
+                    <i class="fa-solid fa-angle-left icon-right"></i>
+                </a>
+            </li>
+        </ul>
+        <!-- End links -->
+    </div>
+    <!--================ End Sidebar ================-->
+    <!--================ Start navbar ================-->
+    <nav class="navbar-me" id="navbar">
+        <div class="container">
+            <div class="content">
+                <div class="brand_logo">
+                    <img src="@imgProfile" class="logo" alt="">
+                    <h3 class="fs13 c-black">@user.user_Name</h3>
+                </div>
+
+                <div class="left">
+                    <div class="not">
+                        <a asp-action="GetAllNotification" asp-controller="Home"></a>
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="number">@countNotify</span>
+                    </div>
+
+                    <div class="menu" id="menu">
+                        <img src="~/assets/imgs/navbar/noun_List_2946302.png" alt="">
+                    </div>
+
+                    <div class="sm_link dropdown">
+                        <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src=@(lang =="ar"?"/assets/imgs/icons/saudii.png":"/assets/imgs/icons/english.jpg") class="flag" alt="saudi flag">
+                            <span class="lang fs13">@(lang == "ar" ? @localizer["Arabic"] : "English")</span>
+                            <i class="fa-solid fa-angle-down fs10"></i>
+                        </button>
+
+                        <ul class="dropdown-menu drop-lang left">
+                            <a onclick="changeLanguage('ar-EG')" class="profile-item">@localizer["Arabic"]</a>
+                            <a onclick="changeLanguage('en-US')" class="profile-item">English</a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!--================ End navbar ================-->
+    <!--================ Start Main Section ================-->
+    <main class="main-sec" id="main">
+        <div class="container">
+            @RenderBody()
+        </div>
+    </main>
+    @RenderSection("rendalModal", required: false)  @* For Rendel Modal After Main becouse if Rendeal Modal in Main Destory Style *@
+    <!--================ End Main Section ================-->
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/assets/plugins/bootstrap/bootstrap.bundle.min.js"></script>
+    <!-- Data Table -->
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.12.1/b-2.2.3/r-2.3.0/datatables.min.js"></script>
+    <!-- intlTelInput -->
+    <script src="~/assets/plugins/flag/js/intlTelInput.min.js"></script>
+    <!-- Select 2 -->
+    <script src="~/assets/plugins/select2/select2.js"></script>
+    <script src="~/assets/plugins/flatpicker/flatpickr.js"></script>
+    <!-- Main Script -->
+    <script src="~/assets/js/main.js"></script>
+    <script src="~/js/sweetalert2/sweetalert2.all.js"></script>
+    <script src="~/js/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="~/js/sweetalert2/sweetalert2.js"></script>
+    <script src="~/js/sweetalert2/sweetalert2.min.js"></script>
+    @RenderSection("scripts", required: false)
+    @await Component.InvokeAsync("NToastNotify")
+    <script src="~/assets/js/toastr.js/toastr.min.js"></script>
+    <script src="~/lib/signalr.js/jquery.signalr.js"></script>
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script>
+        function changeLanguage(culture) {
+
+            $.ajax({
+                url: '/Language/SetLanguage',
+                type: 'POST',
+                data: { culture: culture, returnUrl: '@returnUrl' },
+                success: function (result) {
+                    location.reload()
+                },
+                error: function (error) {
+                    console.error('Error changing language:', error);
+                }
+            });
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            setInterval(function MantenerVivo() {
+                $.ajax({
+                    type: "GET",
+                    url: "/Home/EmptyAction",
+                    dataType: "json",
+                    success: function (response) {
+
+                    },
+                    failure: function (response) {
+                        alert("Por favor, pongase en contacto conmigo....");
+                    }
+                });
+            }, 240000); //Set interval in miliseconds, 4 minutes = 240000
+        });
+    </script>
+    <script>
+        function PushNotifaction(gotopage, msg) {
+            //var audio = new Audio("Audio/alert-notification.mp3");
+            //audio.play();
+            //toastr.error(msg)
+            toastr.warning(msg)
+            setTimeout(function () {
+
+                window.location.href = gotopage;
+            }, 3000);
+
+        }
+
+        function checkIfUserActiveOrDeleted() {
+            debugger
+            var isActive = Boolean(@isActive.ToString().ToLower());
+            var isDeleted = Boolean(@isDeleted.ToString().ToLower());
+
+            var host = 'https://' + window.location.host;
+            var PATH = host + `/Identity/Account/Logout`;
+
+
+            if (!isActive) {
+                PushNotifaction(PATH, "@localizer["Your account was blocked by Admin"]")
+
+            }
+
+            if (isDeleted) {
+                PushNotifaction(PATH, "@localizer["Your account was deleted by Admin"]")
+
+            }
+
+        }
+        $(document).ready(function () {
+            checkIfUserActiveOrDeleted();
+        });
+    </script>
+    <script>
+        var connection = new signalR.HubConnectionBuilder().withUrl("https://dashboard.mumaken.com/chatHub").build();
+        //var connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:7293/chatHub").build();
+        var isConnectionStarted = false;  // Track the connection status
+
+        $(document).ready(function () {
+            if (!isConnectionStarted) {  // Ensure StartConnection is called only once
+                StartConnection();
+            }
+            $('#logoutLink').click(function (event) {
+                DisConnect();
+            });
+        })
+        window.addEventListener("beforeunload", function (event) {
+            DisConnect(); // Call DisConnect when the page is being closed
+        });
+        function StartConnection() {
+            var userId = "@user.Id"
+            connection.start().then(function () {
+                console.log("Connection Started");
+                console.log(userId);
+                isConnectionStarted = true; // Mark connection as started
+                connection.invoke('Connect', userId);
+
+            }).catch(function (err) {
+                console.log(err)
+            });
+            connection.on("connected", function (data) {
+                console.log("Connected To Web ");
+
+            });
+        }
+        function DisConnect() {
+            var userId = "@user.Id"
+            connection.invoke("DisConnect", userId).then(function () {
+                console.log("Connection Stopped");
+                connection.stop();
+            }).catch(function (err) {
+                return console.error(err.toString());
+            });
+        }
+
+        connection.on("AddNewOrderNotify", function (data) {
+            //debugger
+            toastr.success(data.msg)
+            var audio = new Audio("Audio/slow-spring-board.mp3");
+            audio.play().catch(function (error) {
+                console.error("Playback failed due to: ");
+            });
+            setTimeout(function () {
+                window.location.reload()
+            }, 3000);
+        });
+    </script>
+</body>
+
+</html>

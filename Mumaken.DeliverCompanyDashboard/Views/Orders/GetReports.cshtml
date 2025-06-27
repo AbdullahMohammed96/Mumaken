@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Mumaken.Domain.ViewModel.Orders.DeliveryCompanyReportViewModel>
+@{
+    int counter = 1;
+}
+<div class="data">
+    <table id="myTable" class="display table" dir="rtl">
+        <thead>
+            <tr>
+                <th>رقم</th>
+                <th>@localizer["Order Number"]</th>
+                <th>@localizer["Captain's Name"]</th>
+                <th>@localizer["Captain's Phone Number"]</th>
+                <th>@localizer["Order Date"]</th>
+                <th>@localizer["Order Type"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@counter</td>
+                    <td>@order.OrderId</td>
+                    <td> @order.DriverName</td>
+                    <td>@order.DriverPhone</td>
+                    <td>@order.CreationDate</td>
+                    <td>@order.TypeDriverOrder</td>
+                </tr>
+                counter++;
+            }
+        </tbody>
+    </table>
+</div>

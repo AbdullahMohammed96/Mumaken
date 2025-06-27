@@ -1,0 +1,83 @@
+﻿@model Mumaken.Domain.ViewModel.Auth.CheckCodeViewModel
+@{
+    Layout = "_Layout2";
+}
+<!--================ Start Form ================-->
+<form asp-action="CheckCode" asp-controller="DAuth" method="post" class="auth_layout">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-xl-5 col-lg-7">
+
+                <div class="form-heading mb-4">
+                    <h3 class="form-title">@localizer["Validation code"]</h3>
+                    <p class="form-text">@localizer["Enter the code sent to your Phone number"]</p>
+                </div>
+
+                <!-- Code Inputs -->
+                <input type="hidden" asp-for="UserId" value="@ViewBag.userId" />
+                <input type="hidden" asp-for="lang" value="@ViewBag.lang" />
+                <!-- Code Inputs -->
+                <div class="main-input">
+                  @*   <input asp-for="Code" type="number" class="input-me" placeholder="@localizer["Please enter the Validation code"]"> *@
+                    <input asp-for="Code" type="number" type="hidden" />
+                    <div class="code-container mb-4 w-100">
+                        <input type="number" class="code" min="0" max="9" required />
+                        <input type="number" class="code" min="0" max="9" required />
+                        <input type="number" class="code" min="0" max="9" required />
+                        <input type="number" class="code" min="0" max="9" required />
+                        <input type="hidden" class="all_code">
+                    </div>
+                    @* <span asp-validation-for="Code" class="text-danger"></span> *@
+                </div>
+                <br />
+
+                <button type="submit" hidden id="checkCodeSubumitBtn" class="main-btn w-100 up">@localizer["Confirm"]</button>
+                <button type="button" onclick="CheckCodeFun()" class="main-btn w-100 up">@localizer["Confirm"]</button>
+
+                <div class="d-flex justify-content-center mt-3 align-items-center gap-1">
+                    <span class="fs13 c-light2">@localizer["Didn't you receive a code?"]</span>
+                    <a asp-action="ResendCode" asp-route-id="@ViewBag.userId" asp-route-type="1" class="c-sec bg-transparent fs13 cu-pointer"> @localizer["Send again"] </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</form>
+<!--================ End Form ================-->
+<!--================ End Form ================-->
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function CheckCodeFun() {
+            var codeInputs = document.querySelectorAll('.code');
+            var allCodes = [];
+
+            codeInputs.forEach(function (input) {
+                var code = parseInt(input.value, 10); // Convert string to integer
+                if (!isNaN(code)) { // Check if the conversion was successful
+                    allCodes.push(code); // Add the integer value to the array
+                }
+            });
+
+            var allCodesInt = allCodes.map(function (code) {
+                return parseInt(code, 10);
+            });
+
+            if (allCodesInt.length < 4) {
+                toastr.error("@localizer["Please enter the Validation code"]");
+                return 0;
+            }
+            var concatenatedInt = parseInt(allCodesInt.join(''), 10);
+            if (allCodesInt.length < 4) {
+                toastr.error("@localizer["Please enter the Validation code"]");
+                return 0;
+            }
+
+            $("#Code").val(concatenatedInt)
+            $("#checkCodeSubumitBtn").click()
+            $("#Code").val()
+        }
+    </script>
+}

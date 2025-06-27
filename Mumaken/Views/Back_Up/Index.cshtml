@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card-box">
+    <h2 class="header-title m-t-0 m-b-30">نسخه احتياطية</h2>
+    <div>
+        <!-- -------------------------------------------------------------------------------------------------- -->
+
+        <p>
+            @Html.ActionLink("انشاء نسخه احتياطية", "CreateBackUp", "Back_Up", null, new { @class = "btn btn-primary btn-rounded w-md waves-effect waves-light m-b-5" })
+        </p>
+
+
+    </div><!-- end row -->
+</div>
+
+

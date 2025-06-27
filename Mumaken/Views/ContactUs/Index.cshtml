@@ -1,0 +1,120 @@
+﻿@model IEnumerable<Mumaken.Domain.Entities.SettingTables.ContactUs>
+
+@{
+    ViewData["Title"] = @localizer["Index"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card-box">
+    <h2 class="header-title m-t-0 m-b-30">@localizer["Complaints and Suggestions"]</h2>
+    <div>
+        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>
+                        @localizer["Complaint Number"]
+                    </th>
+                    <th>
+                        @localizer["Name"]
+                    </th>
+                    <th>
+                        @localizer["Phone Number"]
+                    </th>
+                    <th>
+                        @localizer["Email"]
+                    </th>
+                    <th>
+                        @localizer["Message Subject"]
+                    </th>
+                    <th>
+                        @localizer["Complaint"]
+                    </th>
+                    <th>
+                        @localizer["Date"]
+                    </th>
+                    <th>
+                        @localizer["Delete"]
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.phoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TitleMessage)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Msg)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            <input type="button" value="@localizer["Delete"]" onclick="Delete('@item.Id')" class="btn btn-purple btn-rounded" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- -------------------------------------------------------------------------------------------------- -->
+    </div><!-- end row -->
+</div>
+
+
+@section scripts {
+    <script>
+
+
+        function Delete(id) {
+            Swal.fire({
+                title: '@localizer["Are you sure you want to delete this item?"]',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                cancelButtonText: '@localizer["Close"]',
+                confirmButtonText: '@localizer["Delete"]',
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "/ContactUs/Delete",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            id: id
+                        }, success: function (result) {
+                            if (result.data == true) {
+                                toastr.success("@localizer["Deleted Successfully"]");
+                                setTimeout(function () {
+                                    window.location.reload();
+                                }, 3000);
+
+                            }
+
+
+                        },
+                        failure: function (info) {
+
+                        }
+                    })
+                }
+            })
+        }
+
+    </script>
+}

@@ -1,0 +1,86 @@
+﻿@*@model Mumaken.Domain.ViewModel.Payment.PaymentViewModel*@
+
+<!--@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card-box">
+    <h2 class="header-title m-t-0 m-b-30" style="text-align:center">تعديل</h2>
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+
+            <form enctype="multipart/form-data" asp-action="EditPayment" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Currency" class="control-label">Currency</label>
+                    <textarea asp-for="Currency" class="form-control"></textarea>
+                    <span asp-validation-for="Currency" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="checkbox" asp-for="IsLive">
+                    <label class="control-label">IsLive</label>
+                    <span asp-validation-for="IsLive" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="checkbox" asp-for="IsMada">
+                    <label asp-for="IsMada" class="control-label">IsMada</label>
+                    <span asp-validation-for="IsMada" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="LiveAccessToken" class="control-label">LiveAccessToken</label>
+                    <textarea asp-for="LiveAccessToken" class="form-control"></textarea>
+                    <span asp-validation-for="LiveAccessToken" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LiveCheckoutUrl" class="control-label">LiveCheckoutUrl</label>
+                    <textarea asp-for="LiveCheckoutUrl" class="form-control"></textarea>
+                    <span asp-validation-for="LiveCheckoutUrl" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="MadaEntityId" class="control-label">من نحن للعميل بالعربية</label>
+                    <textarea asp-for="MadaEntityId" class="form-control"></textarea>
+                    <span asp-validation-for="MadaEntityId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaymentType" class="control-label">PaymentType</label>
+                    <textarea asp-for="PaymentType" class="form-control"></textarea>
+                    <span asp-validation-for="PaymentType" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TestAccessToken" class="control-label">TestAccessToken</label>
+                    <textarea asp-for="TestAccessToken" class="form-control"></textarea>
+                    <span asp-validation-for="TestAccessToken" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TestCheckoutUrl" class="control-label">TestCheckoutUrl</label>
+                    <textarea asp-for="TestCheckoutUrl" class="form-control"></textarea>
+                    <span asp-validation-for="TestCheckoutUrl" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ViMaEntityId" class="control-label">ViMaEntityId</label>
+                    <textarea asp-for="ViMaEntityId" class="form-control"></textarea>
+                    <span asp-validation-for="ViMaEntityId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="حفظ" class="btn-new-style btn-rounded" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}-->

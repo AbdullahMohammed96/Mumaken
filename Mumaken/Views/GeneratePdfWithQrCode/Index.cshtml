@@ -1,0 +1,209 @@
+﻿@model Mumaken.Domain.Entities.AdditionalTables.Order
+@using System.Globalization;
+
+@{
+    ViewData["Title"] = "Invoice";
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="ar">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Invoice/css/all.min.css">
+    <!-- my CSS -->
+    <link rel="stylesheet" href="~/Invoice/css/style.css">
+    <!--<link rel="stylesheet" href="css/style-ltr.css">-->
+
+    <title></title>
+
+    <!-- title logo -->
+    <link rel="icon" href="~/Invoice/imgs/logo.png" type="image/x-icon" />
+
+
+</head>
+
+<body>
+
+    <header>
+        <div class="over-H">
+            <div class="F-R f-b">
+                <p>المملكة العربية السعودية</p>
+                <p>الرياض-التخصصي-تقاطع طريق مكه 6428</p>
+                <p>مقابل مبني الطيار للسياحه - بجوار البنك الاهلي</p>
+                <p>Riyadh 12312</p>
+            </div>
+            <img src="~/Invoice/imgs/logo-bnr.jpg" class="logo_bill F-L">
+        </div>
+    </header>
+    <!-- Start body-content -->
+
+    <div class="body-content">
+        <!--<div class="hr"></div>-->
+
+        <div class="over-H">
+            <div class="F-R f-b">
+                <p><i class="fas fa-map-marker-alt"></i> شركة ماهر عبداللة وشركاه حريملاء</p>
+                <p>المملكة العربية السعودية</p>
+                <p>Tax ID : <span>301349176900003</span></p>
+            </div>
+            <div id="qrcode" class="img_scan F-L">
+                <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(ViewBag.ReturnQrImg))" style=" height:150px; width:150px" />
+            </div>
+        </div>
+
+        <h2 class="the_title"> فاتورةINV/S/2021/08/0105</h2>
+
+        <div class="over-H all_date">
+            <div class="F-R">
+                <div>
+                    <aside>تاريخ الاستحقاق :</aside>
+                    <div>27 2021 ,أغسطس</div>
+                </div>
+            </div>
+            <div class="F-L">
+                <div>
+                    <aside>تاريخ الفاتورة :</aside>
+                    <div>27 2021 ,أغسطس</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="over_outo">
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            <div>SEQ</div>
+                            <div>م</div>
+                        </th>
+                        <th>
+                            <div>PRODUCT OR SERVERS</div>
+                            <div>المنتج او الخدمة</div>
+                        </th>
+                        <th>
+                            <div>PRODUCT</div>
+                            <div>الوصف</div>
+                        </th>
+                        <th>
+                            <div>UNIT PRICE</div>
+                            <div>سعر الوحدة</div>
+                        </th>
+                        <th>
+                            <div>QUANTITY</div>
+                            <div>الكمية</div>
+                        </th>
+                        <th>
+                            <div>TAXABLE AMOUNT</div>
+                            <div>المبلغ الخاضع للضريبة</div>
+                        </th>
+                        <th>
+                            <div>TAX RATE</div>
+                            <div>نسبة الضريبة</div>
+                        </th>
+                        <th>
+                            <div>TAX AMOUNT</div>
+                            <div>مبلغ الضريبة</div>
+                        </th>
+                        <th>
+                            <div>SUBTOTAL WITH VAT</div>
+                            <div>المجموع بالضريبة</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+        
+
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="over_outo">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            <div>Total(Excluding VAT)</div>
+                            <div>المبلغ الخاضع للضريبة</div>
+                        </th>
+                        <th>
+                            <div>Total Vat</div>
+                            <div>مجموع ضريبة القيمة المضافة</div>
+                        </th>
+
+                        <th>
+                            <div>Total ِAmount Due</div>
+                            <div>إجمالي المبلغ المستحق</div>
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td> SR</td>
+                        <td>150.00 SR</td>
+                        <td> SR</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            <div>2021 , أغسطس27 دفع في يوم</div>
+                        </th>
+                        <th>
+                            <div>Amount Due</div>
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1,150.00 SR</td>
+                        <td>0.00 SR</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="f-b text-center">برجاء استخدام هذا المرجع عند السداد : INV/S/2021/08/0105</div>
+
+        <!--<div class="hr"></div>-->
+    </div>
+
+    <footer>
+        <div class="text-center footer-bill">
+            <div><span>Tax ID : 301365782800003</span> <a href="mailto:info@aait.sa">info@aait.sa</a> <a href="https://aait.sa/">https://aait.sa</a> <span>+966555100935</span></div>
+            <div><span>Tax ID : 301365782800003</span></div>
+            <div>1011124764 : سجل تجاري</div>
+        </div>
+    </footer>
+
+    <!-- end body-content -->
+    @*<script src="js/qrcode.min.js"></script>
+        <script>
+            var qrcode = new QRCode("qrcode", {
+                text: window.location.href,
+                width: 80,
+                height: 80,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        </script>*@
+
+
+</body>
+
+</html>

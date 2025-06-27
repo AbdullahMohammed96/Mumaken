@@ -1,0 +1,200 @@
+ * {
+     -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+     box-sizing: border-box;
+ }
+
+ p {
+     margin: 0;
+ }
+
+ @font-face {
+     font-family: "myFont";
+     src: url(../fonts/JF-Flat-regular.ttf);
+
+ }
+
+
+ body {
+     direction: rtl;
+     text-align: right;
+     font-family: "myFont";
+     word-spacing: 1px;
+     background: #FFFFFF;
+     color: #000000;
+     font-size: 14px;
+     text-shadow: 0 0;
+     margin: 0;
+     padding: 0
+ }
+
+ header {
+     padding: 15px;
+     background: #dcedc6;
+     border-bottom: 3px solid #8cde23;
+
+ }
+
+
+ .body-content {
+     padding: 15px;
+     background-image: url(../imgs/sss.jpg);
+     background-size: cover;
+     background-attachment: fixed;
+     background-position: center center;
+     position: relative;
+     z-index: 2}
+
+.body-content:after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fffffff7;
+    z-index: -1
+}
+
+
+ .m-b {
+     margin-bottom: 25px
+ }
+
+ .over-H {
+     overflow: hidden;
+ }
+
+ .over_outo {
+     overflow: auto;
+ }
+
+ .F-L {
+     float: left
+ }
+
+ .F-R {
+     float: right
+ }
+
+ .logo_bill {
+     max-width: 115px;
+     border-radius: 10px;
+ }
+
+ .hr {
+     height: 5px;
+     border: none;
+     background: #8cde23;
+     border-radius: 20px;
+     margin: 12px 0
+ }
+
+ /*
+ .img_scan {
+     width: 80px;
+     height: 80px
+ }
+*/
+
+ .the_title {
+     margin: 10px 0;
+     text-align: center;
+     color: #8cde23
+ }
+
+ .all_date aside {
+     font-size: 16px;
+     font-weight: bolder
+ }
+
+ table {
+     width: 100%;
+     text-align: center;
+     vertical-align: middle;
+     margin: 15px 0;
+     border-spacing: 0px;
+ }
+
+
+
+ table tr th {
+     background: #8cde23;
+     border: 1px solid #EEE;
+     font-size: 13px
+ }
+
+
+ table td {
+     padding: 5px;
+     border: 1px solid #EEE
+ }
+
+
+
+ .f-b {
+     font-weight: bold
+ }
+
+ .text-center {
+     text-align: center
+ }
+
+ .footer-bill {
+     text-align: center;
+     font-weight: bold;
+     padding: 15px;
+     background: #dcedc6;
+     border-top: 3px solid #8cde23;
+ }
+
+ .footer-bill a {
+     margin: 0px 4px;
+     color: #000;
+     text-decoration: none
+ }
+
+
+ /*Extra small devices (portrait phones, less than 576px)*/
+ @media (max-width: 575.98px) {}
+
+ /*Small devices (landscape phones, less than 768px)*/
+ @media (max-width: 767.98px) {}
+
+ /*Medium devices (tablets, less than 992px)*/
+
+ @media (max-width: 991.98px) {}
+
+ /*Large devices (desktops, less than 1200px)*/
+ @media (max-width: 1199.98px) {}
+
+
+
+ ::-webkit-scrollbar,
+ body::-webkit-scrollbar,
+ .scroll::-webkit-scrollbar {
+     width: 8px;
+     height: 6px;
+ }
+
+
+ ::-webkit-scrollbar-thumb,
+ body::-webkit-scrollbar-thumb,
+ .scroll::-webkit-scrollbar-thumb {
+     background-color: #CCC;
+     border-radius: 20px;
+     cursor: pointer
+ }
+
+
+ ::-webkit-scrollbar-thumb:hover,
+ body::-webkit-scrollbar-thumb:hover,
+ .scroll::-webkit-scrollbar-thumb:hover {
+     background: #484747
+ }
+
+@media screen, print {
+    .body-content {
+        background: none !important
+    }
+}

@@ -1,0 +1,180 @@
+﻿@model Mumaken.Domain.ViewModel.Cars.AddCarViewModel
+@{
+    Layout = "_Layout";
+}
+<div class="row">
+    <div class="col-xl-5 col-lg-7">
+
+        <form method="post" enctype="multipart/form-data">
+            <h3 class="fs16 c-black mb-5">@localizer["Add Car"]</h3>
+            <input type="hidden" asp-for="RentalCompanyId" value="@ViewBag.currentUser" />
+            <div class="mb-4 input-g">
+                <lablelasp-for ="CarImage" class="main-label">@localizer["Car Image"] <span class="hint">*</span> </lablelasp-for>
+                <label  class="profile-img">
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    <input type="file"  accept="image/*"
+                           class="hidden-input img-upload-input profile" asp-for="CarImage">
+                    <img src="" alt="" class="img">
+                </label>
+                <span asp-validation-for="CarImage" class="text-danger"></span>
+            </div>
+
+            <div class="input-g">
+                <lablel class="main-label">@localizer["Car Number"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <input type="text" class="input-me" placeholder="@localizer["Enter Car Number"]" asp-for="CarNumber">
+                    <span asp-validation-for="CarNumber" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="input-g">
+                <lablel class="main-label">@localizer["Car Category"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <select class="select"
+                            asp-items="@(new SelectList((IEnumerable<SelectListItem>)ViewBag.CarCategories,"Value","Text"))"
+                            asp-for="CarCategoryId">
+                        <option value="0" selected disabled>@localizer["Select Car Category"]</option>
+                    </select>
+                    <span asp-validation-for="CarCategoryId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="input-g">
+                <lablel class="main-label">@localizer["Car Type"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <select class="select"
+                            asp-items="@(new SelectList((IEnumerable<SelectListItem>)ViewBag.cartypes,"Value","Text"))"
+                            asp-for="CarTypeId">
+                        <option value="0" selected disabled>@localizer["Select Car Type"]</option>
+                    </select>
+                    <span asp-validation-for="CarTypeId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="input-g">
+                <lablel class="main-label">@localizer["Car Model"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <select class="select" asp-for="CarModelId">
+                        <option value="0" selected disabled>@localizer["Select Car Model"]</option>
+
+                    </select>
+                    <span asp-validation-for="CarModelId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="input-g">
+                <lablel class="main-label">@localizer["Rental Price per Day"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <input type="number" class="input-me" oninput="validity.valid||(value='');" placeholder="@localizer["Enter Rental Price per Day"]" asp-for="RentalPriceDaily">
+                    <span class="main-icon red">@localizer["SAR"]</span>
+                    <span asp-validation-for="RentalPriceDaily" class="text-danger"></span>
+                </div>
+            </div>
+
+@*             <div class="input-g">
+                <lablel class="main-label">
+                    @localizer["Car Insurance Information"] <span class="hint">*</span>
+                </lablel>
+                <div class="main-input">
+                    <textarea class="input-me text-area" placeholder="@localizer["Enter Car Insurance Information"]" asp-for="InsuranceInformation"></textarea>
+                    <span asp-validation-for="InsuranceInformation" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="input-g upload-con">
+                <lablel class="main-label">@localizer["Car Insurance Information File"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <label for="idImg" class="input-me photo-input">
+                        @localizer["Attach Car Insurance Information File"]
+                        <input type="file" accept="application/*" class="hidden-input img-upload-input" id="idImg" asp-for="FileInsurancInformation">
+                        <i class="fa-solid fa-arrow-up-from-bracket main-icon"></i>
+                    </label>
+                    <span asp-validation-for="FileInsurancInformation" class="text-danger"></span>
+                </div>
+                <div class="photo-con"></div>
+            </div>
+
+            <div class="input-g upload-con">
+                <lablel class="main-label">@localizer["Car Registration Document"] <span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <label for="carImg" class="input-me photo-input">
+                        @localizer["Attach Car Registration Document"]
+                        <input type="file" accept="application/*" class="hidden-input img-upload-input" id="carImg" asp-for="CarForm">
+                        <!-- <input type="file" accept="images/*" class="hidden-input img-upload-input" id="carImg"> -->
+                        <i class="fa-solid fa-arrow-up-from-bracket main-icon"></i>
+                    </label>
+                    <span asp-validation-for="CarForm" class="text-danger"></span>
+                </div>
+                <div class="photo-con"></div>
+            </div> *@
+
+            <div class="input-g">
+                <lablel class="main-label">
+                    @localizer["Notes"] <span class="hint">*</span>
+                </lablel>
+                <div class="main-input">
+                    <textarea class="input-me text-area" placeholder="@localizer["Enter Notes"]" asp-for="Note"> </textarea>
+                    <span asp-validation-for="Note" class="text-danger"></span>
+                </div>
+            </div>
+
+            <button type="submit" class="main-btn md up">@localizer["Add"]</button>
+
+        </form>
+
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $("#CarTypeId").change(function () {
+            debugger
+            var carTypeId = $(this).val();
+            var carModelsList = $('#CarModelId');
+            $.ajax({
+                url: `/Cars/GetCarModelWithType?carTypeId=${carTypeId}`,
+                method: 'GET',
+                success: function (carModels) {
+                    carModelsList.empty();
+                    $.each(carModels, function (i, carModel) {
+                        carModelsList.append($('<option></option>').attr('value', carModel.id).text(carModel.name));
+                        if (carModel.id == '@ViewData["SelectCarModel"]') {
+                            option.prop('selected', true);
+                        }
+
+                    });
+                }, error: function () { }
+            })
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+            debugger
+            var carTypeId = $("#CarTypeId").val();
+            if (carTypeId != 0) {
+                var carModelsList = $('#CarModelId');
+                $.ajax({
+
+                    url: `/Cars/GetCarModelWithType?carTypeId=${carTypeId}`,
+                    method: 'GET',
+                    success: function (carModels) {
+                        debugger
+                        carModelsList.empty();
+                        $.each(carModels, function (i, carModel) {
+                            var option = $('<option></option>').attr('value', carModel.id).text(carModel.name);
+                            carModelsList.append(option);
+                            //regionList.append($('<option></option>').attr('value', region.value).text(region.text));
+                            if (carModel.id == '@ViewData["SelectCarModel"]') {
+                                option.prop('selected', true);
+                            }
+                        });
+                    }, error: function () { }
+                })
+            }
+        });  //end Ready
+    </script>
+
+}

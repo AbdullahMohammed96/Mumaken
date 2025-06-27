@@ -1,0 +1,236 @@
+﻿@model Mumaken.Domain.ViewModel.Settings.SettingEditViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card-box">
+    <h2 class="header-title m-t-0 m-b-30" style="text-align:center">@localizer["Edit"]</h2>
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+
+            <form enctype="multipart/form-data" asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="Lat" />
+                <input type="hidden" asp-for="Lng" />
+                <input type="hidden" asp-for="Address" />
+                <div class="form-group">
+                    <label asp-for="Phone" class="control-label">@localizer["Phone"]</label>
+                    <textarea asp-for="Phone" class="form-control"></textarea>
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label">@localizer["Email"]</label>
+                    <textarea asp-for="Email" class="form-control"></textarea>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CondtionsArClient" class="control-label">@localizer["Terms and Conditions for Clients (Arabic)"]</label>
+                    <textarea asp-for="CondtionsArClient" class="form-control summernote"></textarea>
+                    <span asp-validation-for="CondtionsArClient" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CondtionsEnClient" class="control-label">@localizer["Terms and Conditions for Clients (English)"]</label>
+                    <textarea asp-for="CondtionsEnClient" class="form-control summernote"></textarea>
+                    <span asp-validation-for="CondtionsEnClient" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CondtionsArDelegt" class="control-label">@localizer["Terms and Conditions for Providers (Arabic)"]</label>
+                    <textarea asp-for="CondtionsArDelegt" class="form-control summernote"></textarea>
+                    <span asp-validation-for="CondtionsArDelegt" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CondtionsEnDelegt" class="control-label">@localizer["Terms and Conditions for Providers (English)"]</label>
+                    <textarea asp-for="CondtionsEnDelegt" class="form-control summernote"></textarea>
+                    <span asp-validation-for="CondtionsEnDelegt" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="AboutUsArClient" class="control-label">@localizer["About Us for Clients (Arabic)"]</label>
+                    <textarea asp-for="AboutUsArClient" class="form-control summernote"></textarea>
+                    <span asp-validation-for="AboutUsArClient" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AboutUsEnClient" class="control-label">@localizer["About Us for Clients (English)"]</label>
+                    <textarea asp-for="AboutUsEnClient" class="form-control summernote"></textarea>
+                    <span asp-validation-for="AboutUsEnClient" class="text-danger"></span>
+                </div>
+
+
+        @*         <div class="form-group">
+                    <label asp-for="AboutUsArDelegt" class="control-label">@localizer["About Us for Providers (Arabic)"]</label>
+                    <textarea asp-for="AboutUsArDelegt" class="form-control"></textarea>
+                    <span asp-validation-for="AboutUsArDelegt" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AboutUsEnDelegt" class="control-label">@localizer["About Us for Providers (English)"]</label>
+                    <textarea asp-for="AboutUsEnDelegt" class="form-control"></textarea>
+                    <span asp-validation-for="AboutUsEnDelegt" class="text-danger"></span>
+                </div> *@
+
+                <div class="form-group">
+                    <label asp-for="AboutAppAr" class="control-label">@localizer["About the App (Arabic)"]</label>
+                    <textarea asp-for="AboutAppAr" class="form-control summernote"></textarea>
+                    <span asp-validation-for="AboutAppAr" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AboutAppEn" class="control-label">@localizer["About the App (English)"]</label>
+                    <textarea asp-for="AboutAppEn" class="form-control summernote"></textarea>
+                    <span asp-validation-for="AboutAppEn" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AboutAppProviderAr" class="control-label">@localizer["About the App Provider (Arabic)"]</label>
+                    <textarea asp-for="AboutAppProviderAr" class="form-control summernote"></textarea>
+                    <span asp-validation-for="AboutAppProviderAr" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AboutAppProviderEn" class="control-label">@localizer["About the App Provider (English)"]</label>
+                    <textarea asp-for="AboutAppProviderEn" class="form-control summernote"></textarea>
+                    <span asp-validation-for="AboutAppProviderEn" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PrivacyPolicyAr" class="control-label">@localizer["Privacy Policy (Arabic)"]</label>
+                    <textarea asp-for="PrivacyPolicyAr" class="form-control summernote"></textarea>
+                    <span asp-validation-for="PrivacyPolicyAr" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PrivacyPolicyEn" class="control-label">@localizer["Privacy Policy (English)"]</label>
+                    <textarea asp-for="PrivacyPolicyEn" class="form-control summernote"></textarea>
+                    <span asp-validation-for="PrivacyPolicyEn" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="InformationRenewalOrcCancellationAr" class="control-label">@localizer["Renewal or Cancellation Information (Arabic)"]</label>
+                    <textarea asp-for="InformationRenewalOrcCancellationAr " class="form-control summernote"></textarea>
+                    <span asp-validation-for="InformationRenewalOrcCancellationAr" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="InformationRenewalOrcCancellationEn" class="control-label">@localizer["Renewal or Cancellation Information (English)"]</label>
+                    <textarea asp-for="InformationRenewalOrcCancellationEn" class="form-control summernote"></textarea>
+                    <span asp-validation-for="InformationRenewalOrcCancellationEn" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IntroAppAr" class="control-label">@localizer["Home Page Text (Arabic)"]</label>
+                    <textarea asp-for="IntroAppAr" class="form-control summernote"></textarea>
+                    <span asp-validation-for="IntroAppAr" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IntroAppEn" class="control-label">@localizer["Home Page Text (English)"]</label>
+                    <textarea asp-for="IntroAppEn" class="form-control summernote"></textarea>
+                    <span asp-validation-for="IntroAppEn" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SenderName" class="control-label">@localizer["Sender Name for Messages"] (SenderName)</label>
+                    <textarea asp-for="SenderName" class="form-control"></textarea>
+                    <span asp-validation-for="SenderName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserNameSms" class="control-label">@localizer["User Name for Messages"] (UserNameSms)</label>
+                    <textarea asp-for="UserNameSms" class="form-control"></textarea>
+                    <span asp-validation-for="UserNameSms" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PasswordSms" class="control-label">@localizer["Password for Messages"] (PasswordSms)</label>
+                    <textarea asp-for="PasswordSms" class="form-control"></textarea>
+                    <span asp-validation-for="PasswordSms" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ApplicationId" class="control-label">@localizer["Application ID"] (ApplicationId)</label>
+                    <textarea asp-for="ApplicationId" class="form-control"></textarea>
+                    <span asp-validation-for="ApplicationId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SenderId" class="control-label">@localizer["Sender ID"]</label>
+                    <textarea asp-for="SenderId" class="form-control"></textarea>
+                    <span asp-validation-for="SenderId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AppPercentage" class="control-label">@localizer["Application Percentage"]</label>
+                    <textarea asp-for="AppPercentage" class="form-control"></textarea>
+                    <span asp-validation-for="AppPercentage" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="VatPercetage" class="control-label">@localizer["VAT Percentage"]</label>
+                    <textarea asp-for="VatPercetage" class="form-control"></textarea>
+                    <span asp-validation-for="VatPercetage" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PermissiblePeriod" class="control-label">@localizer["Change Permissible Period For Rental Company"]</label>
+                    <textarea asp-for="PermissiblePeriod" class="form-control"></textarea>
+                    <span asp-validation-for="PermissiblePeriod" class="text-danger"></span>
+                </div>
+                @*                <div class="form-group">
+                <label asp-for="Address" class="control-label"> الموقع</label>
+                <div class="form-group">
+                <input asp-for="Address" class="form-control" />
+                </div>
+                <div id="map" style="width:100%; height:400px"></div>
+                </div>
+                *@
+
+                <div class="form-group">
+                    <input type="submit" value="حفظ" class="btn-new-style btn-rounded" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    @*    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNm7VC4eQsCZcny5cVteIkg_SMJpc2G7Y&callback=initMap&language=ar"></script>
+    <script src="~/js/locationpicker.jquery.js"></script>
+
+    <script>
+        $( document ).ready(function() {
+                    var latlng = new google.maps.LatLng(@Model.Lat, @Model.Lng);
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        center: latlng,
+                        zoom: 11,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP,
+                        disableDefaultUI: true,
+                        animation: google.maps.Animation.DROP,
+                    });
+                    var marker = new google.maps.Marker({
+                        position: latlng,
+                        map: map,
+                        draggable: true
+                    });
+                    $('#map').locationpicker({
+                    location: {
+                        latitude: @Model.Lat,
+                        longitude: @Model.Lng
+                    },
+                    //locationName: "",
+                    radius: 50,
+                    zoom: 15,
+                    inputBinding: {
+                        latitudeInput: $("#Lat"),
+                        longitudeInput: $("#Lng"),
+                        locationNameInput: $('#Address'),
+                    },
+                     enableAutocomplete: true
+                });
+
+
+                google.maps.event.addListener(marker, 'dragend', function (event) {
+                   var  x = this.getPosition().lat();
+                   var  y = this.getPosition().lng();
+
+                });
+                });
+
+    </script>
+*@
+}

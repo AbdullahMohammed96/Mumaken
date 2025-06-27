@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Mumaken.Domain.ViewModel.Home.NotApprovalRentalCompanyIndexViewModel>;
+@{
+    ViewData["Title"] = @localizer["Pending Rental Companies"];
+}
+<div class="card-box">
+
+    <h2 class="header-title m-t-0 m-b-30">@localizer["Pending Rental Companies"]</h2>
+
+    <div>
+        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>@localizer["Company Name"]</th>
+                    <th>@localizer["Mobile Number"]</th>
+                    <th>@localizer["Picture"]</th>
+                    <th>@localizer["City"]</th>
+                    <th>@localizer["District"]</th>
+                    <th>@localizer["Commercial Register"]</th>
+                    <th>@localizer["Accept Join Request"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.Name
+                        </td>
+                        <td dir="ltr">
+                            @item.PhoneNumber
+                        </td>
+                        <td>
+                            <img src="@item.ImgProfile" />
+                        </td>
+                        <td>
+                            @item.City
+                        </td>
+                        <td>
+                            @item.Dictract
+                        </td>
+                        <td>
+                            @item.CommercialRegisterNumber
+                        </td>
+                        <td>
+                            <input type="button" value="@localizer["Accept Join Request"]" onclick="AccptRequestJoin('@item.Id')" class="btn btn-purple btn-rounded" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- -------------------------------------------------------------------------------------------------- -->
+    </div><!-- end row -->
+</div>
+@section scripts {
+    <script>
+
+        function AccptRequestJoin(id) {
+            Swal.fire({
+                title: '@localizer["Are you sure you want to accept the join request?"]',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                cancelButtonText: '@localizer["Close"]',
+                confirmButtonText: '@localizer["Confirm"]',
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "/RentalCompanies/AccptRequestJoin",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            id: id
+                        },
+                        success: function (result) {
+
+                            toastr.success(result.msg);
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 3000);
+                        },
+                        failure: function (info) {
+
+                        }
+                    });
+                }
+            })
+
+        }
+
+    </script>
+}

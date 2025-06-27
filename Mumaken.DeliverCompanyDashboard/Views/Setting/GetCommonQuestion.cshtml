@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Mumaken.Domain.DTO.MoreDto.CommonQuestionDto>
+@{
+    Layout = "_Layout";
+    int counter = 1;  
+}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <h2 class="fs15 ff-d mb-5 text-center"> @localizer["Common Question"]</h2>
+
+        <div class="accordion" id="accordionExample">
+            @foreach (var item in Model)
+            {
+                <!-- Item -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-@counter">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapse-@counter" aria-expanded="true" aria-controls="collapse-@counter">
+                            @item.question
+                        </button>
+                    </h2>
+                    <div id="collapse-@counter" class="accordion-collapse collapse"
+                         aria-labelledby="heading-@counter" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            @item.answer
+                        </div>
+                    </div>
+                </div>
+                counter++;
+            }
+            @* @for (int i = 0; i < Model.Count(); i++)
+            {
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-@">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            @Model[i].question
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show"
+                         aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            @i.answer
+                        </div>
+                    </div>
+                </div>
+            } *@
+
+        </div>
+
+    </div>
+</div>

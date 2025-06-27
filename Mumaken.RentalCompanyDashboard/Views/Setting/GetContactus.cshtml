@@ -1,0 +1,44 @@
+﻿@model Mumaken.Domain.ViewModel.ContactUs.AddContactUsViewModel;
+@{
+    Layout = "_Layout";
+}
+<div class="row">
+    <div class="col-lg-6">
+        <form class="contact_form" method="post" action="AddContactUs">
+
+            <div class="d-flex gap-3 flex-wrap mb-5">
+                <a class="contact_item">
+                    <i class="fa-solid fa-phone"></i>
+                    @ViewBag.infoContact.phoneNumber
+                </a>
+                <a class="contact_item">
+                    <i class="fa-solid fa-envelope"></i>
+                    @ViewBag.infoContact.email
+                </a>
+            </div>
+
+            <div class="input-g">
+                <lablel class="main-label">@localizer["Message Subject"]<span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <input type="text" class="input-me" asp-for="MessageSubject" dir="auto" placeholder="@localizer["Enter Message Subject"]">
+                    <span asp-validation-for="MessageSubject" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="input-g">
+                <lablel class="main-label">@localizer["Message"]<span class="hint">*</span> </lablel>
+                <div class="main-input">
+                    <textarea class="input-me text-area" asp-for="Message" placeholder="@localizer["Enter Message"]"></textarea>
+                    <span asp-validation-for="Message" class="text-danger"></span>
+                </div>
+            </div>
+
+            <button class="main-btn up">@localizer["Send"]</button>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

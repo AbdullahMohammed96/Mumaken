@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "_Layout2";
+}
+
+<style>
+    pre {
+        white-space: pre-wrap;
+    }
+</style>
+
+<div class="auth_layout">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <h2 class="fs15 ff-d mb-4 text-center"> الشروط والأحكام</h2>
+
+                <p class="fs13 lh-md c-gray text-center">
+                    @Html.Raw(ViewBag.conditionAndTerms)
+           @*          @if (ViewBag.lang == "ar")
+                    {
+                        <div>
+                            @Html.Raw(ViewBag.conditionAndTerms)
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            @Html.Raw(ViewBag.conditionAndTerms)
+                        </div>
+                    } *@
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+

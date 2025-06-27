@@ -1,0 +1,54 @@
+﻿@model Mumaken.Domain.ViewModel.Region.CreateRegoinsViewModel
+
+@{
+    ViewData["Title"] = @localizer["Add Region"];
+}
+
+<div class="card-box">
+    <h2 class="header-title m-t-0 m-b-30">@localizer["Add Region"]</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Create" enctype="multipart/form-data" method="post">
+                <div class="form-group">
+                    <label asp-for="NameAr" class="control-label">@localizer["Region Name (Arabic)"]</label>
+                    <input asp-for="NameAr" class="form-control" />
+                    <span asp-validation-for="NameAr" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NameEn" class="control-label">@localizer["RegionName (English)"]</label>
+                    <input asp-for="NameEn" class="form-control" />
+                    <span asp-validation-for="NameEn" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Fk_City" class="control-label">@localizer["City"]</label>
+                    <select asp-for="Fk_City"
+                            class="form-control"
+                            asp-items="@ViewBag.city">
+                        <option value="0" selected="selected">@localizer["Please choose your city"]</option>
+                    </select>
+                    <span asp-validation-for="Fk_City" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="button" id="btncli" value="@localizer["Add"]" class="btn-new-style btn-rounded" onclick="valdation()" />
+                    <input type="submit" hidden value="@localizer["Add"]" class="btn-new-style btn-rounded" id="btnSubmit" />
+                </div>
+                <div>
+                    <a asp-controller="Regions" asp-action="Index" class="btn-black">@localizer["Back to Homepage"]</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        function valdation() {
+            $("#btncli").prop("disabled", true);
+            $("#btnSubmit").click();
+        }
+    </script>
+}

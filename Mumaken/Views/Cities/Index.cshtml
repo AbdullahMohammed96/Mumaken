@@ -1,0 +1,94 @@
+﻿@model IEnumerable<Mumaken.Domain.ViewModel.Region.CitiesIndexViewModel>
+@{
+    ViewData["Title"] = @localizer["Cities"];
+}
+
+
+<div class="card-box">
+
+    <h2 class="header-title m-t-0 m-b-30">@localizer["Cities"]</h2>
+
+    <div>
+        <p>
+            <a asp-action="Create" asp-controller="Cities" class="btn btn-primary btn-rounded w-md waves-effect waves-light m-b-5">@localizer["Add City"]</a>
+        </p>
+
+        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>@localizer["City Name (Arabic)"]</th>
+                    <th>@localizer["City Name (English)"]</th>
+                    <th>@localizer["Status"]</th>
+                    <th>@localizer["Change Status"]</th>
+                    <th>@localizer["Edit"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NameAr)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NameEn)
+                        </td>
+
+                        <td>
+                            @{
+                                if (item.IsActive == true)
+                                {
+                                    <label id="@item.Id" style="color:green;font-size: 17px;">@localizer["Active"]</label>
+                                }
+                                else
+                                {
+                                    <label id="@item.Id" style="color:red;font-size: 17px;">@localizer["Inactive"]</label>
+                                }
+                            }
+                        </td>
+                        <td>
+                            <input type="button" value="@localizer["Change Status"]" onclick="Validation('@item.Id')" class="btn btn-purple btn-rounded" />
+                        </td>
+
+                        <td>
+                            <a asp-action="Edit" asp-controller="Cities" asp-route-Id="@item.Id" class="btn btn-info btn-rounded">@localizer["Edit"]</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- -------------------------------------------------------------------------------------------------- -->
+    </div><!-- end row -->
+</div>
+
+
+@section scripts {
+    <script>
+
+        function Validation(id) {
+            $.ajax({
+                url: "/Cities/ChangeState",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: id
+                },
+                success: function (result) {
+
+                    if (result.data == true) {
+                        $('#' + id).css('color', 'green');
+                        $('#' + id).html('@localizer["Active"]');
+                    } else if (result.data == false) {
+                        $('#' + id).css('color', 'red');
+                        $('#' + id).html('@localizer["Inactive"]');
+                    }
+                },
+                failure: function (info) {
+
+                }
+            });
+        }
+
+    </script>
+}

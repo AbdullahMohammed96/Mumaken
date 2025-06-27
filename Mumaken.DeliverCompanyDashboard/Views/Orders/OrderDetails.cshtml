@@ -1,0 +1,420 @@
+﻿@model Mumaken.Domain.DTO.OrderDTO.OrderDetailsDto
+@using Mumaken.Domain.Enums;
+@{
+    var orderDlivery=Model.orderDeliveryCompanyInfo.FirstOrDefault(c => c.deliveryCompanyId == ViewBag.currentUser);
+    int typeDriverInCompany = orderDlivery.driverTypeInDliveryCompany;
+    int deliveryOrderCompanyCase = orderDlivery.orderCompnayCase;
+    string loginDataInOrder= orderDlivery.orderLoginData;
+    var isAddedDataForDeliveryApp = orderDlivery.loginData != null && !string.IsNullOrWhiteSpace(orderDlivery.password);
+    var isConfrimDataForDeliveryApp = orderDlivery.isConfirmLoginData;
+}
+<ul class="steps mb-4 sm">
+    <li class="step-item active">
+        <span class="progress-count"></span>
+        <span class="progress-label d-block">@localizer["New"]</span>
+    </li>
+
+    <li class="step-item @((Model.orderInfo.orderStatus == (int)OrderStutes.Current || Model.orderInfo.orderStatus == (int)OrderStutes.Finished) ? "active" : "") ">
+        <span class="progress-count"></span>
+        <span class="progress-label d-block">@localizer["Current"]</span>
+    </li>
+
+    <li class="step-item @(Model.orderInfo.orderStatus == (int)OrderStutes.Finished ? "active" : "")">
+        <span class="progress-count"></span>
+        <span class="progress-label d-block">@localizer["Finished"]</span>
+    </li>
+</ul>
+
+<div class="section_style mb-4">
+    <h3 class="main-card-title">@localizer["Order"]</h3>
+
+    <div class="content">
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Order Number"]</span>
+            <span class="main_item_sec">@Model.orderInfo.orderId</span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Order Date"]</span>
+            <span class="main_item_sec">@Model.orderInfo.orderDate</span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Order Type"]</span>
+            <span class="main_item_sec">@Model.orderDeliveryCompanyInfo.FirstOrDefault(c => c.deliveryCompanyId == ViewBag.currentUser).driverTypeInDliveryCompanyText</span>
+        </div>
+    </div>
+</div>
+
+<div class="section_style mb-4">
+    <h3 class="main-card-title">@localizer["Captain's Name"]</h3>
+
+    <div class="content">
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Captain's Image"]</span>
+            <img src="@Model.userInfo.image" alt="" class="small_img">
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Captain's Name"]</span>
+            <span class="main_item_sec">@Model.userInfo.user_Name</span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Captain's Phone Number"]</span>
+            <span class="main_item_sec" dir="ltr">@Model.userInfo.phoneNumber</span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Email"]</span>
+            <span class="main_item_sec">@Model.userInfo.email</span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["City"]</span>
+            <span class="main_item_sec">@Model.userInfo.city</span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Age"]</span>
+            <span class="main_item_sec">@Model.userInfo.age</span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Gender"]</span>
+            <span class="main_item_sec">@Model.userInfo.genderType</span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Nationality"]</span>
+            <span class="main_item_sec">@Model.userInfo.nationality</span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Identity Number"]</span>
+            <span class="main_item_sec">@Model.userInfo.identityNumber</span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Driver's License Image"]</span>
+            <img src="@Model.userInfo.deliverLicenceImage" alt="" class="small_img">
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Identity Image"]</span>
+            <img src="@Model.userInfo.indentityNumberImage" alt="" class="small_img">
+        </div>
+    </div>
+</div>
+
+@if (Model.orderInfo.orderStatus != (int)OrderStutes.NewOrder)
+{
+    <div class="section_style mb-4">
+        <h3 class="main-card-title">@localizer["Login Data"]</h3>
+
+        <div class="content">
+            <div class="main_item">
+                <span class="main_item_first">@localizer["Mobile Number"]</span>
+                <span class="main_item_sec">@orderDlivery.loginData</span>
+            </div>
+
+            <div class="main_item">
+                <span class="main_item_first">@localizer["Password"]</span>
+                <span class="main_item_sec">@orderDlivery.password</span>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="section_style mb-4">
+    <h3 class="main-card-title">@localizer["Selected Car Data"]</h3>
+
+    <div class="content">
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Car Category"]</span>
+            <span class="main_item_sec">@Model.OrderCarInfo.carCategory</span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Car Type"]</span>
+            <span class="main_item_sec">@Model.OrderCarInfo.carType</span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Car Model"]</span>
+            <span class="main_item_sec">@Model.OrderCarInfo.carModel</span>
+        </div>
+    </div>
+</div>
+
+<div class="section_style mb-4">
+    <h3 class="main-card-title">@localizer["Insurance Information"]</h3>
+
+    <div class="content p-4">
+        <p class="fs13 lh-md c-black">
+            @Model.OrderCarInfo.insurancInformation
+        </p>
+
+        <a href="@Model.OrderCarInfo.fileInsurancInformation" download target="_blank" class="pdf_item mt-3">
+            <i class="fa-regular fa-file"></i>
+        </a>
+    </div>
+</div>
+
+<div class="section_style mb-4">
+    <h3 class="main-card-title">@localizer["Car Form"]</h3>
+
+    <div class="content p-4">
+        <a href="@Model.OrderCarInfo.carForm" download target="_blank" class="pdf_item">
+            <i class="fa-regular fa-file"></i>
+        </a>
+    </div>
+</div>
+
+<div class="d-flex gap-3 mt-4 flex-wrap">
+    @if (deliveryOrderCompanyCase == (int)OrderCase.WaitToAcceptDeliverCompany)
+    {
+        <a asp-action="AcceptOrder" asp-controller="Orders" asp-route-orderId="@Model.orderInfo.orderId" class="main-btn up sec md">@localizer["Accept"]</a>
+        <button type="button" data-bs-toggle="modal" data-bs-target="#rejectModal"
+                class="main-btn up red md">
+            @localizer["Reject"]
+        </button>
+    }
+
+    @if (deliveryOrderCompanyCase == (int)OrderCase.Accepted && typeDriverInCompany == (int)TypeDriverInDeliveryCompanies.Joining && !isAddedDataForDeliveryApp)
+    {
+        <button type="button" data-bs-toggle="modal" data-bs-target="#loginDataModal"
+                class="main-btn up md">
+            @localizer["Add Login Data"]
+        </button>
+    }
+    @if (deliveryOrderCompanyCase == (int)OrderCase.Accepted && typeDriverInCompany == (int)TypeDriverInDeliveryCompanies.Update && !isConfrimDataForDeliveryApp)
+    {
+        <button type="button" data-bs-toggle="modal" data-bs-target="#ConfirmDataModal"
+                class="main-btn up md">
+            @localizer["Confirm Login Data"]
+        </button>
+    }
+</div>
+@section rendalModal {
+    <!-- ==================================== Start Reject Modal ==================================== -->
+    <div class="modal fade" id="rejectModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+         tabindex="-1">
+        <div class="modal-dialog sm modal-dialog-centered">
+            <form class="modal-content p-4">
+
+                <button type="button" class="close-model-btn" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
+
+                <p class="fs15 c-black text-center">@localizer["Reason for rejecting the order"]</p>
+
+                <div class="input-g mt-4 w-100">
+                    <label for="" class="main-label">
+                        @localizer["Reason for rejecting the order"]
+                        <span class="hint">*</span>
+                    </label>
+                    <div class="main-input">
+                        <textarea class="input-me text-area" id="refusedText" placeholder="@localizer["Enter the reason for rejecting the request"]"></textarea>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-3 w-100">
+                    <button type="button" class="main-btn up flex-grow-1" onclick="refusedOrder(@Model.orderInfo.orderId)">@localizer["Confirm"]</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <!-- ==================================== End Reject Modal ==================================== -->
+    <!-- ==================================== Start Login Data Modal ==================================== -->
+    <div class="modal fade" id="loginDataModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+         tabindex="-1">
+        <div class="modal-dialog sm modal-dialog-centered">
+            <form class="modal-content p-4" action="registration-requests.html">
+
+                <button type="button" class="close-model-btn" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
+
+                <p class="fs15 c-black text-center">@localizer["Delivery company application login data"]</p>
+
+                <div class="input-g mt-4 w-100">
+                    <label for="" class="main-label">
+                        @localizer["Username/Mobile Number/Email"]
+                        <span class="hint">*</span>
+                    </label>
+                    <div class="main-input">
+                        <input type="text" class="input-me" id="DeliveryApploginDataInput" placeholder="@localizer["Enter Username/Mobile Number/Email"]">
+                    </div>
+                </div>
+
+                <div class="input-g w-100">
+                    <label for="" class="main-label">
+                        @localizer["Password"]
+                        <span class="hint">*</span>
+                    </label>
+                    <div class="main-input">
+                        <input type="password" class="input-me" id="DeliveryAppPasswordInput" placeholder="@localizer["Enter Password"]">
+                    </div>
+                </div>
+
+                <div class="d-flex gap-3 w-100">
+                    <button type="button" onclick="enterDliveryAppData()" class="main-btn up flex-grow-1">@localizer["Confirm"]</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <!-- ==================================== End Login Data Modal ==================================== -->
+    <!-- ==================================== Confirm Login Data Modal ==================================== -->
+    <div class="modal fade" id="ConfirmDataModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+         tabindex="-1">
+        <div class="modal-dialog sm modal-dialog-centered">
+            <form class="modal-content p-4" action="registration-requests.html">
+
+                <button type="button" class="close-model-btn" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
+
+                <p class="fs15 c-black text-center">@localizer["Delivery company application login data"]</p>
+
+                <div class="input-g mt-4 w-100">
+                    <label for="" class="main-label">
+                        @localizer["Username/Mobile Number/Email"]
+                        <span class="hint">*</span>
+                    </label>
+                    <div class="main-input">
+                        <input type="text" class="input-me" id="ConfirmDeliveryApploginDataInput" placeholder="@localizer["Enter Username/Mobile Number/Email"]" readonly value="@loginDataInOrder">
+                    </div>
+                </div>
+
+                <div class="input-g w-100">
+                    <label for="" class="main-label">
+                        @localizer["Password"]
+                        <span class="hint">*</span>
+                    </label>
+                    <div class="main-input">
+                        <input type="password" class="input-me" id="ConfirmDeliveryAppPasswordInput" placeholder="@localizer["Enter Password"]">
+                    </div>
+                </div>
+
+                <div class="d-flex gap-3 w-100">
+                    <button type="button" onclick="ComfrimDliveryAppData()" class="main-btn up flex-grow-1">@localizer["Confirm"]</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <!-- ==================================== End Confirm Login Data Modal ==================================== -->
+}
+
+@section scripts{
+    <script>
+        function refusedOrder(id) {
+            var textRefused = $("#refusedText").val();
+            if ($("#refusedText").val() == '') {
+                toastr.error("@localizer["Please enter the reason for rejecting the Order"]");
+            }
+            else{
+                $.ajax({
+                    url: "/Orders/RefusedOrder",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        orderId: id,
+                        refusedText: textRefused
+                    },
+                    success: function (result) {
+                        debugger
+                        if (result.key == 1) {
+                            setTimeout(function () {
+                                window.location.href = '@Url.Action("Index", "Orders")' + '?orderStatus=' + @((int)OrderStutes.NewOrder);
+                            }, 3000);
+                            toastr.success(result.msg);
+                        } else {
+                            toastr.error(result.msg);
+                            location.reload()
+                        }
+                    },
+                    failure: function (info) {
+
+                    }
+                });
+            }
+        }
+    </script>
+    <script>
+        function enterDliveryAppData() {
+            debugger
+            var textLoginData = $("#DeliveryApploginDataInput").val();
+            var textPassword = $("#DeliveryAppPasswordInput").val();
+            if (textPassword != "") {
+                var passwordLength = parseInt(textPassword.length)
+                var checkPassword = passwordLength >= 6
+            }
+  
+            if (textLoginData == "") {
+                toastr.error("@localizer["Please enter the login information for the delivery company application"]");
+                return 0;
+            }
+            else if (textPassword == "") {
+                toastr.error("@localizer["Please enter the password for the delivery company application"]");
+                return 0;
+            }
+            else if (checkPassword==false) {
+                toastr.error("@localizer["Password must length is greater than 6"]");
+                return 0;
+            }
+            else{
+                $.ajax({
+                    url: "/Orders/EnterDataForDeliverApp",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        LoginData: textLoginData,
+                        Password: textPassword,
+                        OrderId:@Model.orderInfo.orderId,
+                        UserId:"@Model.userInfo.userId",
+
+                    },
+                    success: function (result) {
+                        debugger
+                        if (result.key == 1) {
+                            setTimeout(function () {
+                                location.reload()
+                            }, 3000);
+                            toastr.success(result.msg);
+                        } else {
+                            toastr.error(result.msg);
+                            location.reload()
+                        }
+                    },
+                    failure: function (info) {
+
+                    }
+                });
+            }
+        }
+        function ComfrimDliveryAppData(){
+            $.ajax({
+                url: "/Orders/ConfirmDataOfDeliverApp",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    OrderId:@Model.orderInfo.orderId
+
+                },
+                success: function (result) {
+                    debugger
+                    if (result.key == 1) {
+                        setTimeout(function () {
+                            location.reload()
+                        }, 3000);
+                        toastr.success(result.msg);
+                    } else {
+                        toastr.error(result.msg);
+                        location.reload()
+                    }
+                },
+                failure: function (info) {
+
+                }
+            });
+        }
+    </script>
+}

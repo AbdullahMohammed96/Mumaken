@@ -1,0 +1,379 @@
+﻿@{
+    ViewBag.Title = @localizer["Notifications"];
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <h2 class="header-title m-t-0 m-b-30"> @localizer["Notifications"]</h2>
+
+            <!-- -------------------------------------------------------------------------------------------------- -->
+
+
+            <div>
+
+
+                <div class="row">
+
+
+                    <div class="col-md-4 d-flex form-group">
+                        <div class="ml-3">
+                            <label class="d-block"> @localizer["All"]</label>
+                            <input type="checkbox" id="allEmployees" />
+                        </div>
+
+                        <div class="w-100" id="employee_div">
+                            <label>
+                                @localizer["Drivers"]
+                            </label>
+                            <select class="select-2 form-control" id="multipleEmployeeSelect" multiple="multiple"></select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 d-flex form-group">
+
+                        <div class="ml-3">
+                            <label class="d-block"> @localizer["All"]</label>
+                            <input type="checkbox" id="allRentalCompany" />
+                        </div>
+
+                        <div class="w-100" id="employee_div">
+                            <label>
+                                @localizer["Rental Companies"]
+                            </label>
+                            <select class="select-2 form-control" id="multipleRentalCompanySelect" multiple="multiple"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 d-flex form-group">
+
+                        <div class="ml-3">
+                            <label class="d-block"> @localizer["All"]</label>
+                            <input type="checkbox" id="allDeliveryCompany" />
+                        </div>
+
+                        <div class="w-100" id="employee_div">
+                            <label>
+                                @localizer["Delivery Companies"]
+                            </label>
+                            <select class="select-2 form-control" id="multipledelveryCompanySelect" multiple="multiple"></select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label>
+                        @localizer["Notification Text"]
+                    </label>
+                    <textarea class="form-control" id="notifyMessage" placeholder="@localizer["Write the text here"]" required></textarea>
+                </div>
+                <button class=" btn-black btn-rounded w-md waves-effect waves-light m-b-5" id="send" onclick="Send();"> @localizer["Send"]  </button>
+            </div>
+
+
+            <!-- -------------------------------------------------------------------------------------------------- -->
+
+
+        </div>
+
+        <div class="row">
+            <!-- end row -->
+        </div>
+    </div><!-- end col -->
+</div>
+
+
+<style>
+    .select2-container--default .select2-selection--multiple {
+        background-color: #b2a5a5;
+        border: 1px solid #aaa;
+        border-radius: 25px;
+        cursor: text;
+        padding: 4px;
+        border: 1px solid #f5f5f5 !important;
+    }
+</style>
+
+
+@section scripts
+{
+    <script>
+
+        $(document).ready(function () {
+
+
+            $(".row").on('blur keyup change click',
+                function () {
+
+                    var value = $("#notifyMessage").val();
+
+                    //console.log(value);
+                    //if ((allProviders.length > 0 || allEmployees.length > 0)) {
+                    //    toastr.warning('من فضلك ادخل بيانات الاشعار');
+                    //    return false;
+                    //}
+                });
+
+
+            //العملاء
+
+            $.ajax({
+                url: "/SendNotification/GetUsers",
+                type: "GET",
+                dataType: "json",
+
+                success: function (data) {
+
+                    var list = '';
+
+                    for (var i = 0; i < data.users.length; i++) {
+                        var option = '<option value="' +
+                            data.users[i].id +
+                            '">' +
+                            data.users[i].name +
+                            '</option>';
+                        list += option;
+                    };
+
+                    $('#multipleEmployeeSelect').append(list);
+                }
+            });
+
+
+            //شركات التاجير
+
+            $.ajax({
+                url: "/SendNotification/GetRentalCompany",
+                type: "GET",
+                dataType: "json",
+
+                success: function (data) {
+
+                    var list = '';
+
+                    for (var i = 0; i < data.delegets.length; i++) {
+                        var option = '<option value="' +
+                            data.delegets[i].id +
+                            '">' +
+                            data.delegets[i].name +
+                            '</option>';
+                        list += option;
+                    };
+
+                    $('#multipleRentalCompanySelect').append(list);
+                }
+            });
+            // شركات التوصيل
+            $.ajax({
+                url: "/SendNotification/GetDeliveryCompany",
+                type: "GET",
+                dataType: "json",
+
+                success: function (data) {
+
+                    var list = '';
+
+                    for (var i = 0; i < data.delegets.length; i++) {
+                        var option = '<option value="' +
+                            data.delegets[i].id +
+                            '">' +
+                            data.delegets[i].name +
+                            '</option>';
+                        list += option;
+                    };
+
+                    $('#multipledelveryCompanySelect').append(list);
+                }
+            });
+
+
+            var selectedEmployees = [];
+
+            $('#multipleEmployeeSelect').change(function () {
+                allEmployees = $("#multipleEmployeeSelect").val();
+
+                if (!$("#multipleEmployeeSelect").val()) {
+                    $("#allEmployees").attr("disabled", false);
+                    allEmployees = "";
+                }
+
+            });
+
+
+            $('#multipledelegetSelect').change(function () {
+                allEmployees = $("#multipledelegetSelect").val();
+
+                if (!$("#multipledelegetSelect").val()) {
+                    $("#allEmployees").attr("disabled", false);
+                    allEmployees = "";
+                }
+
+            });
+
+            var allEmployees = [];
+
+
+            $("#allEmployees").on("click", function () {
+                if ($(this).is(':checked')) {
+
+
+                    $("#multipleEmployeeSelect > option").prop("selected", true);
+                    $("#multipleEmployeeSelect").trigger("change");
+
+                    $("#multipleEmployeeSelect > option:selected").each(function () {
+                        allEmployees.push($(this).val());
+                    });
+
+                } else {
+                    $("#multipleEmployeeSelect > option").prop("selected", false);
+                    $("#multipleEmployeeSelect").trigger("change");
+
+                    $("#multipleEmployeeSelect > option:selected").each(function () {
+                        allEmployees.pop($(this).val());
+                    });
+                }
+
+            });
+
+
+            var allRentalCompanys = [];
+
+
+            $("#allRentalCompany").on("click", function () {
+                if ($(this).is(':checked')) {
+
+
+
+                    //شركات التاجير
+
+                    $("#multipleRentalCompanySelect > option").prop("selected", true);
+                    $("#multipleRentalCompanySelect").trigger("change");
+
+                    $("#multipleRentalCompanySelect > option:selected").each(function () {
+                        allRentalCompanys.push($(this).val());
+                    });
+
+
+                } else {
+
+
+                    $("#multipleRentalCompanySelect > option").prop("selected", false);
+                    $("#multipleRentalCompanySelect").trigger("change");
+
+                    $("#multipleRentalCompanySelect > option:selected").each(function () {
+                        allRentalCompanys.pop($(this).val());
+                    });
+
+                }
+
+            });
+            var allDeliveryCompanys = [];
+
+            $("#allDeliveryCompany").on("click", function () {
+                if ($(this).is(':checked')) {
+
+
+
+                    //شركات التوصيل
+
+                    $("#multipledelveryCompanySelect > option").prop("selected", true);
+                    $("#multipledelveryCompanySelect").trigger("change");
+
+                    $("#multipledelveryCompanySelect > option:selected").each(function () {
+                        allDeliveryCompanys.push($(this).val());
+                    });
+
+
+                } else {
+
+
+                    $("#multipledelveryCompanySelect > option").prop("selected", false);
+                    $("#multipledelveryCompanySelect").trigger("change");
+
+                    $("#multipleRentalCompanySelect > option:selected").each(function () {
+                        allDeliveryCompanys.pop($(this).val());
+                    });
+
+                }
+
+            });
+        })
+
+
+
+
+
+
+
+
+        function Send() {
+            debugger;
+            if ($("#notifyMessage").val() == "") {
+                toastr.warning('من فضلك ادخل النص');
+                $("#notifyMessage").focus();
+                return false;
+            }
+            if ($("#multipleEmployeeSelect > option:selected").val() == undefined && $("#multipledelveryCompanySelect > option:selected").val() == undefined && $("#multipleRentalCompanySelect > option:selected").val() == undefined) {
+                toastr.warning('من فضلك اختر المستخدم');
+
+                return false;
+            }
+
+            var employeesData = [];
+            var rentalCompanyes = [];
+            var deliveryCompanyes = [];
+            $("#multipleEmployeeSelect > option:selected").each(function () {
+                debugger;
+                employeesData.push($(this).val());
+            });
+
+            $("#multipledelveryCompanySelect > option:selected").each(function () {
+                debugger;
+                deliveryCompanyes.push($(this).val());
+            });
+            $("#multipleRentalCompanySelect > option:selected").each(function () {
+                debugger;
+                rentalCompanyes.push($(this).val());
+            });
+            var textMessage = $("#notifyMessage").val();
+
+            Swal.fire({
+                position: 'success',
+                type: 'success',
+                title: 'تم الارسال بنجاح..',
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+            $.ajax({
+                url: "/SendNotification/Send",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    msg: textMessage,
+                    employees: employeesData.join(','),
+                    deliveryCompanyes: deliveryCompanyes.join(','),
+                    rentalCompanyes: rentalCompanyes.join(',')
+                },
+                success: function (result) {
+                    $("#send").prop("disabled", true);
+                    window.location.href = "/SendNotification/Index";
+                }
+            });
+
+
+            //setTimeout("pageRedirect()", 10000);
+            //$.ajax({
+            //    url: "",
+            //    context: document.body,
+            //    success: function (s, x) {
+            //        $(this).html(s);
+            //    }
+            //});
+        }
+
+
+    </script>
+}
+

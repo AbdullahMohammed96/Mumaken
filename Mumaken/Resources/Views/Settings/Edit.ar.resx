@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About the App (Arabic)" xml:space="preserve">
+    <value>عن التطبيق بالعربية</value>
+  </data>
+  <data name="About the App (English)" xml:space="preserve">
+    <value>عن التطبيق بالانجليزية</value>
+  </data>
+  <data name="About the App Provider (Arabic)" xml:space="preserve">
+    <value>عن التطبيق مقدم الخدمة بالعربية</value>
+  </data>
+  <data name="About the App Provider (English)" xml:space="preserve">
+    <value>عن التطبيق مقدم الخدمة بالانجليزية</value>
+  </data>
+  <data name="About Us for Clients (Arabic)" xml:space="preserve">
+    <value>من نحن للعميل بالعربية</value>
+  </data>
+  <data name="About Us for Clients (English)" xml:space="preserve">
+    <value>من نحن للعميل بالانجليزية</value>
+  </data>
+  <data name="About Us for Providers (Arabic)" xml:space="preserve">
+    <value>من نحن لمقدم الخدمة بالعربية</value>
+  </data>
+  <data name="About Us for Providers (English)" xml:space="preserve">
+    <value>من نحن لمقدم الخدمة بالانجليزية</value>
+  </data>
+  <data name="Application ID" xml:space="preserve">
+    <value>رقم التطبيق (ApplicationId)</value>
+  </data>
+  <data name="Application Percentage" xml:space="preserve">
+    <value>نسبة التطبيق</value>
+  </data>
+  <data name="Change Permissible Period For Rental Company" xml:space="preserve">
+    <value>تغيير المدة المسموح بها لشركة التأجير</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>تعديل</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>البريد الالكتروني</value>
+  </data>
+  <data name="Home Page Text (Arabic)" xml:space="preserve">
+    <value>نص صفحة الصفحة الرئسية بالعربية</value>
+  </data>
+  <data name="Home Page Text (English)" xml:space="preserve">
+    <value>نص صفحة الصفحة الرئسية بالانجليزية</value>
+  </data>
+  <data name="Password for Messages" xml:space="preserve">
+    <value>كلمة المرور للسرائل (PasswordSms)</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>الهاتف</value>
+  </data>
+  <data name="Privacy Policy (Arabic)" xml:space="preserve">
+    <value>سياسيه الخصوصية بالعربية</value>
+  </data>
+  <data name="Privacy Policy (English)" xml:space="preserve">
+    <value>سياسيه الخصوصية بالانجليزية</value>
+  </data>
+  <data name="Renewal or Cancellation Information (Arabic)" xml:space="preserve">
+    <value>معلومات التجديد اوالغائه بالعربية</value>
+  </data>
+  <data name="Renewal or Cancellation Information (English)" xml:space="preserve">
+    <value>معلومات التجديد اوالغائه بالانجليزية</value>
+  </data>
+  <data name="Sender ID" xml:space="preserve">
+    <value>رقم المرسل (SenderId)</value>
+  </data>
+  <data name="Sender Name for Messages" xml:space="preserve">
+    <value>اسم المرسل للرسائل (SenderName)</value>
+  </data>
+  <data name="Terms and Conditions for Clients (Arabic)" xml:space="preserve">
+    <value>الشروط والاحكام للعميل بالعربية</value>
+  </data>
+  <data name="Terms and Conditions for Clients (English)" xml:space="preserve">
+    <value>الشروط والاحكام للعميل بالانجليزية</value>
+  </data>
+  <data name="Terms and Conditions for Providers (Arabic)" xml:space="preserve">
+    <value>الشروط والاحكام لمقدم الخدمة بالعربية</value>
+  </data>
+  <data name="Terms and Conditions for Providers (English)" xml:space="preserve">
+    <value>الشروط والاحكام لمقدم الخدمة بالانجليزية</value>
+  </data>
+  <data name="User Name for Messages" xml:space="preserve">
+    <value>اسم المستخدم للرسائل (UserNameSms)</value>
+  </data>
+  <data name="VAT Percentage" xml:space="preserve">
+    <value>الضريبة المضافة</value>
+  </data>
+</root>

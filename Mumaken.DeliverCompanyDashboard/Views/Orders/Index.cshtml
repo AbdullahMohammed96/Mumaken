@@ -1,0 +1,116 @@
+﻿@model IEnumerable<Mumaken.Domain.ViewModel.DeliveryCompanyOrder.DeliveryCompanyOrdersViewModel>
+@using Mumaken.Domain.Enums;
+@{
+    int counter = 1;
+}
+@if (ViewBag.IsAppravel == false)
+{
+    <div class="custom_alert red mb-4">@localizer["Your data is being reviewed by the administration"]</div>
+}
+
+<!-- Start Main Tabs -->
+<div class="tabs-container-m mb-4">
+    <div class="tab-m @(ViewBag.orderStatus==(int)OrderStutes.NewOrder?"active-tab":"")" onclick="redirectToStatus(@((int)OrderStutes.NewOrder))">@localizer["New Order"]</div>
+    <div class="tab-m @(ViewBag.orderStatus==(int)OrderStutes.Current?"active-tab":"")" onclick="redirectToStatus(@((int)OrderStutes.Current))">@localizer["Current Order"]</div>
+    <div class="tab-m @(ViewBag.orderStatus==(int)OrderStutes.Finished?"active-tab":"")" onclick="redirectToStatus(@((int)OrderStutes.Finished))">@localizer["Finished Order"]</div>
+</div>
+
+<!-- Start Data Table -->
+<div class="data">
+    <table id="myTable" class="display table" dir="rtl">
+        <thead>
+            <tr>
+                <th>@localizer["Number"]</th>
+                <th>@localizer["Order ID"]</th>
+                <th>@localizer["Captain's Name"]</th>
+                <th>@localizer["Captain's Phone Number"]</th>
+                <th>@localizer["Order Date"]</th>
+                <th>@localizer["Order Type"]</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ViewBag.IsAppravel == true)
+            {
+                @if (Model is not null)
+                {
+                    foreach (var order in Model)
+                    {
+                        <tr>
+                            <td>@counter</td>
+                            <td>@order.OrderId</td>
+                            <td> @order.CaptionName</td>
+                            <td dir="ltr">@order.CaptionPhone</td>
+                            <td>@order.CreationDate</td>
+                            <td>@order.OrderType</td>
+                            <td class="position-relative">
+                                <i class="fa-solid fa-ellipsis drop-icon add-details"></i>
+
+                                <div class="details d-none">
+                                <a asp-action="OrderDetails" asp-controller="Orders" asp-route-orderId="@order.OrderId" class="d-flex justify-content-between">
+                                    <i class="fa-regular fa-eye"></i>
+                                    <p>@localizer["Details"]</p>
+                                </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        counter++;
+
+                    }
+
+                }
+            }
+           
+
+        </tbody>
+    </table>
+</div>
+
+
+
+
+@section Scripts {
+    <script>
+        $(".tabs-container-m .tab-m").on("click", function () {
+            $(".tabs-container-m .tab-m").removeClass("active-tab");
+            $(this).addClass("active-tab");
+        });
+    </script>
+    <script>
+        function redirectToStatus(status) {
+            debugger
+            // Remove 'active-tab' class from all tabs
+            var tabs = document.querySelectorAll('.tab-m');
+            tabs.forEach(function (tab) {
+                tab.classList.remove('active-tab');
+            });
+
+            // Add 'active-tab' class to the clicked tab
+            event.currentTarget.classList.add('active-tab');
+
+            // Redirect to the appropriate URL based on the status
+            var url = '/Orders/Index/?orderStatus=' + status;
+            window.location.assign(url);
+        }
+    </script>
+    <script>
+        // $(document).ready(function () {
+        //     $('.add-details').click(function () {
+        //         // Toggle the 'd-none' class on all '.details' elements except the next one to the clicked button
+        //         $('.details').not($(this).next('.details')).addClass("d-none");
+        //         $(this).next('.details').toggleClass("d-none");
+        //     });
+        // });
+
+        function runFun() {
+            $('.add-details').click(function () {
+                // Toggle the 'd-none' class on all '.details' elements except the next one to the clicked button
+                $('.details').not($(this).next('.details')).addClass("d-none");
+                $(this).next('.details').toggleClass("d-none");
+            });
+        };
+
+        runFun()
+    </script>
+}

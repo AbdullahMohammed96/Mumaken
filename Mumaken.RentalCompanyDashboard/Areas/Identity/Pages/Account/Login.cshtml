@@ -1,0 +1,68 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+    Layout = "_Layout2";
+}
+
+
+<form class="auth_layout" method="post">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-xl-5 col-lg-7">
+
+                <div class="form-heading">
+                    <h3 class="form-title">@localizer["Login"]</h3>
+                    <p class="form-text">@localizer["Enter your account information to log in"]</p>
+                </div>
+                <input type="hidden" id="Input_PhoneCode"  asp-for="Input.PhoneCode"/>
+                <div class="input-g">
+                    <lablel class="main-label">@localizer["Phone Number"] <span class="hint">*</span> </lablel>
+                    <div class="main-input">
+                        <input type="text" asp-for="Input.PhoneNumber" class="input-me telephone" placeholder="@localizer["Please enter your phone number"]">
+                    </div>
+                    <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                </div>
+
+                <div class="">
+                    <lablel class="main-label">@localizer["Password"]<span class="hint">*</span> </lablel>
+                    <div class="main-input">
+                        <input type="password" asp-for="Input.Password" class="input-me" placeholder="@localizer["Please enter your password"]">
+                    </div>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <div class=" my-3 text-end">
+                    <a asp-action="ForegetPassword" asp-controller="DAuth" class="c-sec fs13">
+                        @localizer["Forget your password ?"]
+                    </a>
+                </div>
+
+                <button type="submit" class="main-btn w-100 up">@localizer["Login"]</button>
+
+                <div class="d-flex justify-content-center mt-3 align-items-center gap-1">
+                    <span class="fs13 c-light2">@localizer["Don't have an account?"]</span>
+                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="c-sec fs13">@localizer["Create an account"] </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            var phoneCodeText = $(".iti__selected-dial-code").text();
+            $("#Input_PhoneCode").val(phoneCodeText)
+        })
+        $(document).on('click', '#iti-0__country-listbox', function () {
+            debugger
+            var phoneCodeText = $(".iti__selected-dial-code").text();
+            $("#Input_PhoneCode").val(phoneCodeText)
+        });
+    </script>
+}

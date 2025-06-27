@@ -1,0 +1,265 @@
+﻿@model IEnumerable<Mumaken.Domain.ViewModel.Notification.GetAllNotificationViewModel>
+﻿@using Mumaken.Domain.Common.Helpers
+@using Mumaken.Domain.Common.PathUrl
+@using Mumaken.Domain.Enums
+
+
+@{
+    ViewData["Title"] = @localizer["Index"];
+    var lang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+}
+<div class="card-box">
+    <h2 class="header-title m-t-0 m-b-30">@localizer["Notifications"]</h2>
+
+    <div>
+        <table id="datatable-responsive-Notification" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th style="text-align:center">
+                        @localizer["Deliver/Company"]
+                    </th>
+                    <th style="text-align:center">
+                        @localizer["TextAr"]
+                    </th>
+                    <th style="text-align:center">
+                        @localizer["TextEn"]
+                    </th>
+                    <th style="text-align:center">
+                        @localizer["Date"]
+                    </th>
+                    <th style="text-align:center">
+                        @localizer["OrderId"]
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody style="text-align:center">
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+             
+                        <td>@item.UserName</td>
+                        <td>
+                           @*  @item.TextAr *@
+                             @{
+                        <span class="truncated-text" data-fulltext="@item.TextAr">@(item.TextAr.Length > 30 ? item.TextAr.Substring(0, 30) + "..." : item.TextAr)</span>
+                        }
+                        </td>
+                        <td>
+                            <span class="truncated-text" data-fulltext="@item.TextEn">@(item.TextEn.Length > 30 ? item.TextEn.Substring(0, 30) + "..." : item.TextEn)</span>
+                           @*  @item.TextEn *@
+                        </td>
+                        <td>@item.DateSend</td>
+                        <td>@item.OrderId</td>
+                      
+                    </tr>
+
+                }
+
+            </tbody>
+
+        </table>
+    </div><!-- end row -->
+</div>
+
+
+
+<!-- Modal  -->
+<div class="modal fade" id="textModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@localizer["Notify Text"]</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-dark" id="modalText">
+                <!-- Full text will be inserted here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@localizer["Close"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="~/assets/plugins/datatables/datatables.buttons.min.js"></script>
+     <script src="~/assets/plugins/datatables/buttons.html5.min.js"></script>
+    <script src="~/assets/plugins/datatables/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.truncated-text').on('click', function () {
+                var fullText = $(this).data('fulltext');
+                $('#modalText').text(fullText);
+                $('#textModal').modal('show');
+            });
+        });
+        var columns = [0, 1, 2, 3, 4];
+
+
+        //var url = "https://localhost:7293/"
+         var url = "@DashBordUrl.baseUrlHost"
+
+        pdfMake.fonts = {
+            cairo: {
+                normal: `${url}/assets/fonts/URWDINArabicMedium.ttf`,
+                bold: `${url}/assets/fonts/URWDINArabicMedium.ttf`,
+                italics: `${url}/assets/fonts/URWDINArabicMedium.ttf`,
+                bolditalics: `${url}/assets/fonts/URWDINArabicMedium.ttf`,
+            },
+        };
+        let myDataTable = document.getElementById("datatable-responsive-Notification");
+
+        if (myDataTable) {
+            var myTable = $("#datatable-responsive-Notification").dataTable({
+                // pageLength: 6, // Optionally set page length
+                responsive: true,
+
+                dom: "lBfrtip",
+                buttons: [
+                    {
+                        // extend: "pdf",
+                        // text: "PDF",
+                        // className: "btn btn-info",
+                        // sCharset: "utf8",
+                        // exportOptions: { columns: ":visible" },
+                        customize: function (doc) {
+                            doc.defaultStyle.font = "cairo";
+                            doc.defaultStyle.alignment = "center";
+                            doc.defaultStyle.fontSize = 10;
+                            doc.styles.tableHeader.alignment = "center";
+                            doc.styles.tableHeader.fontSize = 10;
+
+                            let titleTable = doc.content;
+                            titleTable[0]["text"] = titleTable[0]["text"].split(" ").reverse().join(" ");
+
+                            let tableContent = doc.content[1].table.body;
+                            var arabic = /[\u0600-\u06FF]/;
+
+                            for (let i = 0; i < tableContent.length; i++) {
+                                for (let k = 0; k < tableContent[i].length; k++) {
+                                    if (arabic.test(tableContent[i][k]["text"])) {
+                                        tableContent[i][k]["text"] = tableContent[i][k]["text"]
+                                            .split(" ")
+                                            .reverse()
+                                            .join(" ");
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        text: '@localizer["Export to Excel file"]',
+                        className: 'btn btn-info',
+                        action: function (e, dt, button, config) {
+                            $.ajax({
+                                url: '/SendNotification/GetAllNotifcationForExcel',
+                                type: 'POST',
+                                success: function (data) {
+                                    // Define the headers
+                                    var headers = [
+                                        "@localizer["Deliver/Company"]",
+                                        "@localizer["TextAr"]",
+                                        " @localizer["TextEn"]",
+                                        "@localizer["Date"]",
+                                        "@localizer["OrderId"]"
+                                    ];
+
+                                    // Create an array to hold the Excel data
+                                    var excelData = [headers]; // Add headers as the first row
+
+                                    // Convert JSON data to an array of objects
+                                    for (var i = 0; i < data.length; i++) {
+                                        var row = [
+                                            data[i].userName,
+                                            data[i].textAr,
+                                            data[i].textEn,
+                                            data[i].dateSend,
+                                            data[i].orderId
+                                        ];
+                                        excelData.push(row);
+                                    }
+
+                                    // Create a new workbook
+                                    var workbook = XLSX.utils.book_new();
+
+                                    // Add the worksheet
+                                    var worksheet = XLSX.utils.aoa_to_sheet(excelData);
+
+                                    // Set column widths
+                                    worksheet['!cols'] = [
+                                        { wch: 20 }, 
+                                        { wch: 40 },
+                                        { wch: 40 },
+                                        { wch: 15 }, 
+                                        { wch: 10 } 
+                                    ];
+
+                                    // Append the worksheet to the workbook
+                                    XLSX.utils.book_append_sheet(workbook, worksheet, 'Clients');
+
+                                    // Convert the workbook to a binary string
+                                    var wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'binary' });
+
+                                    // Convert the binary string to a Blob
+                                    var blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+
+                                    // Create a temporary URL for the Blob
+                                    var url = window.URL.createObjectURL(blob);
+
+                                    // Create a temporary link element
+                                    var a = document.createElement('a');
+                                    a.href = url;
+                                    a.download = 'ممكن.xlsx'; // Set the desired file name
+                                    document.body.appendChild(a);
+
+                                    // Programmatically trigger a click event to initiate the download
+                                    a.click();
+
+                                    // Clean up by removing the temporary link and URL object
+                                    document.body.removeChild(a);
+                                    window.URL.revokeObjectURL(url);
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error(xhr.responseText); // Display error message
+                                }
+                            });
+
+                            // Helper function to convert a string to an ArrayBuffer
+                            function s2ab(s) {
+                                var buf = new ArrayBuffer(s.length);
+                                var view = new Uint8Array(buf);
+                                for (var i = 0; i < s.length; i++) {
+                                    view[i] = s.charCodeAt(i) & 0xFF;
+                                }
+                                return buf;
+                            }
+                        }
+                    }
+                ],
+                language: {
+                    paginate: {
+                        previous: `<i class="fa-solid fa-angles-left"></i>`,
+                        next: `<i class="fa-solid fa-angles-right"></i>`
+                    },
+                    sProcessing: "جارٍ التحميل...",
+                    sLengthMenu: "أظهر _MENU_ مدخلات",
+                    sZeroRecords: "لم يعثر على أية سجلات",
+                    sInfo: "إظهار النتائج من _START_ - _END_",
+                    sInfoEmpty: "يعرض 0 إلى 0 من أصل 0 سجل",
+                    sInfoFiltered: "(منتقاة من مجموع _MAX_ مُدخل)",
+                    sInfoPostFix: ""
+                },
+                bLengthChange: false,
+                ordering: true
+            });
+     }
+    </script>
+}

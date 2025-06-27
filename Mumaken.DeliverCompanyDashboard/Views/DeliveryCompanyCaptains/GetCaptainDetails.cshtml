@@ -1,0 +1,97 @@
+﻿@model Mumaken.Domain.ViewModel.Auth.CaptionDetailsViewModel
+@{
+    Layout = "_Layout";
+}
+
+<div class="section_style">
+    <h3 class="main-card-title">@localizer["Captain Data"]</h3>
+
+    <div class="content">
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Captain Image"]</span>
+            <img src="@Model.ImageProfile" alt="" class="small_img">
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Captain Name"]</span>
+            <span class="main_item_sec">@Model.UserName</span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Captain Phone Number"]</span>
+            <span class="main_item_sec">@Model.PhoneNumber</span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Email"]</span>
+            <span class="main_item_sec">@Model.Email</span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["City"]</span>
+            <span class="main_item_sec">@Model.City</span>
+        </div>
+
+ @*        <div class="main_item">
+            <span class="main_item_first">@localizer["Age"]</span>
+            <span class="main_item_sec">@Model.Age</span>
+        </div> *@
+               <div class="main_item">
+            <span class="main_item_first">@localizer["BirthDate"]</span>
+        <span class="main_item_sec">@Model.BirthDate</span>
+        </div>
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Gender"]</span>
+            <span class="main_item_sec">@Model.Gender</span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Nationality"]</span>
+            <span class="main_item_sec">@Model.Nationality</span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Identity Number"]</span>
+            <span class="main_item_sec">@Model.IdentityNumber</span>
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Driving License Image"]</span>
+            <img src="@Model.DeliverLicense" alt="" class="small_img">
+        </div>
+
+        <div class="main_item">
+            <span class="main_item_first">@localizer["Identity Image"]</span>
+            <img src="@Model.IdentityNumberImage" alt="" class="small_img">
+        </div>
+
+    </div>
+</div>
+
+<div class="d-flex gap-3 mt-4">
+    <a asp-action="UpdateCaption" asp-controller="DeliveryCompanyCaptains" asp-route-id="@Model.Id" class="main-btn md up">@localizer["Edit"]</a>
+    <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" class="main-btn md up red">@localizer["Delete"]</button>
+</div>
+
+@section rendalModal {
+    <!-- ==================================== Start Delete Modal ==================================== -->
+    <div class="modal fade" id="deleteModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+         tabindex="-1">
+        <div class="modal-dialog sm modal-dialog-centered">
+            <div class="modal-content p-4 pt-5">
+
+                <button class="close-model-btn" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
+
+                <p class="fs15 c-black text-center">@localizer["Do you really want to delete the captain?"]</p>
+
+                <div class="d-flex gap-3 mt-4 w-100">
+                    <a asp-action="deleteCaptain" asp-controller="DeliveryCompanyCaptains" asp-route-id="@Model.Id" class="main-btn red up flex-grow-1">@localizer["Yes"]</a>
+                    <button type="button" data-bs-dismiss="modal" class="main-btn up flex-grow-1">@localizer["No"]</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- ==================================== End Delete Modal ==================================== -->
+}

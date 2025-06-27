@@ -1,0 +1,277 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@{
+    ViewData["Title"] = @localizer["UserInRoles"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card-box">
+    <h2 class="header-title m-t-0 m-b-30">@localizer["Permissions"]</h2>
+    <h4 class="text-center">@localizer["Please select the user and choose the permissions"]</h4>
+
+    <!-- -------------------------------------------------------------------------------------------------- -->
+    <table class="table table-striped table-bordered dt-responsive nowrap display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th style="text-align:center">
+                    @localizer["Users"]
+                </th>
+            </tr>
+        </thead>
+        <tbody style="text-align:center" id="getusers"></tbody>
+    </table>
+
+
+    <table class="table table-striped table-bordered dt-responsive nowrap display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th style="text-align:center">
+                    @localizer["Permissions"]
+                </th>
+            </tr>
+        </thead>
+        <tbody style="text-align:center" id="getrole"></tbody>
+    </table>
+
+
+    <br />
+
+
+    <input type="button" id="editrole" onclick="GetUsersId()" value="@localizer["Set Permissions"]" class="btn btn-new-style" />
+
+
+    <br />
+    <hr />
+
+    <table class="table table-striped table-bordered dt-responsive nowrap display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th style="text-align:center">
+                    @localizer["Users"]
+                </th>
+                <th style="text-align:center">
+                    @localizer["Permissions"]
+                </th>
+                <th style="text-align:center">
+                    @localizer["Edit Permissions"]
+                </th>
+            </tr>
+        </thead>
+        <tbody style="text-align: center" id="userWithRoles">
+        </tbody>
+    </table>
+
+    <!-- -------------------------------------------------------------------------------------------------- -->
+
+
+</div><!-- end row -->
+@section scripts{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            GetRoles();
+            GetUsers();
+            getuserWithRoles();
+        });
+
+        function GetUsersId() {
+
+            var users = [];
+            $.each($("input[name='user']:checked"),
+                function () {
+                    users.push($(this).attr("id"));
+                });
+            //alert("MyUser: " + users.join("||"));
+
+            var roles = [];
+            $.each($("input[name='role']:checked"),
+                function () {
+                    roles.push($(this).attr("id"));
+                });
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "/Admin/EditUsersInRoles",
+                data: JSON.stringify({
+                    users: users,
+                    roles: roles
+                }),
+                dataType: "json",
+                success: function (response, data) {
+                    if (response.key == 1) {
+                        window.location.reload();
+                        Swal.fire({
+                            position: 'success',
+                            type: 'success',
+                            title: '@localizer["Permissions set successfully"]',
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                    }
+                    else if (response.key == 2) {
+                        Swal.fire({
+                            position: 'error',
+                            type: 'error',
+                            title: '@localizer["You must select a user."]',
+                            showConfirmButton: false,
+                            timer: 2000
+
+
+                        });
+
+                    }
+
+                },
+                error: function (err) {
+                }
+            });
+
+        }
+
+
+        function EEditRoles() {
+            var url = "../../Admin/EditUsers";
+            var user = ["1", "2", "3"];
+            $.getJSON(url,
+                { user: user },
+                function (data) {
+
+                });
+        }
+
+        function GetUsers() {
+            var html = "";
+
+
+            $.ajax({
+                type: "GET",
+                url: "../../Admin/GetAlluser",
+                contentType: "application/json",
+                dataType: "json",
+                success: function (data) {
+                    if (data.key == 1) {
+                        $.each(data.users,
+                            function (i, item) {
+                                html += '<tr>';
+                                html += '<td> <div class="td-check">' +
+
+                                    ' <input  type="checkbox"  id=' + item.id + ' name="user" /> <span>' + item.userName + ' </span></div></td>';
+                                html += '<tr>';
+                            })
+                        $("#getusers").html(html);
+                    } else {
+                        html += '<p style="text-align:center;color:blue;font-size:16px">' + data.msg + '</p>';
+                        $("#getusers").html(html);
+                    }
+                },
+                failure: function (response) {
+                }
+            });
+        }
+
+
+        function GetRoles() {
+            var html = "";
+            $.ajax({
+                type: "GET",
+                url: "../../Admin/GetAllRoles",
+                contentType: "application/json",
+                dataType: "json",
+                success: function (data) {
+                    if (data.key == 1) {
+                        $.each(data.roles,
+                            function (i, item) {
+                                html += '<tr>';
+                                html += '<td> <div class="td-check">' +
+
+                                    ' <input  type="checkbox"  id=' + item.id + ' name="role" /> <span>' + item.name + ' </span></div></td>';
+                                html += '<tr>';
+                                html += '<tr>';
+                            })
+                        $("#getrole").html(html);
+                    } else {
+                        html += '<p style="text-align:center;color:blue;font-size:16px">' + data.msg + '</p>';
+                        $("#getrole").html(html);
+                    }
+                },
+                failure: function (response) {
+                }
+            });
+        }
+
+        function getuserWithRoles() {
+            var html = '';
+            var userRoles = '';
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                url: "/Admin/GetUsersWithRoles",
+
+                dataType: "json",
+                success: function (response, data) {
+                    for (var i = 0; i < response.users.length; i++) {
+                        html += '<tr>';
+
+                        html += '<td>' + response.users[i].userName + '</td>';
+
+                        if (response.roles[i].length == 0) {
+                            html += '<td>' + 'لا يوجد صلاحيات' + '</td>';
+                        } else {
+                            html += '<td>' + response.roles[i] + '</td>';
+
+                        }
+                        var userId = "" + response.users[i].id + "";
+                        html += '<td><input type="button" onclick="editUserRoles(`' + userId + '`)" class="icon-font btn btn-purple btn-rounded" value="&#xf040;" /></td>';
+                        html += '</tr>';
+                    }
+
+                    $('#userWithRoles').html(html);
+                },
+                error: function (err) {
+                }
+            });
+
+        }
+
+        function editUserRoles(id) {
+            var userId = $('input[name="user"]#' + id).attr('id');
+
+            $.each($("input[name='role']:checked"),
+                function () {
+                    $(this).prop('checked', false);
+                });
+            $.each($("input[name='user']:checked"),
+                function () {
+                    $(this).prop('checked', false);
+                });
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "/Admin/EditUserRoles",
+                data: JSON.stringify({
+                    id: id
+                }),
+                dataType: "json",
+                success: function (response, data) {
+
+                    if (response.user.id == userId) {
+                        $('input[name="user"]#' + id).prop('checked', true);
+
+                    }
+                    for (var i = 0; i < response.userRoles.length; i++) {
+                        var roleId = $('input[name="role"]#' + response.userRoles[i].id).attr('id');
+                        if (response.userRoles[i].id == roleId) {
+                            $('input[name="role"]#' + roleId).prop('checked', true);
+                        }
+                    }
+                },
+                error: function (err) {
+                }
+            });
+        }
+
+    </script>
+}

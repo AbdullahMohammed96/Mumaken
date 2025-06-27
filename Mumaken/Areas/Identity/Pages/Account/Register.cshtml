@@ -1,0 +1,86 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer localizer
+@model RegisterModel
+@{
+    ViewData["Title"] = @localizer["Add User"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<style>
+    .far.fa-eye {
+        font-size: medium;
+        top: 40px;
+        height: 16px;
+        position: absolute;
+        left: 12px;
+        width: 16px;
+        color: #666;
+    }
+
+    .form-group {
+        position: relative
+    }
+</style>
+
+<div class="card-box">
+    <h2 class="header-title m-t-0 m-b-30">@ViewData["Title"]</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form enctype="multipart/form-data" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Input.Email">@localizer["Email"]</label>
+                    <input asp-for="Input.Email" class="form-control" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                @*<div class="form-group">
+                <label asp-for="Input.FullName">اسم المستخدم</label>
+                <input asp-for="Input.FullName" class="form-control" />
+                <span asp-validation-for="Input.FullName" class="text-danger"></span>
+                </div>*@
+                <div class="form-group">
+                    <label asp-for="Input.Img">@localizer["Profile Picture"]</label>
+                    <input type="file" asp-for="Input.Img" class="form-control" accept="image/*" />
+                    <span asp-validation-for="Input.Img" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password">@localizer["Password"]</label>
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    <i id="showPassword" class="far fa-eye"></i>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.ConfirmPassword">@localizer["Confirm Password"]</label>
+                    <input asp-for="Input.ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    <i id="showPassword" class="far fa-eye"></i>
+                </div>
+                <button type="submit" class="btn-new-style btn-rounded">@localizer["Add"]</button>
+            </form>
+            <a asp-action="Index" asp-controller="Home" class="btn-black">@localizer["Back to Homepage"]</a>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(".fa-eye").on("click", function () {
+            $(this).toggleClass("active");
+            if ($(this).hasClass("active")) {
+                $(this).parent(".form-group").find("input").attr({ "type": "text" });
+            } else {
+                $(this).parent(".form-group").find("input").attr({ "type": "password" });
+            }
+        });
+    </script>
+}
